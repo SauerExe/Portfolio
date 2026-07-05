@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800" role="img" aria-label="Mockup der Gewinnspielverwaltung">
+  <defs>
+    <filter id="soft-blur" x="-5%" y="-5%" width="110%" height="110%">
+      <feGaussianBlur stdDeviation="1.4" />
+    </filter>
+    <filter id="card-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.08" />
+    </filter>
+  </defs>
+
+  <rect width="1280" height="800" fill="#f8fafc" />
+
+  <g filter="url(#soft-blur)">
+    <!-- Sidebar -->
+    <rect x="0" y="0" width="248" height="800" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <rect x="0" y="0" width="4" height="800" fill="#004b93" />
+
+    <text x="28" y="46" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#0f172a">Gewinnspielverwaltung</text>
+    <text x="28" y="66" font-family="Arial, sans-serif" font-size="11" fill="#94a3b8">Stadtverwaltung · Intern</text>
+
+    <line x1="0" y1="90" x2="248" y2="90" stroke="#e2e8f0" stroke-width="1" />
+
+    <!-- Nav items -->
+    <g font-family="Arial, sans-serif" font-size="13">
+      <g>
+        <rect x="16" y="112" width="216" height="34" rx="8" fill="#ffffff" />
+        <rect x="16" y="112" width="4" height="34" rx="2" fill="#e2e8f0" />
+        <circle cx="40" cy="129" r="5" fill="#cbd5e1" />
+        <text x="56" y="133" fill="#475569">Dashboard</text>
+      </g>
+      <g>
+        <rect x="16" y="152" width="216" height="34" rx="8" fill="#eaf1fb" />
+        <rect x="16" y="152" width="4" height="34" rx="2" fill="#004b93" />
+        <circle cx="40" cy="169" r="5" fill="#004b93" />
+        <text x="56" y="173" fill="#0f3d73" font-weight="700">Gewinnspiele</text>
+      </g>
+      <g>
+        <rect x="16" y="192" width="216" height="34" rx="8" fill="#ffffff" />
+        <circle cx="40" cy="209" r="5" fill="#cbd5e1" />
+        <text x="56" y="213" fill="#475569">Teilnehmer</text>
+      </g>
+      <g>
+        <rect x="16" y="232" width="216" height="34" rx="8" fill="#ffffff" />
+        <circle cx="40" cy="249" r="5" fill="#cbd5e1" />
+        <text x="56" y="253" fill="#475569">Auswertung</text>
+      </g>
+      <g>
+        <rect x="16" y="272" width="216" height="34" rx="8" fill="#ffffff" />
+        <circle cx="40" cy="289" r="5" fill="#cbd5e1" />
+        <text x="56" y="293" fill="#475569">Rechteverwaltung</text>
+      </g>
+      <g>
+        <rect x="16" y="312" width="216" height="34" rx="8" fill="#ffffff" />
+        <circle cx="40" cy="329" r="5" fill="#cbd5e1" />
+        <text x="56" y="333" fill="#475569">Einstellungen</text>
+      </g>
+    </g>
+
+    <!-- Sidebar footer / user -->
+    <line x1="0" y1="740" x2="248" y2="740" stroke="#e2e8f0" stroke-width="1" />
+    <circle cx="40" cy="770" r="14" fill="#dbeafe" />
+    <text x="40" y="774" font-family="Arial, sans-serif" font-size="11" fill="#004b93" text-anchor="middle" font-weight="700">TW</text>
+    <text x="64" y="767" font-family="Arial, sans-serif" font-size="12" fill="#0f172a">Sachbearbeitung</text>
+    <text x="64" y="781" font-family="Arial, sans-serif" font-size="10" fill="#94a3b8">Amt für Digitalisierung</text>
+
+    <!-- Main content -->
+    <text x="280" y="58" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#0f172a">Gewinnspiele</text>
+    <text x="280" y="80" font-family="Arial, sans-serif" font-size="12" fill="#64748b">Übersicht aller laufenden, geplanten und beendeten Gewinnspiele</text>
+
+    <!-- Search + action bar -->
+    <rect x="280" y="104" width="300" height="36" rx="8" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" />
+    <text x="298" y="127" font-family="Arial, sans-serif" font-size="12" fill="#94a3b8">Gewinnspiel suchen …</text>
+    <rect x="1108" y="104" width="128" height="36" rx="8" fill="#004b93" />
+    <text x="1172" y="127" font-family="Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle" font-weight="600">+ Neu anlegen</text>
+
+    <!-- Table card -->
+    <rect x="280" y="160" width="956" height="560" rx="12" fill="#ffffff" stroke="#e2e8f0" stroke-width="1" filter="url(#card-shadow)" />
+
+    <!-- Table header -->
+    <g font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#475569">
+      <text x="308" y="192">Titel</text>
+      <text x="620" y="192">Zeitraum</text>
+      <text x="800" y="192">Teilnehmer</text>
+      <text x="960" y="192">Status</text>
+    </g>
+    <line x1="280" y1="206" x2="1236" y2="206" stroke="#e2e8f0" stroke-width="1" />
+
+    <!-- Rows (non-clickable, flat) -->
+    <g font-family="Arial, sans-serif" font-size="13" fill="#334155">
+      <!-- row 1 -->
+      <rect x="280" y="212" width="956" height="56" fill="#f8fafc" />
+      <text x="308" y="245">Sommerfest 2026</text>
+      <text x="620" y="245" fill="#64748b">01.06. – 30.06.2026</text>
+      <text x="800" y="245" fill="#64748b">412</text>
+      <rect x="960" y="228" width="60" height="22" rx="11" fill="#dcfce7" />
+      <text x="990" y="243" fill="#166534" text-anchor="middle" font-size="11" font-weight="600">Aktiv</text>
+
+      <!-- row 2 -->
+      <rect x="280" y="268" width="956" height="56" fill="#ffffff" />
+      <text x="308" y="301">Stadtfest-Tombola</text>
+      <text x="620" y="301" fill="#64748b">14.08. – 16.08.2026</text>
+      <text x="800" y="301" fill="#64748b">288</text>
+      <rect x="960" y="284" width="72" height="22" rx="11" fill="#fef3c7" />
+      <text x="996" y="299" fill="#92400e" text-anchor="middle" font-size="11" font-weight="600">Geplant</text>
+
+      <!-- row 3 -->
+      <rect x="280" y="324" width="956" height="56" fill="#f8fafc" />
+      <text x="308" y="357">Adventskalender-Verlosung</text>
+      <text x="620" y="357" fill="#64748b">01.12. – 24.12.2025</text>
+      <text x="800" y="357" fill="#64748b">1.024</text>
+      <rect x="960" y="340" width="76" height="22" rx="11" fill="#e2e8f0" />
+      <text x="998" y="355" fill="#475569" text-anchor="middle" font-size="11" font-weight="600">Beendet</text>
+
+      <!-- row 4 -->
+      <rect x="280" y="380" width="956" height="56" fill="#ffffff" />
+      <text x="308" y="413">Kinderfest-Gewinnspiel</text>
+      <text x="620" y="413" fill="#64748b">10.05. – 12.05.2026</text>
+      <text x="800" y="413" fill="#64748b">156</text>
+      <rect x="960" y="396" width="60" height="22" rx="11" fill="#dcfce7" />
+      <text x="990" y="411" fill="#166534" text-anchor="middle" font-size="11" font-weight="600">Aktiv</text>
+
+      <!-- row 5 -->
+      <rect x="280" y="436" width="956" height="56" fill="#f8fafc" />
+      <text x="308" y="469">Frühlingsaktion Innenstadt</text>
+      <text x="620" y="469" fill="#64748b">01.03. – 31.03.2026</text>
+      <text x="800" y="469" fill="#64748b">734</text>
+      <rect x="960" y="452" width="76" height="22" rx="11" fill="#e2e8f0" />
+      <text x="998" y="467" fill="#475569" text-anchor="middle" font-size="11" font-weight="600">Beendet</text>
+
+      <!-- row 6 -->
+      <rect x="280" y="492" width="956" height="56" fill="#ffffff" />
+      <text x="308" y="525">Weihnachtsverlosung Rathaus</text>
+      <text x="620" y="525" fill="#64748b">01.12. – 06.01.2027</text>
+      <text x="800" y="525" fill="#64748b">—</text>
+      <rect x="960" y="508" width="72" height="22" rx="11" fill="#fef3c7" />
+      <text x="996" y="523" fill="#92400e" text-anchor="middle" font-size="11" font-weight="600">Geplant</text>
+
+      <!-- row 7 -->
+      <rect x="280" y="548" width="956" height="56" fill="#f8fafc" />
+      <text x="308" y="581">Vereinsfest Gewinnspiel</text>
+      <text x="620" y="581" fill="#64748b">20.09. – 22.09.2025</text>
+      <text x="800" y="581" fill="#64748b">201</text>
+      <rect x="960" y="564" width="76" height="22" rx="11" fill="#e2e8f0" />
+      <text x="998" y="579" fill="#475569" text-anchor="middle" font-size="11" font-weight="600">Beendet</text>
+    </g>
+
+    <line x1="280" y1="268" x2="1236" y2="268" stroke="#eef2f6" stroke-width="1" />
+    <line x1="280" y1="324" x2="1236" y2="324" stroke="#eef2f6" stroke-width="1" />
+    <line x1="280" y1="380" x2="1236" y2="380" stroke="#eef2f6" stroke-width="1" />
+    <line x1="280" y1="436" x2="1236" y2="436" stroke="#eef2f6" stroke-width="1" />
+    <line x1="280" y1="492" x2="1236" y2="492" stroke="#eef2f6" stroke-width="1" />
+    <line x1="280" y1="548" x2="1236" y2="548" stroke="#eef2f6" stroke-width="1" />
+    <line x1="280" y1="604" x2="1236" y2="604" stroke="#eef2f6" stroke-width="1" />
+  </g>
+</svg>
