@@ -1,56 +1,117 @@
+import { useEffect, useState } from "react";
 import Reveal from "./Reveal.jsx";
-import SplitHeading from "./SplitHeading.jsx";
+import DistanceCard from "./DistanceCard.jsx";
+import NowPlayingCard from "./NowPlayingCard.jsx";
+import StatusCard from "./StatusCard.jsx";
 import { profile } from "../data/content.js";
-import { useMagneticHover } from "../hooks/useMagneticHover.js";
+import { useMotionPref } from "../hooks/useMotionPref.js";
+
+function localTime() {
+  return new Intl.DateTimeFormat("de-DE", {
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZone: "Europe/Berlin",
+  }).format(new Date());
+}
 
 export default function Contact() {
-  const mailCta = useMagneticHover();
+  const [reduced, setReduced] = useMotionPref();
+  const [copied, setCopied] = useState(false);
+  const [time, setTime] = useState(localTime);
   const year = new Date().getFullYear();
 
+  useEffect(() => {
+    const id = setInterval(() => setTime(localTime()), 30_000);
+    return () => clearInterval(id);
+  }, []);
+
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.location.href = `mailto:${profile.email}`;
+    }
+  };
+
   return (
-    <section id="kontakt" className="section contact" data-scene="ember" aria-label="Kontakt">
+    <section id="kontakt" className="section contact" aria-label="Kontakt">
       <div className="section-inner">
-        <SplitHeading className="contact-headline" text="Lass uns reden" dot />
-        <Reveal>
-          <p className="contact-line">
-            Ob Projekt, Frage oder einfach Interesse an dem, was ich baue: ich freue
-            mich über eine Nachricht.
-          </p>
-        </Reveal>
-        <Reveal delay={120}>
-          <div className="contact-ctas">
-            <a ref={mailCta} className="btn btn--primary" href={`mailto:${profile.email}`}>
-              Nachricht schreiben
-            </a>
-            <a className="btn btn--ghost" href={profile.oldPortfolio} target="_blank" rel="noopener noreferrer">
-              Altes Portfolio ↗
-            </a>
-          </div>
-          <ul className="contact-channels">
-            <li>
-              <span className="mono dim">E-Mail</span>
-              <a href={`mailto:${profile.email}`}>{profile.email}</a>
-            </li>
-            <li>
-              <span className="mono dim">GitHub</span>
-              <a href={profile.github} target="_blank" rel="noopener noreferrer">
-                {profile.github.replace("https://", "")} ↗
+        <div className="contact-closing">
+          <Reveal>
+            <span className="kicker">Kontakt</span>
+          </Reveal>
+
+          <Reveal>
+            <p className="contact-lead">
+              Kein Formular, kein Calendly. Eine Mail reicht.
+            </p>
+          </Reveal>
+
+          <Reveal delay={80}>
+            <button
+              type="button"
+              className="contact-mail-big"
+              onClick={copyEmail}
+              aria-label={`E-Mail-Adresse ${profile.email} in die Zwischenablage kopieren`}
+            >
+              {profile.email}
+              <span className="contact-copy-hint mono" aria-hidden="true">
+                {copied ? "✓ kopiert" : "klicken zum kopieren"}
+              </span>
+            </button>
+          </Reveal>
+
+          <Reveal delay={160} className="contact-actions">
+            <div className="contact-links">
+              <a className="contact-link" href={`mailto:${profile.email}`}>
+                Mail öffnen ↗
               </a>
-            </li>
-            <li>
-              <span className="mono dim">Altes Portfolio</span>
-              <a href={profile.oldPortfolio} target="_blank" rel="noopener noreferrer">
-                {profile.oldPortfolio.replace("https://", "")} ↗
+              <a
+                className="contact-link"
+                href={profile.github}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub ↗
               </a>
-            </li>
-          </ul>
-        </Reveal>
+            </div>
+          </Reveal>
+
+          <Reveal delay={200} className="contact-live-head">
+            <span className="kicker">Maschinenraum</span>
+            <p className="contact-live-sub">
+              Status, Musik und Standort kommen live aus meiner eigenen
+              Infrastruktur.
+            </p>
+          </Reveal>
+
+          <Reveal delay={240} className="contact-live">
+            <StatusCard />
+            <NowPlayingCard />
+            <DistanceCard />
+          </Reveal>
+        </div>
       </div>
+
       <footer className="footer">
+        <div className="footer-schicht-sep" aria-hidden="true">
+          <span /><span /><span />
+        </div>
         <div className="section-inner footer-inner">
-          <p className="mono">
-            © {year} {profile.name} · {profile.location}
-          </p>
+          <span className="footer-coords mono" aria-label="Standort Gelsenkirchen">
+            51.5177° N, 7.0857° E · {time} Uhr
+          </span>
+          <button
+            className="footer-motion-btn"
+            type="button"
+            aria-pressed={reduced}
+            onClick={() => setReduced((v) => !v)}
+          >
+            {reduced ? "Motion: aus" : "Motion: an"}
+          </button>
+          <span className="mono">© {year} {profile.name}</span>
         </div>
       </footer>
     </section>

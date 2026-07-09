@@ -11,17 +11,28 @@ export default function BuildPath() {
         </Reveal>
         <SplitHeading className="section-title" text="Der Weg bis hier" dot />
         <ol className="buildpath-list">
-          {buildPath.map((entry, i) => (
-            <li key={i}>
-              <Reveal delay={i * 80} className="buildpath-entry">
-                <span className="buildpath-period mono">{entry.period}</span>
-                <div className="buildpath-body">
-                  <h3 className="buildpath-title">{entry.title}</h3>
-                  <p className="buildpath-text">{entry.text}</p>
-                </div>
-              </Reveal>
-            </li>
-          ))}
+          {buildPath.map((entry, i) => {
+            const isNow = i === buildPath.length - 1;
+            return (
+              <li key={i}>
+                <Reveal delay={i * 80} className="buildpath-entry">
+                  <span className="buildpath-period mono">
+                    {entry.period}
+                    {isNow && (
+                      <span className="buildpath-now">
+                        <span className="buildpath-now-dot" aria-hidden="true" />
+                        heute
+                      </span>
+                    )}
+                  </span>
+                  <div className="buildpath-body">
+                    <h3 className="buildpath-title">{entry.title}</h3>
+                    <p className="buildpath-text">{entry.text}</p>
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
         </ol>
       </div>
     </section>

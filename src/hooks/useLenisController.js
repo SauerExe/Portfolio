@@ -1,6 +1,6 @@
 // Small module-level registry so components that don't own the Lenis
-// instance (custom scrollbar, project iframe focus) can still read/drive it.
-// Mirrors the original `ha`/`Sd`/`D_`/`w_`/`_2`/`v2`/`y2` closures.
+// instance (custom scrollbar) can still read/drive it.
+// Mirrors the original `ha`/`Sd`/`D_`/`w_` closures.
 let activeLenis = null;
 const listeners = new Set();
 
@@ -16,12 +16,4 @@ export function getLenisInstance() {
 export function onLenisChange(listener) {
   listeners.add(listener);
   return () => listeners.delete(listener);
-}
-
-export function pauseLenis() {
-  activeLenis?.stop();
-}
-
-export function resumeLenis() {
-  activeLenis?.start();
 }

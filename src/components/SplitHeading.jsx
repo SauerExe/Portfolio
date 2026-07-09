@@ -20,7 +20,7 @@ export default function SplitHeading({ text, as: Tag = "h2", className, dot }) {
           duration: 0.9,
           ease: "power4.out",
           stagger: 0.055,
-          scrollTrigger: { trigger: el, start: "top 88%", once: true },
+          scrollTrigger: { trigger: el, start: "top 82%", once: true },
         },
       );
     }, el);

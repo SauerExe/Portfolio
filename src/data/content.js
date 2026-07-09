@@ -10,7 +10,6 @@ export const profile = {
   age: 22,
   email: "contact@vvashed.dev",
   github: "https://github.com/SauerExe",
-  oldPortfolio: "https://v1.vvashed.dev",
 };
 
 export const heroStatement = "Ich baue Software, die im Betrieb läuft, nicht nur in der Demo.";
@@ -32,7 +31,7 @@ export const projects = [
     status: "In Betrieb",
     context: "Mitgründer / CTO · B2B EU-AI-Act-Compliance",
     shortDescription:
-      "Der EU AI Act verpflichtet Unternehmen, ihre KI-Systeme zu klassifizieren und zu dokumentieren, für Nicht-Juristen kaum zu durchdringen. SimpleAct erfasst KI-Systeme strukturiert, ordnet sie nach Risikoklassen ein und leitet daraus konkrete Compliance-Aufgaben ab.",
+      "Der EU AI Act verpflichtet Unternehmen, ihre KI-Systeme zu klassifizieren und zu dokumentieren. Für Nicht-Juristen ist das kaum zu durchdringen. SimpleAct erfasst die Systeme strukturiert, ordnet sie nach Risikoklassen ein und erzeugt daraus konkrete Compliance-Aufgaben.",
     role: "Architektur, Plattform, Automatisierung",
     technologies: ["Next.js", "TypeScript", "Supabase", "n8n"],
     liveUrl: "https://simpleact.de",
@@ -49,7 +48,7 @@ export const projects = [
     status: "Im Regelbetrieb",
     context: "Entwicklung im Anstellungsverhältnis",
     shortDescription:
-      "Gewinnspiele wurden manuell in Listen verwaltet, fehleranfällig, ohne Auswertung, ohne Rechteverwaltung. Web-Plattform mit .NET 10 Web API, EF Core und Next.js-Admin-UI löst das Problem strukturiert.",
+      "Gewinnspiele liefen vorher über manuell gepflegte Listen: fehleranfällig, ohne Auswertung, ohne Rechteverwaltung. Jetzt läuft das über eine Web-Plattform mit .NET 10 Web API, EF Core und einem Next.js-Admin.",
     role: "Konzeption, Entwicklung",
     technologies: [".NET 10", "EF Core", "JWT / LDAP", "Next.js"],
     screenshot: "/images/projekte/admin-kommune/mockup.svg",
@@ -75,18 +74,18 @@ export const projects = [
     ],
   },
   {
-    title: "vvashed.dev",
+    title: "vvashed.dev v1",
     slug: "vvashed-dev",
     type: "Website",
     status: "Live",
-    context: "Dieses Portfolio",
+    context: "Mein altes Portfolio",
     shortDescription:
-      "Portfolios behaupten Skills, belegen sie aber selten. Diese Seite führt sie stattdessen vor: sechs interaktive Labs gegen echte API-Endpoints, der komplette Quellcode ist offen einsehbar.",
+      "Die erste Version dieses Portfolios. Sechs interaktive Labs sprechen mit echten API-Endpoints statt mit Screenshots. Der komplette Code liegt öffentlich auf GitHub.",
     role: "Konzept, Design, Entwicklung",
     technologies: ["Next.js 16", "Tailwind v4", "Motion", "zod"],
-    liveUrl: "https://vvashed.dev",
+    liveUrl: "https://v1.vvashed.dev",
     repoUrl: "https://github.com/SauerExe/vvashed.dev",
-    extraLink: { href: "https://v1.vvashed.dev", label: "Altes Portfolio" },
+    screenshot: "/images/projekte/vvashed-dev/screenshot.webp",
     highlights: [
       "Sechs interaktive Labs statt Skill-Badges",
       "Kompletter Quellcode offen einsehbar",
@@ -125,7 +124,7 @@ export const skillGroups = [
     label: "Infrastruktur & Automation",
     claim: "Eigener Betrieb statt Managed-Abhängigkeit, vom Server bis zum Deploy.",
     items: [
-      { name: "TrueNAS", note: "Storage-Basis im Homelab" },
+      { name: "TrueNAS", note: "Storage-Basis der eigenen Infrastruktur" },
       { name: "Coolify", note: "Container-Deployments" },
       { name: "n8n", note: "Workflow-Automatisierung" },
       { name: "Cloudflare Tunnel", note: "Zugriff ohne offene Ports" },
@@ -146,7 +145,34 @@ export const skillGroups = [
   },
 ];
 
+// Verknüpft einen Skill-Namen mit den Projekten, die ihn laut technologies[]
+// tatsächlich einsetzen (Wortabgleich, keine erfundenen Referenzen).
+export function projectsForSkill(skillName) {
+  const words = skillName
+    .toLowerCase()
+    .split(/[/,]/)
+    .flatMap((part) => part.split(/\s+/))
+    .map((word) => word.replace(/[^a-z0-9]/g, ""))
+    .filter((word) => word.length >= 3);
+
+  return projects.filter((project) =>
+    project.technologies.some((tech) => {
+      const techWords = tech
+        .toLowerCase()
+        .split(/\s+/)
+        .map((word) => word.replace(/[^a-z0-9]/g, ""))
+        .filter((word) => word.length >= 3);
+      return techWords.some((techWord) => words.includes(techWord));
+    }),
+  );
+}
+
 export const buildPath = [
+  {
+    period: "2018",
+    title: "Erste Zeilen Code",
+    text: "Spieleentwicklung mit Unity, gelernt über YouTube und eigene Projekte.",
+  },
   {
     period: "2023",
     title: "Ausbildung Fachinformatiker Anwendungsentwicklung",
@@ -158,48 +184,48 @@ export const buildPath = [
     text: "EU-AI-Act-Compliance-SaaS: Produktarchitektur, Plattform, Automatisierung.",
   },
   {
-    period: "Juli 2026",
-    title: "Abschluss der Ausbildung",
-    text: "Ausgelernt seit Juli 2026; seitdem Full-Stack-Entwicklung und Betrieb eigener Infrastruktur.",
-  },
-  {
     period: "2026",
     title: "Gewinnspiel-Anwendung für die Stadtverwaltung",
-    text: "Konzeption und Entwicklung bis in den Regelbetrieb, .NET 10, EF Core, Next.js.",
+    text: "Konzeption und Entwicklung bis in den Regelbetrieb, mit .NET 10, EF Core und Next.js.",
+  },
+  {
+    period: "Juli 2026",
+    title: "Ausbildung abgeschlossen",
+    text: "Seitdem fest angestellt bei der gkd-el, daneben CTO-Rolle und Betrieb eigener Server-Infrastruktur.",
   },
 ];
 
 export const principles = [
   [
     "Vorführen statt behaupten",
-    "Skills werden nicht behauptet, sondern vorgeführt. Die Labs auf vvashed.dev sprechen mit echten Route Handlers, Fehlerpfade inklusive, statt mit Skill-Badges zu werben.",
+    "Die Statusleiste oben zeigt echte Daten von meinen eigenen Servern. Wenn dort etwas ausfällt, sieht man es auf dieser Seite zuerst.",
   ],
   [
-    "Quellcode offen einsehbar",
-    "Der komplette Code dieser Seite liegt öffentlich auf GitHub. Wer nachprüfen will, wie etwas gebaut ist, muss nicht glauben, sondern kann lesen.",
+    "Quellcode offen",
+    "Diese Seite liegt komplett öffentlich auf GitHub, inklusive der Commits, in denen ich Sachen wieder rausgeworfen habe.",
   ],
   [
-    "Eigene Infrastruktur, eigene Kontrolle",
-    "TrueNAS, Coolify und n8n selbst betrieben statt Managed-Dienste gemietet. Wer die Infrastruktur versteht, ist nicht von ihr abhängig.",
+    "Eigene Infrastruktur",
+    "TrueNAS, Coolify und n8n laufen auf meinen eigenen Servern. Es gibt keinen Support, den ich anrufen kann, und genau das ist der Punkt.",
   ],
   [
-    "Server-first, JavaScript nur wo nötig",
-    "Sections bleiben React Server Components, wo es geht. Animationen laufen über CSS statt über Hydration, die auf sich warten lässt.",
+    "JavaScript nur wo nötig",
+    "Animationen laufen über CSS, wo es geht. JavaScript kommt dazu, wenn man etwas anklicken kann, nicht für Deko.",
   ],
   [
     "Kein Tracking, keine Cookies",
-    "Diese Seite verzichtet bewusst auf Analyse-Dienste und Cookies. Eine Theme-Einstellung lokal zu speichern reicht, ohne Nutzer zu vermessen.",
+    "Ich könnte nicht sagen, wie viele Leute diese Seite besuchen. Es gibt keine Zählung, nur eine Theme-Einstellung im Browser.",
   ],
   [
     "Offene Punkte offen benennen",
-    "Was noch nicht fertig ist, wird als solches markiert statt kaschiert. Lieber ein sichtbares TODO als eine stille Lücke.",
+    "Was nicht fertig ist, steht als solches da. Ein sichtbares TODO ist mir lieber als eine stille Lücke.",
   ],
   [
     "Verantwortung übernehmen",
-    "Als Mitgründer und CTO von SimpleAct liegt Architektur- und Plattformverantwortung nicht bei irgendwem, sondern konkret bei mir.",
+    "Bei SimpleAct liegt die Verantwortung für Architektur und Plattform bei mir. Wenn nachts etwas ausfällt, ist das mein Problem.",
   ],
   [
     "Erst verstehen, dann automatisieren",
-    "Bevor ein Ablauf automatisiert wird, muss er manuell verstanden sein. Automation, die das Problem nicht kennt, verschiebt es nur.",
+    "Bevor ich einen Ablauf automatisiere, will ich ihn einmal von Hand gemacht haben. Automation ohne Verständnis verschiebt das Problem nur.",
   ],
 ];

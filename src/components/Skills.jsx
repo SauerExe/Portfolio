@@ -1,36 +1,62 @@
+import { useState } from "react";
 import Reveal from "./Reveal.jsx";
 import SplitHeading from "./SplitHeading.jsx";
 import { skillGroups } from "../data/content.js";
 
+// Eine Zeile des Spec-Sheets. Die Note des gehoverten Skills erscheint
+// in einer festen Spalte rechts, damit sich das Layout nicht verschiebt.
+function SpecRow({ group, delay }) {
+  const [note, setNote] = useState(null);
+
+  return (
+    <Reveal delay={delay} className="skills-spec-row">
+      <span className="skills-spec-cat">{group.label}</span>
+      <ul
+        className="skills-spec-list"
+        aria-label={group.label}
+        onMouseLeave={() => setNote(null)}
+      >
+        {group.items.map((item) => (
+          <li
+            key={item.name}
+            className="skills-spec-item"
+            title={item.note || undefined}
+            onMouseEnter={() => setNote(item.note || null)}
+          >
+            {item.name}
+          </li>
+        ))}
+      </ul>
+      <span
+        className={`skills-spec-notecol mono${note ? " has-note" : ""}`}
+        aria-hidden="true"
+      >
+        {note || ""}
+      </span>
+    </Reveal>
+  );
+}
+
 export default function Skills() {
   return (
-    <section id="skills" className="section skills" data-scene="green" aria-label="Skills">
+    <section id="skills" className="section skills" aria-label="Skills">
       <div className="section-inner">
-        <SplitHeading className="section-title" text="Womit ich baue" dot />
         <Reveal>
-          <p className="skills-intro dim">
-            Alles, was ich baue, besteht aus denselben Modulen. Keine Prozentbalken,
-            keine erfundenen Level: nur das, was ich wirklich benutze.
+          <span className="kicker">Womit ich baue</span>
+        </Reveal>
+        <SplitHeading className="section-title" text="Stack" dot />
+
+        <Reveal>
+          <p className="skills-lead">
+            Was hier steht, ist im Einsatz: bei SimpleAct, in Kundenprojekten
+            oder auf meiner eigenen Infrastruktur.
+            <span className="skills-hint mono">Hover zeigt, wofür.</span>
           </p>
         </Reveal>
-        <div className="skills-grid">
+
+        <div className="skills-spec">
           {skillGroups.map((group, i) => (
-            <Reveal key={group.id} delay={(i % 2) * 90} className="skills-card">
-              <div className="skills-card-head">
-                <span className="skills-card-no mono">{String(i + 1).padStart(2, "0")}</span>
-                <h3 className="skills-card-label">{group.label}</h3>
-              </div>
-              <p className="skills-claim">{group.claim}</p>
-              <ul className="skills-items">
-                {group.items.map((item) => (
-                  <li key={item.name}>
-                    <span className="skills-item-name mono">{item.name}</span>
-                    {item.note && <span className="skills-item-note">{item.note}</span>}
-                  </li>
-                ))}
-              </ul>
-              <p className="skills-used mono">Im Einsatz für: {group.usedFor}</p>
-            </Reveal>
+            <SpecRow key={group.id} group={group} delay={i * 60} />
           ))}
         </div>
       </div>

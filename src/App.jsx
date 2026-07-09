@@ -1,6 +1,7 @@
+import A11yWidget from "./components/A11yWidget.jsx";
 import SmoothScroll from "./components/SmoothScroll.jsx";
-import Aurora from "./components/Aurora.jsx";
 import ScrollProgressBar from "./components/ScrollProgressBar.jsx";
+import StatusBar from "./components/StatusBar.jsx";
 import Nav from "./components/Nav.jsx";
 import Hero from "./components/Hero.jsx";
 import Manifesto from "./components/Manifesto.jsx";
@@ -15,8 +16,11 @@ export default function App() {
   return (
     <>
       <SmoothScroll />
-      <Aurora />
       <ScrollProgressBar />
+      <StatusBar
+        uptimeUrl={null}
+        spotifyUrl={null}
+      />
       <Nav />
       <main id="top">
         <Hero />
@@ -28,6 +32,7 @@ export default function App() {
         <HowIWork />
         <Contact />
       </main>
+      <A11yWidget />
     </>
   );
 }
