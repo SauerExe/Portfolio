@@ -102,7 +102,7 @@ export const skillGroups = [
       { name: "TypeScript / JavaScript", note: "typsicher, ohne Ballast" },
       { name: "React / Next.js", note: "Full-Stack-React, SSR & RSC" },
       { name: "Tailwind CSS", note: "konsistentes, schnelles Styling" },
-      { name: "Motion", note: "Scroll- und Interaktions-Animationen" },
+      { name: "Motion", note: "Scroll- & UI-Animationen" },
     ],
     usedFor: "Web-Plattformen, interaktive Labs, Admin-Oberflächen",
   },
@@ -113,8 +113,8 @@ export const skillGroups = [
     items: [
       { name: "C# / .NET 10", note: "Web APIs, Anwendungsentwicklung" },
       { name: "EF Core", note: "Datenzugriff und Migrationen" },
-      { name: "JWT / LDAP", note: "Authentifizierung gegen bestehende Systeme" },
-      { name: "Supabase", note: "Datenbank, Auth, Backend-as-a-Service" },
+      { name: "JWT / LDAP", note: "Auth gegen bestehende Systeme" },
+      { name: "Supabase", note: "Datenbank & Auth als Service" },
       { name: "zod", note: "Validierung an API-Grenzen" },
     ],
     usedFor: "APIs, Auth-Flows, Datenmodellierung",
@@ -124,7 +124,7 @@ export const skillGroups = [
     label: "Infrastruktur & Automation",
     claim: "Eigener Betrieb statt Managed-Abhängigkeit, vom Server bis zum Deploy.",
     items: [
-      { name: "TrueNAS", note: "Storage-Basis der eigenen Infrastruktur" },
+      { name: "TrueNAS", note: "zentrale Storage-Basis" },
       { name: "Coolify", note: "Container-Deployments" },
       { name: "n8n", note: "Workflow-Automatisierung" },
       { name: "Cloudflare Tunnel", note: "Zugriff ohne offene Ports" },

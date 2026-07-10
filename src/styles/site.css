@@ -1119,12 +1119,17 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   color: var(--ink-faint);
   margin: 0 10px;
 }
-/* Feste Note-Spalte rechts: Inhalt wechselt, Layout bleibt stabil */
+/* Feste Note-Spalte rechts: Inhalt wechselt, Layout bleibt stabil.
+   Strikt einzeilig, damit die Zeilenhöhe nie springt. */
 .skills-spec-notecol {
   font-size: var(--text-xs);
   color: var(--accent-text);
   letter-spacing: 0.04em;
   text-align: right;
+  white-space: nowrap;
+  overflow: clip;
+  text-overflow: ellipsis;
+  min-width: 0;
   opacity: 0;
   transform: translateX(4px);
   transition: opacity 0.2s ease, transform 0.25s var(--ease-out);
@@ -1490,7 +1495,9 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   gap: clamp(20px, 3.5vw, 48px);
   align-items: center;
 }
-.geo-panel:hover {
+/* Kein Lift-Effekt auf der breiten Karten-Zeile
+   (überschreibt .live-panel:hover, daher doppelte Klasse) */
+.live-panel.geo-panel:hover {
   transform: none;
   box-shadow: none;
   border-color: var(--line-strong);
@@ -1739,17 +1746,12 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 @media (max-width: 560px) {
   .contact-ctas .btn { width: 100%; justify-content: center; }
 }
-/* — Barrierefreiheits-Widget unten links — */
-.a11y {
+/* — Barrierefreiheits-Widget: Trigger unten rechts, Einstellungen als Modal — */
+.a11y-toggle {
   position: fixed;
-  left: 18px;
+  right: 18px;
   bottom: 18px;
   z-index: 95;
-  display: grid;
-  gap: 10px;
-  justify-items: start;
-}
-.a11y-toggle {
   width: 44px;
   height: 44px;
   border-radius: 50%;
@@ -1769,30 +1771,57 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   color: var(--accent-text);
   transform: translateY(-2px);
 }
-.a11y-panel {
+.a11y-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
   display: grid;
-  gap: 14px;
-  padding: 16px;
-  min-width: 230px;
+  place-items: center;
+  padding: var(--gutter);
+  background: oklch(0% 0 0 / 0.65);
+  backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0s 0.25s;
+}
+.a11y-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s ease, visibility 0s;
+}
+.a11y-modal {
+  display: grid;
+  gap: 18px;
+  width: min(380px, 100%);
+  padding: clamp(20px, 3vw, 28px);
   border: 1px solid var(--line-strong);
   background: var(--bg-surface);
-  opacity: 0;
-  transform: translateY(8px);
-  visibility: hidden;
-  transition:
-    opacity 0.25s ease,
-    transform 0.3s var(--ease-out),
-    visibility 0s 0.3s;
+  transform: translateY(12px) scale(0.97);
+  transition: transform 0.3s var(--ease-out);
 }
-.a11y-panel.is-open {
-  opacity: 1;
+.a11y-overlay.is-open .a11y-modal {
   transform: none;
-  visibility: visible;
-  transition:
-    opacity 0.25s ease,
-    transform 0.3s var(--ease-out),
-    visibility 0s;
 }
+.a11y-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.a11y-modal-title {
+  font-size: var(--text-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+}
+.a11y-close {
+  font-size: var(--text-lg);
+  line-height: 1;
+  color: var(--ink-faint);
+  transition: color 0.15s ease;
+}
+.a11y-close:hover { color: var(--ink); }
 .a11y-row {
   display: flex;
   align-items: center;
@@ -1815,7 +1844,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   color: var(--ink-dim);
   font-family: var(--mono);
   font-size: var(--text-xs);
-  padding: 5px 9px;
+  padding: 6px 11px;
   cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease;
 }
@@ -1830,8 +1859,13 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 /* Die drei A-Größen visuell abstufen */
 .a11y-opt--s { font-size: calc(var(--text-xs) * 0.85); }
 .a11y-opt--l { font-size: calc(var(--text-xs) * 1.2); }
+.a11y-note {
+  font-size: calc(var(--text-xs) * 0.9);
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+}
 @media (max-width: 560px) {
-  .a11y { left: 12px; bottom: 12px; }
+  .a11y-toggle { right: 12px; bottom: 12px; }
 }
 } /* close @layer components */
 
