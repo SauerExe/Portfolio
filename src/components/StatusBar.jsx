@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
 
 /**
- * Persistente Statusleiste — läuft auf der gesamten Seite mit.
- * Zeigt Uptime und Now-Playing nebeneinander in Monospace.
- * Kein Card-Styling, kein Icon-Panel — liest sich wie ein beiläufiges Detail.
- *
- * uptimeUrl / spotifyUrl: echte Endpoints (kommen später).
- * Solange null → Platzhalterwerte.
+ * Persistente Statusleiste, läuft auf der gesamten Seite mit.
+ * Zeigt Server-Status und Now-Playing nebeneinander in Monospace.
+ * Beide Werte kommen von den echten API-Endpoints (/api/*),
+ * bis zur ersten Antwort steht ein neutraler Platzhalter da.
  */
-export default function StatusBar({ uptimeUrl = null, spotifyUrl = null }) {
-  const [uptime, setUptime] = useState({ text: "Server: 47 Tage online", live: true });
+const STATUS_TEXT = {
+  operational: "Server: online",
+  degraded: "Server: eingeschränkt",
+  down: "Server: down",
+  maintenance: "Server: Wartung",
+  unknown: "Server: unbekannt",
+};
+
+export default function StatusBar({
+  uptimeUrl = "/api/status",
+  spotifyUrl = "/api/spotify/now-playing",
+}) {
+  const [uptime, setUptime] = useState({ text: "Server: …", live: false });
   const [track, setTrack] = useState({ text: "Spotify: gerade nichts an", live: false });
 
-  // Uptime polling (Uptime-Kuma-kompatible Antwortstruktur)
+  // Server-Status (Uptime-Kuma-Proxy unter /api/status)
   useEffect(() => {
     if (!uptimeUrl) return;
     let active = true;
@@ -22,11 +31,15 @@ export default function StatusBar({ uptimeUrl = null, spotifyUrl = null }) {
         if (!res.ok) throw new Error();
         const data = await res.json();
         if (!active) return;
-        const days = data?.uptimeDays ?? data?.uptime_days ?? null;
-        if (days !== null) {
-          setUptime({ text: `Server: ${days} Tag${days !== 1 ? "e" : ""} online`, live: true });
+        const status = data?.status ?? "unknown";
+        let text = STATUS_TEXT[status] ?? STATUS_TEXT.unknown;
+        if (status === "operational" && data?.uptime24h != null) {
+          text = `Server: online · ${(data.uptime24h * 100).toFixed(1)}% (24h)`;
         }
-      } catch {}
+        setUptime({ text, live: status === "operational" });
+      } catch {
+        if (active) setUptime({ text: STATUS_TEXT.unknown, live: false });
+      }
     };
     poll();
     const id = setInterval(poll, 60_000);

@@ -18,8 +18,19 @@ export default function ScrollProgressBar() {
     let isDragging = false;
     let grabOffset = thumbHeight / 2;
 
-    const scrollableHeight = () =>
-      document.documentElement.scrollHeight - window.innerHeight;
+    // Layout-Werte cachen: Reads wie scrollHeight bei jedem Scroll-Frame
+    // erzwingen sonst Reflows, während GSAP parallel Styles schreibt.
+    let docHeight = 0;
+    let viewportHeight = 0;
+    let trackHeight = 0;
+
+    const measure = () => {
+      docHeight = document.documentElement.scrollHeight;
+      viewportHeight = window.innerHeight;
+      trackHeight = track.clientHeight;
+    };
+
+    const scrollableHeight = () => docHeight - viewportHeight;
 
     const currentScrollFraction = () => {
       const scrollable = scrollableHeight();
@@ -29,9 +40,7 @@ export default function ScrollProgressBar() {
     const update = () => {
       rafId = 0;
       const scrollable = scrollableHeight();
-      const trackHeight = track.clientHeight;
-      const viewportRatio = window.innerHeight / document.documentElement.scrollHeight;
-      thumbHeight = Math.max(trackHeight * viewportRatio, 40);
+      thumbHeight = Math.max(trackHeight * (viewportHeight / docHeight), 40);
       const fraction = currentScrollFraction();
       const offset = (trackHeight - thumbHeight) * fraction;
 
@@ -102,19 +111,30 @@ export default function ScrollProgressBar() {
     attachToActiveLenis();
     const unsubscribeLenisChange = onLenisChange(attachToActiveLenis);
 
+    const onResize = () => {
+      measure();
+      requestUpdate();
+    };
+    // Dokumenthöhe ändert sich auch ohne Resize (z. B. Projekt-Accordion):
+    // ResizeObserver auf <body> hält den Cache aktuell.
+    const bodyObserver = new ResizeObserver(onResize);
+    bodyObserver.observe(document.body);
+
     window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
+    window.addEventListener("resize", onResize);
     track.addEventListener("pointerdown", onPointerDown);
     track.addEventListener("pointermove", onPointerMove);
     track.addEventListener("pointerup", onPointerUp);
     track.addEventListener("pointercancel", onPointerUp);
+    measure();
     update();
 
     return () => {
       unsubscribeLenisChange();
       unsubscribeScroll?.();
+      bodyObserver.disconnect();
       window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("resize", onResize);
       track.removeEventListener("pointerdown", onPointerDown);
       track.removeEventListener("pointermove", onPointerMove);
       track.removeEventListener("pointerup", onPointerUp);

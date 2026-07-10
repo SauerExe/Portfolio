@@ -19,6 +19,7 @@ export default function Contact() {
   const [copied, setCopied] = useState(false);
   const [time, setTime] = useState(localTime);
   const year = new Date().getFullYear();
+  const [mailUser, mailDomain] = profile.email.split("@");
 
   useEffect(() => {
     const id = setInterval(() => setTime(localTime()), 30_000);
@@ -56,9 +57,12 @@ export default function Contact() {
               onClick={copyEmail}
               aria-label={`E-Mail-Adresse ${profile.email} in die Zwischenablage kopieren`}
             >
-              {profile.email}
+              {mailUser}@<wbr />{mailDomain}
               <span className="contact-copy-hint mono" aria-hidden="true">
                 {copied ? "✓ kopiert" : "klicken zum kopieren"}
+              </span>
+              <span className="visually-hidden" aria-live="polite">
+                {copied ? "E-Mail-Adresse in die Zwischenablage kopiert" : ""}
               </span>
             </button>
           </Reveal>

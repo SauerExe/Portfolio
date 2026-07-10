@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 
 // Mein Standort (Gelsenkirchen), passend zu den Footer-Koordinaten.
 const HOME = { lat: 51.5177, lng: 7.0857 };
@@ -28,36 +26,46 @@ export default function DistanceCard() {
     const el = mapEl.current;
     if (!el) return;
 
-    const map = L.map(el, {
-      zoomControl: false,
-      attributionControl: false,
-      dragging: false,
-      scrollWheelZoom: false,
-      doubleClickZoom: false,
-      boxZoom: false,
-      keyboard: false,
-      touchZoom: false,
-    });
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
-      subdomains: "abcd",
-      maxZoom: 19,
-    }).addTo(map);
-
-    const dotStyle = (color) => ({
-      radius: 5,
-      color,
-      weight: 2,
-      fillColor: color,
-      fillOpacity: 0.9,
-    });
-    L.circleMarker([HOME.lat, HOME.lng], dotStyle(ACCENT)).addTo(map);
-    map.setView([HOME.lat, HOME.lng], 4);
-
+    let map = null;
     let cancelled = false;
-    // Grobe Position über die IP des Besuchers, keine Browser-Berechtigung nötig.
-    fetch("https://ipwho.is/")
-      .then((r) => r.json())
-      .then((data) => {
+
+    // Leaflet lazy laden: hält es aus dem Haupt-Bundle raus,
+    // die Karte ist ohnehin erst am Seitenende sichtbar.
+    async function init() {
+      const [{ default: L }] = await Promise.all([
+        import("leaflet"),
+        import("leaflet/dist/leaflet.css"),
+      ]);
+      if (cancelled) return;
+
+      map = L.map(el, {
+        zoomControl: false,
+        attributionControl: false,
+        dragging: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        touchZoom: false,
+      });
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", {
+        subdomains: "abcd",
+        maxZoom: 19,
+      }).addTo(map);
+
+      const dotStyle = (color) => ({
+        radius: 5,
+        color,
+        weight: 2,
+        fillColor: color,
+        fillOpacity: 0.9,
+      });
+      L.circleMarker([HOME.lat, HOME.lng], dotStyle(ACCENT)).addTo(map);
+      map.setView([HOME.lat, HOME.lng], 4);
+
+      // Grobe Position über die IP des Besuchers, keine Browser-Berechtigung nötig.
+      try {
+        const data = await fetch("https://ipwho.is/").then((r) => r.json());
         if (cancelled) return;
         if (!data?.success || data.latitude == null) throw new Error("no geo");
         const pos = { lat: data.latitude, lng: data.longitude };
@@ -77,14 +85,15 @@ export default function DistanceCard() {
           city: data.city,
           km: Math.round(haversineKm(HOME, pos)),
         });
-      })
-      .catch(() => {
+      } catch {
         if (!cancelled) setFailed(true);
-      });
+      }
+    }
+    init();
 
     return () => {
       cancelled = true;
-      map.remove();
+      map?.remove();
     };
   }, []);
 
@@ -116,6 +125,10 @@ export default function DistanceCard() {
         ) : (
           <p className="geo-sentence dim mono">Wird geortet …</p>
         )}
+        <p className="geo-note mono">
+          Grobe Ortung über die IP, direkt im Browser. Nichts davon wird
+          gespeichert.
+        </p>
       </div>
     </article>
   );

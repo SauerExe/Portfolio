@@ -15,14 +15,12 @@ import Contact from "./components/Contact.jsx";
 export default function App() {
   return (
     <>
+      <a className="skip-link" href="#top">Zum Inhalt springen</a>
       <SmoothScroll />
       <ScrollProgressBar />
-      <StatusBar
-        uptimeUrl={null}
-        spotifyUrl={null}
-      />
+      <StatusBar />
       <Nav />
-      <main id="top">
+      <main id="top" tabIndex={-1}>
         <Hero />
         <Manifesto />
         <Marquee />

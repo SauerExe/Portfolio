@@ -1,7 +1,7 @@
 export default function Nav() {
   return (
     <header className="nav">
-      <a className="nav-logo" href="#top" aria-label="Zum Seitenanfang">
+      <a className="nav-logo" href="#top" aria-label="vv. Zum Seitenanfang">
         <img
           className="nav-logo-mark"
           src="/logo-mark.png"

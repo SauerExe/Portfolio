@@ -145,28 +145,6 @@ export const skillGroups = [
   },
 ];
 
-// Verknüpft einen Skill-Namen mit den Projekten, die ihn laut technologies[]
-// tatsächlich einsetzen (Wortabgleich, keine erfundenen Referenzen).
-export function projectsForSkill(skillName) {
-  const words = skillName
-    .toLowerCase()
-    .split(/[/,]/)
-    .flatMap((part) => part.split(/\s+/))
-    .map((word) => word.replace(/[^a-z0-9]/g, ""))
-    .filter((word) => word.length >= 3);
-
-  return projects.filter((project) =>
-    project.technologies.some((tech) => {
-      const techWords = tech
-        .toLowerCase()
-        .split(/\s+/)
-        .map((word) => word.replace(/[^a-z0-9]/g, ""))
-        .filter((word) => word.length >= 3);
-      return techWords.some((techWord) => words.includes(techWord));
-    }),
-  );
-}
-
 export const buildPath = [
   {
     period: "2018",

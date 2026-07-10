@@ -13,7 +13,8 @@ export default function SmoothScroll() {
   useEffect(() => {
     if (isStaticMode()) return;
 
-    const lenis = new Lenis({ duration: 1.1, anchors: true });
+    // lerp statt duration: reagiert direkter aufs Rad, kein "Nachzieh"-Gefühl
+    const lenis = new Lenis({ lerp: 0.14, anchors: true });
     setLenisInstance(lenis);
     lenis.on("scroll", ScrollTrigger.update);
 
