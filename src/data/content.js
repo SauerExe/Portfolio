@@ -80,11 +80,10 @@ export const projects = [
     status: "Live",
     context: "Mein altes Portfolio",
     shortDescription:
-      "Die erste Version dieses Portfolios. Sechs interaktive Labs sprechen mit echten API-Endpoints statt mit Screenshots. Der komplette Code liegt öffentlich auf GitHub.",
+      "Die erste Version dieses Portfolios. Sechs interaktive Labs sprechen mit echten API-Endpoints statt mit Screenshots.",
     role: "Konzept, Design, Entwicklung",
     technologies: ["Next.js 16", "Tailwind v4", "Motion", "zod"],
     liveUrl: "https://v1.vvashed.dev",
-    repoUrl: "https://github.com/SauerExe/vvashed.dev",
     screenshot: "/images/projekte/vvashed-dev/screenshot.webp",
     highlights: [
       "Sechs interaktive Labs statt Skill-Badges",
