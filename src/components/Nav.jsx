@@ -1,7 +1,11 @@
+// Anker absolut (/#…) statt relativ (#…), damit dieselbe Nav auch auf
+// Unterseiten (Impressum, Datenschutz, Notizen) funktioniert: dort führt
+// der Klick zurück zur Startseite an die richtige Sektion, auf der
+// Startseite bleibt es ein normaler Anker-Sprung.
 export default function Nav() {
   return (
     <header className="nav">
-      <a className="nav-logo" href="#top" aria-label="vv. Zum Seitenanfang">
+      <a className="nav-logo" href="/#top" aria-label="vv. Zum Seitenanfang">
         <img
           className="nav-logo-mark"
           src="/logo-mark.png"
@@ -12,11 +16,12 @@ export default function Nav() {
         vv<span className="accent">.</span>
       </a>
       <nav aria-label="Hauptnavigation">
-        <a href="#ueber">Über</a>
-        <a href="#projekte">Projekte</a>
-        <a href="#skills">Skills</a>
-        <a href="#weg">Weg</a>
-        <a href="#kontakt" className="nav-contact">
+        <a href="/#ueber">Über</a>
+        <a href="/#projekte">Projekte</a>
+        <a href="/#skills">Skills</a>
+        <a href="/#weg">Weg</a>
+        <a href="/notes">Notizen</a>
+        <a href="/#kontakt" className="nav-contact">
           Kontakt
         </a>
       </nav>

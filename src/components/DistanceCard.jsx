@@ -63,9 +63,11 @@ export default function DistanceCard() {
       L.circleMarker([HOME.lat, HOME.lng], dotStyle(ACCENT)).addTo(map);
       map.setView([HOME.lat, HOME.lng], 4);
 
-      // Grobe Position über die IP des Besuchers, keine Browser-Berechtigung nötig.
+      // Grobe Position über die IP, aber über die eigene API statt direkt
+      // beim Drittanbieter: /api/geo kürzt die IP serverseitig und fragt
+      // erst damit ipwho.is an — der Browser redet nur mit dieser Domain.
       try {
-        const data = await fetch("https://ipwho.is/").then((r) => r.json());
+        const data = await fetch("/api/geo").then((r) => r.json());
         if (cancelled) return;
         if (!data?.success || data.latitude == null) throw new Error("no geo");
         const pos = { lat: data.latitude, lng: data.longitude };
@@ -126,8 +128,8 @@ export default function DistanceCard() {
           <p className="geo-sentence dim mono">Wird geortet …</p>
         )}
         <p className="geo-note mono">
-          Grobe Ortung über die IP, direkt im Browser. Nichts davon wird
-          gespeichert.
+          Grobe Ortung über die IP: Mein Server kürzt sie und fragt damit
+          ipwho.is an. Gespeichert wird nichts.
         </p>
       </div>
     </article>

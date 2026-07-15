@@ -40,6 +40,10 @@ export const projects = [
       "Verantwortlich für Produktarchitektur als Mitgründer",
       "Automatisierte Risikoeinordnung statt manueller Rechtsprüfung",
     ],
+    // metric: Kennzahlen-Bullet. Solange [X]/[Y]-Platzhalter drinstehen, wird
+    // die Zeile gedimmt als sichtbares TODO dargestellt; Feld einfach
+    // entfernen, wenn (noch) keine echten Zahlen da sind.
+    metric: "[X] Kunden onboarded, [Y] % Zeitersparnis bei der Risikoklassifizierung",
   },
   {
     title: "Gewinnspiel-Anwendung für die Stadtverwaltung",
@@ -56,6 +60,14 @@ export const projects = [
       "Authentifizierung über JWT gegen bestehendes LDAP",
       "Läuft seit Übergabe im Regelbetrieb bei der Kommune",
     ],
+    metric: "[X] Gewinnspiele seit Launch verwaltet, [Y] Teilnehmer",
+    // media: visueller Beweis für Projekte ohne Live-Link. Bild nach
+    // public/media/ hochladen; solange es fehlt, fällt die Card auf
+    // `screenshot` zurück.
+    media: {
+      src: "/media/gewinnspiel-admin.png",
+      alt: "Admin-Oberfläche der Gewinnspiel-Anwendung: Übersicht der laufenden Gewinnspiele mit Teilnehmerzahlen und Auswertung",
+    },
   },
   {
     title: "Habitaz",
@@ -72,25 +84,20 @@ export const projects = [
       "Smoobu-Anbindung für Verfügbarkeiten und Buchungen",
       "Zwei Standorte über eine gemeinsame Buchungsstrecke",
     ],
-  },
-  {
-    title: "vvashed.dev v1",
-    slug: "vvashed-dev",
-    type: "Website",
-    status: "Live",
-    context: "Mein altes Portfolio",
-    shortDescription:
-      "Die erste Version dieses Portfolios. Sechs interaktive Labs sprechen mit echten API-Endpoints statt mit Screenshots.",
-    role: "Konzept, Design, Entwicklung",
-    technologies: ["Next.js 16", "Tailwind v4", "Motion", "zod"],
-    liveUrl: "https://v1.vvashed.dev",
-    screenshot: "/images/projekte/vvashed-dev/screenshot.webp",
-    highlights: [
-      "Sechs interaktive Labs statt Skill-Badges",
-      "Kompletter Quellcode offen einsehbar",
-    ],
+    metric: "[X] Buchungen über die Smoobu-Anbindung synchronisiert",
+    media: {
+      src: "/media/habitaz-buchung.png",
+      alt: "Buchungsstrecke von Habitaz: Verfügbarkeitskalender mit Smoobu-Anbindung für beide Standorte",
+    },
   },
 ];
+
+// vvashed.dev v1 ist bewusst kein Projekt-Eintrag mehr (Meta-Referenz, kein
+// Kundenprojekt) — der Verweis lebt als Randnotiz im Footer weiter.
+export const previousVersion = {
+  label: "Frühere Version dieser Seite ↗",
+  url: "https://v1.vvashed.dev",
+};
 
 export const skillGroups = [
   {

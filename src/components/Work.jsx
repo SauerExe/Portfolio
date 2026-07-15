@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Reveal from "./Reveal.jsx";
 import SplitHeading from "./SplitHeading.jsx";
+import ProjectMedia from "./ProjectMedia.jsx";
 import { projects } from "../data/content.js";
 
 function statusClass(status) {
@@ -10,6 +11,10 @@ function statusClass(status) {
   if (s.includes("entwicklung")) return "is-wip";
   return "";
 }
+
+// Kennzahlen-Bullets mit [X]/[Y]-Platzhaltern werden gedimmt dargestellt
+// (sichtbares TODO), bis echte Zahlen eingetragen sind.
+const hasPlaceholder = (text) => /\[[^\]]+\]/.test(text);
 
 export default function Work() {
   const [open, setOpen] = useState(null);
@@ -60,11 +65,22 @@ export default function Work() {
                         <div className="work-panel-info">
                           <p className="work-panel-desc">{project.shortDescription}</p>
 
-                          {project.highlights?.length > 0 && (
+                          {(project.highlights?.length > 0 || project.metric) && (
                             <ul className="work-panel-highlights">
-                              {project.highlights.map((h) => (
+                              {project.highlights?.map((h) => (
                                 <li key={h}>{h}</li>
                               ))}
+                              {project.metric && (
+                                <li
+                                  className={
+                                    hasPlaceholder(project.metric)
+                                      ? "is-placeholder"
+                                      : undefined
+                                  }
+                                >
+                                  {project.metric}
+                                </li>
+                              )}
                             </ul>
                           )}
 
@@ -96,14 +112,17 @@ export default function Work() {
                           </div>
                         </div>
 
-                        {project.screenshot && (
+                        {(project.media || project.screenshot) && (
                           <div className="work-panel-media">
-                            <img
-                              src={project.screenshot}
-                              alt={`Screenshot von ${project.title}`}
-                              loading="lazy"
-                              width={640}
-                              height={400}
+                            <ProjectMedia
+                              src={project.media?.src ?? project.screenshot}
+                              fallbackSrc={
+                                project.media ? project.screenshot : undefined
+                              }
+                              alt={
+                                project.media?.alt ??
+                                `Screenshot von ${project.title}`
+                              }
                             />
                           </div>
                         )}

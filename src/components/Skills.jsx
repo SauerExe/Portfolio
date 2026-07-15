@@ -2,9 +2,11 @@ import { useState } from "react";
 import Reveal from "./Reveal.jsx";
 import SplitHeading from "./SplitHeading.jsx";
 import { skillGroups } from "../data/content.js";
+import { repoForSkill, hasAnyRepoLinks } from "../data/skills-config.js";
 
 // Eine Zeile des Spec-Sheets. Die Note des gehoverten Skills erscheint
 // in einer festen Spalte rechts, damit sich das Layout nicht verschiebt.
+// Skills mit Repo-Beleg (skills-config.js) verlinken auf GitHub.
 function SpecRow({ group, delay }) {
   const [note, setNote] = useState(null);
 
@@ -16,16 +18,31 @@ function SpecRow({ group, delay }) {
         aria-label={group.label}
         onMouseLeave={() => setNote(null)}
       >
-        {group.items.map((item) => (
-          <li
-            key={item.name}
-            className="skills-spec-item"
-            title={item.note || undefined}
-            onMouseEnter={() => setNote(item.note || null)}
-          >
-            {item.name}
-          </li>
-        ))}
+        {group.items.map((item) => {
+          const repoUrl = repoForSkill(item.name);
+          return (
+            <li
+              key={item.name}
+              className="skills-spec-item"
+              title={item.note || undefined}
+              onMouseEnter={() => setNote(item.note || null)}
+            >
+              {repoUrl ? (
+                <a
+                  className="skills-spec-link"
+                  href={repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${item.name} – Referenz-Repo auf GitHub öffnen`}
+                >
+                  {item.name}
+                </a>
+              ) : (
+                item.name
+              )}
+            </li>
+          );
+        })}
       </ul>
       <span
         className={`skills-spec-notecol mono${note ? " has-note" : ""}`}
@@ -50,7 +67,10 @@ export default function Skills() {
           <p className="skills-lead">
             Was hier steht, ist im Einsatz: bei SimpleAct, in Kundenprojekten
             oder auf meiner eigenen Infrastruktur.
-            <span className="skills-hint mono">Hover zeigt, wofür.</span>
+            <span className="skills-hint mono">
+              Hover zeigt, wofür.
+              {hasAnyRepoLinks() && " Verlinkte Einträge führen zum Repo."}
+            </span>
           </p>
         </Reveal>
 

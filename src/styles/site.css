@@ -599,7 +599,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 }
 .nav-contact:hover { border-color: var(--ink); }
 @media (max-width: 560px) {
-  .nav nav a:not(.nav-contact):not([href="#projekte"]) { display: none; }
+  .nav nav a:not(.nav-contact):not([href="/#projekte"]) { display: none; }
 }
 .hero {
   position: relative;
@@ -642,8 +642,14 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   display: inline-block;
 }
 .hero-name-last {
-  color: transparent;
+  /* Nicht komplett transparent: eine leichte Füllung hält den Umriss
+     auch auf kleinen Screens lesbar, ohne den Outline-Look aufzugeben. */
+  color: color-mix(in oklab, var(--ink) 14%, transparent);
   -webkit-text-stroke: clamp(1.5px, 0.2vw, 2.5px) var(--ink);
+}
+:root[data-contrast="high"] .hero-name-last {
+  color: var(--ink);
+  -webkit-text-stroke: 0;
 }
 .hero-content {
   display: grid;
@@ -879,8 +885,14 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   text-transform: uppercase;
   letter-spacing: 0.02em;
   white-space: nowrap;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(244, 238, 226, 0.35);
+  /* Leichte Füllung + kräftigere Kontur statt reiner 0.35er-Outline,
+     sonst bricht die Lesbarkeit im Default-Kontrast weg. */
+  color: color-mix(in oklab, var(--ink) 10%, transparent);
+  -webkit-text-stroke: 1px color-mix(in oklab, var(--ink) 60%, transparent);
+}
+:root[data-contrast="high"] .marquee-item {
+  color: var(--ink);
+  -webkit-text-stroke: 0;
 }
 .marquee-sep {
   color: var(--scene-accent);
@@ -1644,29 +1656,6 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   text-decoration: none;
 }
 .footer a:hover { color: var(--ink); }
-.footer-motion {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.footer-motion-btn {
-  font-family: var(--mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-  background: none;
-  border: 1px solid var(--line);
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 0;
-  transition: border-color 0.2s ease, color 0.2s ease;
-}
-.footer-motion-btn:hover { border-color: var(--line-strong); color: var(--ink-dim); }
-.footer-motion-btn[aria-pressed="true"] {
-  border-color: var(--accent-lo);
-  color: var(--accent-text);
-}
 @media (max-width: 560px) {
   .contact-ctas .btn { width: 100%; justify-content: center; }
 }
@@ -1811,6 +1800,332 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .a11y-seg-btn--l { font-size: calc(var(--text-xs) * 1.25); }
 @media (max-width: 560px) {
   .a11y-toggle { right: 12px; bottom: 12px; }
+}
+/* — Skills: Repo-Belege (skills-config.js) — */
+.skills-spec-link {
+  color: inherit;
+  text-decoration: none;
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 1px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.skills-spec-link::after {
+  content: "↗";
+  font-size: 0.7em;
+  margin-left: 4px;
+  color: var(--ink-faint);
+  transition: color 0.2s ease;
+}
+.skills-spec-link:hover {
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+.skills-spec-link:hover::after { color: var(--accent); }
+/* — Kennzahlen-Bullet mit offenen [X]-Platzhaltern: sichtbares TODO — */
+.work-panel-highlights li.is-placeholder {
+  color: var(--ink-faint);
+}
+.work-panel-highlights li.is-placeholder::before {
+  color: var(--line-strong);
+}
+/* — ProjectMedia: Screenshot-Slot mit Lightbox (natives <dialog>) — */
+.project-media {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+  text-align: left;
+}
+.project-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line-strong);
+  background: var(--bg);
+  transition: border-color 0.2s ease;
+}
+.project-media:hover img,
+.project-media:focus-visible img {
+  border-color: var(--accent);
+}
+.project-media-hint {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  padding: 4px 9px;
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  background: var(--bg);
+  border: 1px solid var(--line-strong);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.project-media:hover .project-media-hint,
+.project-media:focus-visible .project-media-hint {
+  opacity: 1;
+}
+@media (hover: none) {
+  .project-media-hint { display: none; }
+}
+.project-media-missing {
+  border: 1px dashed var(--line-strong);
+  color: var(--ink-faint);
+  padding: 48px 20px;
+  text-align: center;
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+}
+.project-media-lightbox {
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  background: var(--bg-surface);
+  color: var(--ink);
+  max-width: min(1100px, calc(100vw - 2 * var(--gutter)));
+  max-height: calc(100dvh - 2 * var(--gutter));
+}
+.project-media-lightbox::backdrop {
+  background: oklch(0% 0 0 / 0.78);
+}
+.project-media-lightbox img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: calc(100dvh - 2 * var(--gutter) - 46px);
+  object-fit: contain;
+  background: var(--bg);
+}
+.project-media-close {
+  display: block;
+  width: 100%;
+  padding: 13px;
+  border-top: 1px solid var(--line);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  transition: color 0.15s ease;
+}
+.project-media-close:hover { color: var(--ink); }
+/* — Unterseiten (Impressum, Datenschutz, Notizen, 404) — */
+.subpage {
+  padding-top: calc(var(--statusbar-h) + clamp(56px, 9vh, 96px));
+  min-height: 72dvh;
+}
+.subpage .section {
+  padding-top: clamp(32px, 5vh, 56px);
+}
+/* — Rechtsseiten — */
+.legal .section-title {
+  margin-bottom: clamp(28px, 5vh, 52px);
+}
+.legal-body {
+  display: grid;
+  gap: clamp(28px, 4.5vh, 44px);
+  max-width: 66ch;
+  border-top: 1px solid var(--line);
+  padding-top: clamp(28px, 4.5vh, 44px);
+}
+.legal-block {
+  display: grid;
+  gap: 10px;
+}
+.legal-block h2 {
+  font-size: var(--text-xl); /* Stufe 2, wie --item-title */
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+.legal-block p {
+  color: var(--ink-dim);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+.legal-block p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.legal-address {
+  text-align: left !important;
+  hyphens: none !important;
+}
+/* — Notizen — */
+.notes-lead {
+  color: var(--ink-dim);
+  font-size: var(--text-lg);
+  max-width: 52ch;
+  margin-bottom: clamp(32px, 5vh, 56px);
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+.notes-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+.notes-row {
+  display: grid;
+  grid-template-columns: clamp(90px, 14vw, 160px) 1fr auto;
+  gap: 0 clamp(24px, 4vw, 56px);
+  align-items: baseline;
+  padding: var(--item-pad) 0;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+}
+.notes-date {
+  font-size: var(--text-xs);
+  color: var(--ink-faint);
+  letter-spacing: 0.06em;
+}
+.notes-row-body {
+  display: grid;
+  gap: var(--item-gap);
+}
+.notes-title {
+  font-size: var(--item-title);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  transition: color 0.15s ease;
+}
+.notes-row:hover .notes-title { color: var(--accent-text); }
+.notes-teaser {
+  color: var(--ink-dim);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  max-width: 56ch;
+}
+.notes-arrow {
+  color: var(--ink-faint);
+  transition: transform 0.2s var(--ease-out), color 0.2s ease;
+}
+.notes-row:hover .notes-arrow {
+  color: var(--accent);
+  transform: translateX(4px);
+}
+@media (max-width: 560px) {
+  .notes-row {
+    grid-template-columns: 1fr auto;
+  }
+  .notes-date { grid-column: 1 / -1; margin-bottom: 6px; }
+}
+.note-article {
+  max-width: 66ch;
+}
+.note-body {
+  display: grid;
+  gap: clamp(16px, 2.5vh, 24px);
+  border-top: 1px solid var(--line);
+  padding-top: clamp(28px, 4.5vh, 44px);
+}
+.note-body p {
+  color: var(--ink-dim);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  text-align: justify;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+.note-body p strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+.note-body h2 {
+  font-size: var(--text-xl);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  margin-top: clamp(12px, 2vh, 20px);
+}
+.note-body code {
+  font-family: var(--mono);
+  font-size: 0.85em;
+  color: var(--accent-text);
+  border: 1px solid var(--line);
+  padding: 1px 6px;
+  background: var(--bg-surface);
+}
+/* Kleine Code-/Terminal-Ausschnitte in Notizen: eine Schicht tiefer
+   (Surface + Linie), Akzent nur als schmale Kante links. */
+.note-body pre {
+  margin: 0;
+  padding: 16px 20px;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+  color: var(--ink-dim);
+  background: var(--bg-surface);
+  border: 1px solid var(--line);
+  border-left: 2px solid var(--accent);
+  overflow-x: auto;
+  text-align: left;
+}
+.note-body ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+.note-body ul li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--ink-dim);
+  font-size: var(--text-base);
+  line-height: 1.6;
+}
+.note-body ul li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+.note-back {
+  display: inline-block;
+  margin-top: clamp(32px, 5vh, 48px);
+  font-size: var(--text-xs);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-faint);
+  border-bottom: 1px solid var(--line-strong);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.note-back:hover {
+  color: var(--accent-text);
+  border-color: var(--accent);
+}
+/* — 404 (Client-Seite, Pendant zu public/404.html) — */
+.notfound-code {
+  font-size: clamp(4rem, 18vw, 8rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+}
+.notfound-text {
+  margin-top: 20px;
+  color: var(--ink-dim);
+  max-width: 44ch;
+  line-height: 1.6;
+}
+/* — Footer: Rechtliches + Randnotizen — */
+.footer-legal {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
 }
 } /* close @layer components */
 

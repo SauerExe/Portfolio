@@ -1,30 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Reveal from "./Reveal.jsx";
 import DistanceCard from "./DistanceCard.jsx";
 import NowPlayingCard from "./NowPlayingCard.jsx";
 import StatusCard from "./StatusCard.jsx";
+import SiteFooter from "./SiteFooter.jsx";
 import { profile } from "../data/content.js";
-import { useMotionPref } from "../hooks/useMotionPref.js";
-
-function localTime() {
-  return new Intl.DateTimeFormat("de-DE", {
-    hour: "2-digit",
-    minute: "2-digit",
-    timeZone: "Europe/Berlin",
-  }).format(new Date());
-}
 
 export default function Contact() {
-  const [reduced, setReduced] = useMotionPref();
   const [copied, setCopied] = useState(false);
-  const [time, setTime] = useState(localTime);
-  const year = new Date().getFullYear();
   const [mailUser, mailDomain] = profile.email.split("@");
-
-  useEffect(() => {
-    const id = setInterval(() => setTime(localTime()), 30_000);
-    return () => clearInterval(id);
-  }, []);
 
   const copyEmail = async () => {
     try {
@@ -99,25 +83,7 @@ export default function Contact() {
         </div>
       </div>
 
-      <footer className="footer">
-        <div className="footer-schicht-sep" aria-hidden="true">
-          <span /><span /><span />
-        </div>
-        <div className="section-inner footer-inner">
-          <span className="footer-coords mono" aria-label="Standort Gelsenkirchen">
-            51.5177° N, 7.0857° E · {time} Uhr
-          </span>
-          <button
-            className="footer-motion-btn"
-            type="button"
-            aria-pressed={reduced}
-            onClick={() => setReduced((v) => !v)}
-          >
-            {reduced ? "Motion: aus" : "Motion: an"}
-          </button>
-          <span className="mono">© {year} {profile.name}</span>
-        </div>
-      </footer>
+      <SiteFooter />
     </section>
   );
 }

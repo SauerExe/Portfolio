@@ -27,6 +27,7 @@ async function getAccessToken() {
       grant_type: "refresh_token",
       refresh_token: SPOTIFY_REFRESH_TOKEN,
     }),
+    signal: AbortSignal.timeout(5000),
   });
   if (!response.ok) return null;
 
@@ -41,14 +42,28 @@ async function getAccessToken() {
 }
 
 export async function getNowPlayingPayload() {
-  const accessToken = await getAccessToken();
+  // Wirft nie: Netzwerkfehler und Timeouts werden zum leeren Fallback,
+  // damit Aufrufer (Serverless-Handler, server.js, Vite-Dev-Plugin) immer
+  // eine saubere 200er-Antwort ausliefern können.
+  let accessToken = null;
+  try {
+    accessToken = await getAccessToken();
+  } catch {
+    return { isPlaying: false, configured: true };
+  }
   if (!accessToken) {
     return { isPlaying: false, configured: false };
   }
 
-  const response = await fetch(NOW_PLAYING_ENDPOINT, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
+  let response;
+  try {
+    response = await fetch(NOW_PLAYING_ENDPOINT, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+      signal: AbortSignal.timeout(5000),
+    });
+  } catch {
+    return { isPlaying: false, configured: true };
+  }
 
   if (response.status === 204 || response.status >= 400) {
     return { isPlaying: false, configured: true };

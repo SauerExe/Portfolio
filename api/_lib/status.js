@@ -45,7 +45,13 @@ function aggregateStatus(statuses) {
 }
 
 async function fetchJson(url) {
-  const res = await fetch(url, { headers: { Accept: "application/json" } });
+  // Timeout ist Pflicht: Ein hängender Upstream würde die Serverless-
+  // Function sonst ins Plattform-Timeout laufen lassen (5xx beim Besucher),
+  // statt in den Cache-/Fallback-Zweig unten.
+  const res = await fetch(url, {
+    headers: { Accept: "application/json" },
+    signal: AbortSignal.timeout(5000),
+  });
   if (!res.ok) throw new Error(`Status host responded ${res.status} for ${url}`);
   return res.json();
 }
