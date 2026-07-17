@@ -1232,36 +1232,32 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 }
 /* — End Skills — */
 /* — BuildPath timeline — */
+.buildpath-track {
+  position: relative;
+}
 .buildpath-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  position: relative;
 }
-/* Vertikale Mittellinie */
-.buildpath-list::before {
-  content: "";
+/* Vertikale Mittellinie als echtes Element (nicht ::before): GSAP
+   braucht ein Target, das es skalieren kann — scaleY wird beim
+   Scrollen durch die Sektion von 0 auf 1 hochgezogen (buildpath.jsx). */
+.buildpath-line {
   position: absolute;
   left: 50%;
   top: 0;
   bottom: 0;
   width: 1px;
   background: var(--line);
+  transform-origin: top center;
+  transform: scaleY(1);
   z-index: 0;
 }
 .buildpath-list > li {
   position: relative;
   z-index: 1;
-}
-/* entry + content sind reine Durchreicher: period/body landen so
-   direkt als Grid-Items der Spalten unten (li), statt in einem
-   eigenen verschachtelten Grid mit Auto-Spalten zu enden. Nur so
-   sitzt die Periode zuverlässig genau an der Mittellinie, egal wie
-   lang der Titel ist. */
-.buildpath-entry,
-.buildpath-content {
-  display: contents;
 }
 /* Linke Einträge (gerade Indizes): Periode + Body zusammen links,
    auf der gleichen Seite wie der Titel — nicht die Periode allein
@@ -1292,6 +1288,20 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .buildpath-right .buildpath-period,
 .buildpath-right .buildpath-body {
   grid-column: 2;
+}
+/* Einblenden je nach Seite: linke Einträge kommen von links,
+   rechte von rechts (BuildPath.jsx togglet .is-in per Eintrag). */
+.buildpath-reveal {
+  opacity: 0;
+  transition:
+    opacity 0.65s var(--ease-out),
+    transform 0.65s var(--ease-out);
+}
+.buildpath-left.buildpath-reveal { transform: translateX(-32px); }
+.buildpath-right.buildpath-reveal { transform: translateX(32px); }
+.buildpath-reveal.is-in {
+  opacity: 1;
+  transform: none;
 }
 .buildpath-period {
   position: relative;
@@ -1386,7 +1396,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   line-height: 1.6;
 }
 @media (max-width: 560px) {
-  .buildpath-list::before { display: none; }
+  .buildpath-line { display: none; }
   .buildpath-left,
   .buildpath-right {
     grid-template-columns: 1fr;
