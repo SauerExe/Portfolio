@@ -1238,15 +1238,21 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   padding: 0;
   display: grid;
   position: relative;
-  border-top: 1px solid var(--line);
+}
+/* Vertikale Mittellinie */
+.buildpath-list::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+  z-index: 0;
 }
 .buildpath-list > li {
   position: relative;
   z-index: 1;
-  border-bottom: 1px solid var(--line);
-}
-.buildpath-list li:last-child {
-  border-bottom: 0;
 }
 /* Linke Einträge (gerade Indizes): Body links, Periode rechts der Linie */
 .buildpath-left {
