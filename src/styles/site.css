@@ -1263,39 +1263,33 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .buildpath-content {
   display: contents;
 }
-/* Linke Einträge (gerade Indizes): Body links, Periode rechts der Linie.
-   Spalten bleiben symmetrisch 1fr/1fr (Nahtstelle exakt bei 50%),
-   aber die Periode bekommt justify-self statt text-align — sonst
-   stretcht das Grid-Item über die ganze halbe Spalte und die Zahl
-   sitzt am äußeren statt am inneren (Linien-nahen) Rand. */
+/* Linke Einträge (gerade Indizes): Periode + Body zusammen links,
+   auf der gleichen Seite wie der Titel — nicht die Periode allein
+   drüben bei der Linie, sonst schwebt die Jahreszahl ohne
+   erkennbaren Bezug zum Titel im Nichts. Nur der Verbindungsstrich
+   überbrückt die Distanz zur Mittellinie. */
 .buildpath-left {
   --bp-gap: clamp(24px, 4vw, 48px);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 var(--bp-gap);
+  gap: 6px var(--bp-gap);
   padding: var(--item-pad) 0;
   align-items: start;
 }
-.buildpath-left .buildpath-period {
-  grid-column: 2;
-  justify-self: start;
-}
+.buildpath-left .buildpath-period,
 .buildpath-left .buildpath-body {
   grid-column: 1;
 }
-/* Rechte Einträge (ungerade Indizes): Periode links der Linie, Body rechts */
+/* Rechte Einträge (ungerade Indizes): Periode + Body zusammen rechts */
 .buildpath-right {
   --bp-gap: clamp(24px, 4vw, 48px);
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0 var(--bp-gap);
+  gap: 6px var(--bp-gap);
   padding: var(--item-pad) 0;
   align-items: start;
 }
-.buildpath-right .buildpath-period {
-  grid-column: 1;
-  justify-self: end;
-}
+.buildpath-right .buildpath-period,
 .buildpath-right .buildpath-body {
   grid-column: 2;
 }
@@ -1332,19 +1326,22 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   transform: translateY(-50%);
   z-index: 1;
 }
+/* Periode liegt jetzt in der Spalte, die ans Gap grenzt — links
+   grenzt die RECHTE Boxkante ans Gap, rechts die LINKE. Verbindung
+   verläuft entsprechend von dort weiter zur Mittellinie. */
 .buildpath-left .buildpath-period::after {
-  right: 100%;
-  width: calc(var(--bp-gap) / 2);
-}
-.buildpath-left .buildpath-period::before {
-  right: calc(100% + (var(--bp-gap) / 2) - 3.5px);
-}
-.buildpath-right .buildpath-period::after {
   left: 100%;
   width: calc(var(--bp-gap) / 2);
 }
-.buildpath-right .buildpath-period::before {
+.buildpath-left .buildpath-period::before {
   left: calc(100% + (var(--bp-gap) / 2) - 3.5px);
+}
+.buildpath-right .buildpath-period::after {
+  right: 100%;
+  width: calc(var(--bp-gap) / 2);
+}
+.buildpath-right .buildpath-period::before {
+  right: calc(100% + (var(--bp-gap) / 2) - 3.5px);
 }
 .buildpath-now {
   display: flex;
