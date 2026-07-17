@@ -1263,7 +1263,11 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .buildpath-content {
   display: contents;
 }
-/* Linke Einträge (gerade Indizes): Body links, Periode rechts der Linie */
+/* Linke Einträge (gerade Indizes): Body links, Periode rechts der Linie.
+   Spalten bleiben symmetrisch 1fr/1fr (Nahtstelle exakt bei 50%),
+   aber die Periode bekommt justify-self statt text-align — sonst
+   stretcht das Grid-Item über die ganze halbe Spalte und die Zahl
+   sitzt am äußeren statt am inneren (Linien-nahen) Rand. */
 .buildpath-left {
   --bp-gap: clamp(24px, 4vw, 48px);
   display: grid;
@@ -1274,7 +1278,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 }
 .buildpath-left .buildpath-period {
   grid-column: 2;
-  text-align: right;
+  justify-self: start;
 }
 .buildpath-left .buildpath-body {
   grid-column: 1;
@@ -1290,7 +1294,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 }
 .buildpath-right .buildpath-period {
   grid-column: 1;
-  text-align: left;
+  justify-self: end;
 }
 .buildpath-right .buildpath-body {
   grid-column: 2;
