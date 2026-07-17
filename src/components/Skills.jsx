@@ -6,15 +6,10 @@ import { repoForSkill } from "../data/skills-config.js";
 // Eine Kategorie-Karte: Claim-Satz gibt Kontext, Chips sind die
 // einzelnen Skills. Skills mit Repo-Beleg (skills-config.js) verlinken
 // auf GitHub.
-function SkillCard({ group, index, delay }) {
+function SkillCard({ group, delay }) {
   return (
     <Reveal delay={delay} className="skills-spec-block">
-      <div className="skills-block-head">
-        <h4 className="skills-block-title">{group.label}</h4>
-        <span className="skills-block-index mono" aria-hidden="true">
-          {String(index + 1).padStart(2, "0")}
-        </span>
-      </div>
+      <h4 className="skills-block-title">{group.label}</h4>
       {group.claim && <p className="skills-block-claim">{group.claim}</p>}
       <ul className="skills-grid" aria-label={group.label}>
         {group.items.map((item) => {
@@ -63,7 +58,7 @@ export default function Skills() {
 
         <div className="skills-spec">
           {skillGroups.map((group, i) => (
-            <SkillCard key={group.id} group={group} index={i} delay={i * 60} />
+            <SkillCard key={group.id} group={group} delay={i * 60} />
           ))}
         </div>
       </div>

@@ -1140,7 +1140,10 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   padding-top: clamp(32px, 4vh, 48px);
 }
 /* Karten statt Linien-Rows: bricht mit dem sonst durchgängigen
-   Zeilen-/Trennlinien-Muster der anderen Listen-Sektionen. */
+   Zeilen-/Trennlinien-Muster der anderen Listen-Sektionen. Hover
+   nutzt den harten Offset-Schatten, den auch .btn und .live-panel
+   verwenden — sonst wirkt die Karte wie ein Fremdkörper (weicher
+   Blur-Shadow passt nicht zum sonst kantigen Look der Seite). */
 .skills-spec-block {
   background: var(--bg-surface);
   border: 1px solid var(--line);
@@ -1149,22 +1152,16 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   gap: clamp(14px, 2vh, 18px);
   align-content: start;
   transition:
-    border-color 0.2s ease,
-    transform 0.2s var(--ease-out),
-    box-shadow 0.2s var(--ease-out);
+    border-color 0.25s ease,
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out);
 }
 @media (hover: hover) {
   .skills-spec-block:hover {
     border-color: var(--line-strong);
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px -12px oklch(0% 0 0 / 0.5);
+    transform: translate(calc(var(--offset) * -1), calc(var(--offset) * -1));
+    box-shadow: var(--offset) var(--offset) 0 0 var(--accent-lo);
   }
-}
-.skills-block-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
 }
 .skills-block-title {
   font-family: var(--mono);
@@ -1185,17 +1182,14 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   background: var(--accent);
   flex: none;
 }
-.skills-block-index {
-  font-size: var(--text-xs);
-  color: var(--ink-faint);
-  letter-spacing: 0.08em;
-  flex: none;
-}
 .skills-block-claim {
   color: var(--ink-dim);
   font-size: var(--text-sm);
   line-height: 1.55;
   margin: 0;
+  /* Linksbündig statt Blocksatz: in schmalen Karten reißt justify
+     bei kurzen Zeilen hässliche Wortzwischenräume auf. */
+  text-align: left;
 }
 .skills-grid {
   display: flex;
@@ -1212,7 +1206,9 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .skills-grid-link {
   display: inline-flex;
   align-items: center;
-  padding: 7px 14px;
+  padding: 6px 12px;
+  font-family: var(--mono);
+  font-size: var(--text-xs);
   border: 1px solid var(--line-strong);
   color: var(--ink-dim);
   text-decoration: none;
@@ -1820,7 +1816,6 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .work-panel-desc,
 .work-panel-highlights li,
 .skills-lead,
-.skills-block-claim,
 .principle-text,
 .buildpath-text,
 .geo-sentence,
