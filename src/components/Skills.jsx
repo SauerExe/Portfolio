@@ -1,38 +1,32 @@
-import { useState } from "react";
 import Reveal from "./Reveal.jsx";
 import SplitHeading from "./SplitHeading.jsx";
 import { skillGroups } from "../data/content.js";
-import { repoForSkill, hasAnyRepoLinks } from "../data/skills-config.js";
+import { repoForSkill } from "../data/skills-config.js";
 
-// Skill-Kategorien als kompakte Grid-Blöcke statt durchgehender Rows.
-// Gibt mehr visuellen Rhythmus und nutzt Fläche besser.
-function SpecRow({ group, delay }) {
-  const [note, setNote] = useState(null);
-
+// Eine Kategorie-Karte: Claim-Satz gibt Kontext, Chips sind die
+// einzelnen Skills. Skills mit Repo-Beleg (skills-config.js) verlinken
+// auf GitHub.
+function SkillCard({ group, index, delay }) {
   return (
     <Reveal delay={delay} className="skills-spec-block">
-      <h4 className="skills-block-title">{group.label}</h4>
-      <ul
-        className="skills-grid"
-        aria-label={group.label}
-        onMouseLeave={() => setNote(null)}
-      >
+      <div className="skills-block-head">
+        <h4 className="skills-block-title">{group.label}</h4>
+        <span className="skills-block-index mono" aria-hidden="true">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+      {group.claim && <p className="skills-block-claim">{group.claim}</p>}
+      <ul className="skills-grid" aria-label={group.label}>
         {group.items.map((item) => {
           const repoUrl = repoForSkill(item.name);
           return (
-            <li
-              key={item.name}
-              className="skills-grid-item"
-              onMouseEnter={() => setNote(item.note || null)}
-            >
+            <li key={item.name} className="skills-grid-item">
               {repoUrl ? (
                 <a
                   className="skills-grid-link"
                   href={repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onFocus={() => setNote(item.note || null)}
-                  onBlur={() => setNote(null)}
                 >
                   {item.name}
                   <span className="visually-hidden"> — Referenz-Repo auf GitHub</span>
@@ -64,18 +58,12 @@ export default function Skills() {
           <p className="skills-lead">
             Was hier steht, ist im Einsatz: bei SimpleAct, in Kundenprojekten
             oder auf meiner eigenen Infrastruktur.
-            {/* Reiner Maus-Hinweis — Screenreader bekommen die Notes
-                direkt als Text an jedem Skill. */}
-            <span className="skills-hint mono" aria-hidden="true">
-              Hover zeigt, wofür.
-              {hasAnyRepoLinks() && " Verlinkte Einträge führen zum Repo."}
-            </span>
           </p>
         </Reveal>
 
         <div className="skills-spec">
           {skillGroups.map((group, i) => (
-            <SpecRow key={group.id} group={group} delay={i * 60} />
+            <SkillCard key={group.id} group={group} index={i} delay={i * 60} />
           ))}
         </div>
       </div>
