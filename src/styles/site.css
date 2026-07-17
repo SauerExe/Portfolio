@@ -665,27 +665,27 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .hero-role {
   color: var(--accent-text);
   font-family: var(--mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.12em;
+  font-size: var(--text-base);
+  letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 .hero-org {
   color: var(--ink-dim);
   font-family: var(--mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 .hero-links {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 .hero-links a {
   text-decoration: none;
   font-family: var(--mono);
-  font-size: var(--text-xs);
-  letter-spacing: 0.08em;
+  font-size: var(--text-sm);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--ink-faint);
   display: inline-flex;
