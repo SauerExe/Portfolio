@@ -1254,64 +1254,49 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   position: relative;
   z-index: 1;
 }
-/* Linke Einträge (gerade Indizes): Body links, Periode rechts der Linie */
-.buildpath-left {
-  display: grid;
-  grid-template-columns: 1fr minmax(0, 48%);
-  gap: 0 clamp(24px, 4vw, 48px);
-  padding: var(--item-pad) 0;
-  padding-right: 2%;
-  align-items: start;
-}
-.buildpath-left .buildpath-entry {
-  grid-column: 1;
+/* entry + content sind reine Durchreicher: period/body landen so
+   direkt als Grid-Items der Spalten unten (li), statt in einem
+   eigenen verschachtelten Grid mit Auto-Spalten zu enden. Nur so
+   sitzt die Periode zuverlässig genau an der Mittellinie, egal wie
+   lang der Titel ist. */
+.buildpath-entry,
+.buildpath-content {
   display: contents;
 }
-.buildpath-left .buildpath-content {
-  grid-column: 1;
+/* Linke Einträge (gerade Indizes): Body links, Periode rechts der Linie */
+.buildpath-left {
+  --bp-gap: clamp(24px, 4vw, 48px);
   display: grid;
-  gap: 0;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 var(--bp-gap);
+  padding: var(--item-pad) 0;
+  align-items: start;
 }
 .buildpath-left .buildpath-period {
   grid-column: 2;
   text-align: right;
-  order: 1;
 }
 .buildpath-left .buildpath-body {
   grid-column: 1;
-  order: 2;
 }
 /* Rechte Einträge (ungerade Indizes): Periode links der Linie, Body rechts */
 .buildpath-right {
+  --bp-gap: clamp(24px, 4vw, 48px);
   display: grid;
-  grid-template-columns: minmax(0, 48%) 1fr;
-  gap: 0 clamp(24px, 4vw, 48px);
+  grid-template-columns: 1fr 1fr;
+  gap: 0 var(--bp-gap);
   padding: var(--item-pad) 0;
-  padding-left: 2%;
   align-items: start;
-}
-.buildpath-right .buildpath-entry {
-  grid-column: 2;
-  display: contents;
-}
-.buildpath-right .buildpath-content {
-  grid-column: 2;
-  display: grid;
-  gap: 0;
 }
 .buildpath-right .buildpath-period {
   grid-column: 1;
   text-align: left;
-  order: 1;
 }
 .buildpath-right .buildpath-body {
   grid-column: 2;
-  order: 2;
-}
-.buildpath-entry {
-  display: contents;
 }
 .buildpath-period {
+  position: relative;
   font-family: var(--mono);
   /* Stufe 3 -> Stufe 5 der Skala */
   font-size: clamp(var(--text-2xl), 1.4rem + 1.6vw, var(--text-4xl));
@@ -1319,6 +1304,43 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   color: var(--accent);
   line-height: 1;
   letter-spacing: -0.02em;
+}
+/* Verbindungsstrich + Punkt zur Mittellinie, in der Akzentfarbe.
+   top:0.5em statt fixem px-Wert, damit die Zentrierung mit der
+   Zeile mitgeht (line-height:1, also 1em = Zeilenhöhe). */
+.buildpath-period::before {
+  content: "";
+  position: absolute;
+  top: 0.5em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateY(-50%);
+  z-index: 2;
+}
+.buildpath-period::after {
+  content: "";
+  position: absolute;
+  top: 0.5em;
+  height: 1px;
+  background: var(--line-strong);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+.buildpath-left .buildpath-period::after {
+  right: 100%;
+  width: calc(var(--bp-gap) / 2);
+}
+.buildpath-left .buildpath-period::before {
+  right: calc(100% + (var(--bp-gap) / 2) - 3.5px);
+}
+.buildpath-right .buildpath-period::after {
+  left: 100%;
+  width: calc(var(--bp-gap) / 2);
+}
+.buildpath-right .buildpath-period::before {
+  left: calc(100% + (var(--bp-gap) / 2) - 3.5px);
 }
 .buildpath-now {
   display: flex;
@@ -1363,12 +1385,27 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   line-height: 1.6;
 }
 @media (max-width: 560px) {
-  .buildpath-entry {
+  .buildpath-list::before { display: none; }
+  .buildpath-left,
+  .buildpath-right {
     grid-template-columns: 1fr;
     gap: 6px;
     padding: 22px 0;
   }
+  .buildpath-left .buildpath-period,
+  .buildpath-right .buildpath-period {
+    grid-column: 1;
+    text-align: left;
+  }
+  .buildpath-left .buildpath-body,
+  .buildpath-right .buildpath-body {
+    grid-column: 1;
+  }
   .buildpath-period { font-size: 1.8rem; }
+  .buildpath-period::before,
+  .buildpath-period::after {
+    display: none;
+  }
 }
 /* — End BuildPath — */
 /* — Principles numbered — */
