@@ -34,13 +34,17 @@ export default function Work() {
             return (
               <Reveal key={project.slug}>
                 <article className={`work-item${isOpen ? " is-open" : ""}`}>
-                  <button
-                    type="button"
-                    className="work-row"
-                    aria-expanded={isOpen}
-                    aria-controls={panelId}
-                    onClick={() => setOpen(isOpen ? null : project.slug)}
-                  >
+                  {/* Überschrift umschließt den Accordion-Button (WAI-ARIA-
+                      Pattern): So sind Projekte per Überschriften-Navigation
+                      im Screenreader direkt ansteuerbar. */}
+                  <h3 className="work-heading">
+                    <button
+                      type="button"
+                      className="work-row"
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      onClick={() => setOpen(isOpen ? null : project.slug)}
+                    >
                     <span className="work-row-num mono">
                       {String(i + 1).padStart(2, "0")}
                     </span>
@@ -57,7 +61,8 @@ export default function Work() {
                       </span>
                       <span className="work-row-toggle" aria-hidden="true">+</span>
                     </span>
-                  </button>
+                    </button>
+                  </h3>
 
                   <div id={panelId} className="work-panel">
                     <div className="work-panel-inner">

@@ -68,8 +68,12 @@ export default function StatusBar({
     return () => { active = false; clearInterval(id); };
   }, [spotifyUrl]);
 
+  // Bewusst KEINE Live-Region (role="status"/aria-live): Die Werte
+  // aktualisieren sich alle 30–60s per Polling — als Live-Region würde
+  // jeder Songwechsel und Status-Refresh Screenreader ungefragt
+  // unterbrechen. So bleibt die Leiste normal lesbarer Text.
   return (
-    <div className="statusbar" role="status" aria-label="Systemstatus">
+    <div className="statusbar">
       <div className="statusbar-inner">
         <span className="statusbar-item statusbar-item--live">
           {uptime.live && <span className="statusbar-dot" aria-hidden="true" />}

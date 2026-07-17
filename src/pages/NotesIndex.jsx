@@ -23,7 +23,7 @@ export default function NotesIndex() {
                 <a className="notes-row" href={`/notes/${post.slug}`}>
                   <span className="notes-date mono">{post.date}</span>
                   <span className="notes-row-body">
-                    <span className="notes-title">{post.title}</span>
+                    <h2 className="notes-title">{post.title}</h2>
                     <span className="notes-teaser">{post.teaser}</span>
                   </span>
                   <span className="notes-arrow" aria-hidden="true">

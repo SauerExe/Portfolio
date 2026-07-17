@@ -3,6 +3,8 @@
 // der Klick zurück zur Startseite an die richtige Sektion, auf der
 // Startseite bleibt es ein normaler Anker-Sprung.
 export default function Nav() {
+  const onNotes = window.location.pathname.startsWith("/notes");
+
   return (
     <header className="nav">
       <a className="nav-logo" href="/#top" aria-label="vv. Zum Seitenanfang">
@@ -20,7 +22,9 @@ export default function Nav() {
         <a href="/#projekte">Projekte</a>
         <a href="/#skills">Skills</a>
         <a href="/#weg">Weg</a>
-        <a href="/notes">Notizen</a>
+        <a href="/notes" aria-current={onNotes ? "page" : undefined}>
+          Notizen
+        </a>
         <a href="/#kontakt" className="nav-contact">
           Kontakt
         </a>

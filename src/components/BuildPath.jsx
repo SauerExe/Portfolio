@@ -13,21 +13,24 @@ export default function BuildPath() {
         <ol className="buildpath-list">
           {buildPath.map((entry, i) => {
             const isNow = i === buildPath.length - 1;
+            const isEven = i % 2 === 0;
             return (
-              <li key={i}>
+              <li key={i} className={isEven ? "buildpath-left" : "buildpath-right"}>
                 <Reveal delay={i * 80} className="buildpath-entry">
-                  <span className="buildpath-period mono">
-                    {entry.period}
-                    {isNow && (
-                      <span className="buildpath-now">
-                        <span className="buildpath-now-dot" aria-hidden="true" />
-                        heute
-                      </span>
-                    )}
-                  </span>
-                  <div className="buildpath-body">
-                    <h3 className="buildpath-title">{entry.title}</h3>
-                    <p className="buildpath-text">{entry.text}</p>
+                  <div className="buildpath-content">
+                    <span className="buildpath-period mono">
+                      {entry.period}
+                      {isNow && (
+                        <span className="buildpath-now">
+                          <span className="buildpath-now-dot" aria-hidden="true" />
+                          heute
+                        </span>
+                      )}
+                    </span>
+                    <div className="buildpath-body">
+                      <h3 className="buildpath-title">{entry.title}</h3>
+                      <p className="buildpath-text">{entry.text}</p>
+                    </div>
                   </div>
                 </Reveal>
               </li>

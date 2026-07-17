@@ -29,13 +29,14 @@ export default function NowPlayingCard() {
   const progressPercent = Math.min((progress / duration) * 100, 100);
   const href = data?.songUrl || "https://open.spotify.com/";
 
+  // Kein aria-label auf dem Link (würde Titel/Artist/Zeit für
+  // Screenreader überschreiben) — der Karteninhalt liest sich selbst.
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
       className="live-panel spotify-panel"
-      aria-label={isPlaying ? `Spotify — ${data.title} von ${data.artist}` : "Spotify"}
     >
       <div className="live-panel-head">
         <span className="live-panel-badge mono">Spotify</span>
@@ -57,7 +58,7 @@ export default function NowPlayingCard() {
             </div>
           </div>
           <div className="live-progress">
-            <span className="live-progress-track">
+            <span className="live-progress-track" aria-hidden="true">
               <span className="live-progress-fill" style={{ width: `${progressPercent}%` }} />
             </span>
             <span className="live-progress-time mono">
@@ -66,6 +67,7 @@ export default function NowPlayingCard() {
           </div>
         </>
       )}
+      <span className="visually-hidden">Öffnet Spotify</span>
     </a>
   );
 }

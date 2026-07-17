@@ -39,13 +39,15 @@ export default function StatusCard() {
     data?.uptime24h == null ? "—" : (data.uptime24h * 100).toFixed(data.uptime24h >= 0.99 ? 2 : 1);
   const sparkPath = buildSparkline(data?.pings ?? [], 100, 24);
 
+  // Kein aria-label auf dem Link: das würde den kompletten Inhalt
+  // (Status, Uptime, Ping) für Screenreader überschreiben. Der Inhalt
+  // liest sich selbst, das Linkziel steht als versteckter Zusatz drin.
   return (
     <a
       href={pageUrl}
       target="_blank"
       rel="noopener noreferrer"
       className="live-panel status-panel"
-      aria-label={`Server-Status: ${STATUS_LABEL[status]}`}
     >
       <div className="live-panel-head">
         <span className="live-panel-badge mono">Server-Status</span>
@@ -79,6 +81,7 @@ export default function StatusCard() {
           </div>
         </>
       )}
+      <span className="visually-hidden">Öffnet die öffentliche Status-Seite</span>
     </a>
   );
 }

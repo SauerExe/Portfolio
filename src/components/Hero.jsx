@@ -79,12 +79,14 @@ export default function Hero() {
   return (
     <section ref={sectionRef} className="hero" aria-label="Intro">
       <div className="hero-inner">
-        {/* Left: giant name */}
-        <h1 className="hero-name">
-          <span className="hero-mask">
+        {/* Left: giant name. aria-label, weil die zwei Masken-Spans ohne
+            Leerzeichen aneinanderliegen — sonst liest ein Screenreader
+            "TimoWeiß" als ein Wort. */}
+        <h1 className="hero-name" aria-label="Timo Weiß">
+          <span className="hero-mask" aria-hidden="true">
             <span className="hero-rise">Timo</span>
           </span>
-          <span className="hero-mask">
+          <span className="hero-mask" aria-hidden="true">
             <span className="hero-rise hero-name-last">Weiß</span>
           </span>
         </h1>
@@ -106,10 +108,17 @@ export default function Hero() {
             </a>
             <a href={`mailto:${profile.email}`}>Kontakt</a>
           </nav>
+
+          {/* Der Claim aus dem Scroll-Overlay, einmal als echter Text —
+              das Overlay selbst ist reine Deko (aria-hidden) und bei
+              reduzierter Motion komplett ausgeblendet. */}
+          <p className="visually-hidden">
+            Software, die im Betrieb läuft. Nicht nur in der Demo.
+          </p>
         </div>
       </div>
 
-      <div className="hero-claim-wrap">
+      <div className="hero-claim-wrap" aria-hidden="true">
         <p className="hero-claim">
           {CLAIM_WORDS.map(([word, accent], i) => (
             <span key={i}>

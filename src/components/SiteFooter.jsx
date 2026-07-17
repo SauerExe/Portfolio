@@ -16,6 +16,9 @@ function localTime() {
 export default function SiteFooter() {
   const [time, setTime] = useState(localTime);
   const year = new Date().getFullYear();
+  const path = window.location.pathname;
+  const current = (href) =>
+    path === href || path.startsWith(`${href}/`) ? "page" : undefined;
 
   useEffect(() => {
     const id = setInterval(() => setTime(localTime()), 30_000);
@@ -34,9 +37,15 @@ export default function SiteFooter() {
         <span className="footer-legal mono">
           © {year} {profile.name}
           <nav className="footer-links" aria-label="Rechtliches und Archiv">
-            <a href="/impressum">Impressum</a>
-            <a href="/datenschutz">Datenschutz</a>
-            <a href="/notes">Notizen</a>
+            <a href="/impressum" aria-current={current("/impressum")}>
+              Impressum
+            </a>
+            <a href="/datenschutz" aria-current={current("/datenschutz")}>
+              Datenschutz
+            </a>
+            <a href="/notes" aria-current={current("/notes")}>
+              Notizen
+            </a>
             <a
               href={previousVersion.url}
               target="_blank"

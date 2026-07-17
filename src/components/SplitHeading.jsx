@@ -5,6 +5,9 @@ import { isStaticMode } from "../hooks/useStaticMode.js";
 
 // Splits a heading into per-word spans and animates them in on scroll
 // (`ir` in the original bundle).
+// Screenreader bekommen den Text einmal am Stück (visually-hidden),
+// die Wort-Spans sind aria-hidden — sonst lesen manche Engines die
+// Überschrift Wort für Wort abgehackt vor.
 export default function SplitHeading({ text, as: Tag = "h2", className, dot }) {
   const ref = useRef(null);
 
@@ -31,17 +34,20 @@ export default function SplitHeading({ text, as: Tag = "h2", className, dot }) {
 
   return (
     <Tag ref={ref} className={className}>
-      {words.map((word, i) => (
-        <span key={i}>
-          <span className="sw-mask">
-            <span className="sw">
-              {word}
-              {dot && i === words.length - 1 && <span className="accent">.</span>}
+      <span className="visually-hidden">{text}</span>
+      <span aria-hidden="true">
+        {words.map((word, i) => (
+          <span key={i}>
+            <span className="sw-mask">
+              <span className="sw">
+                {word}
+                {dot && i === words.length - 1 && <span className="accent">.</span>}
+              </span>
             </span>
+            {i < words.length - 1 ? " " : ""}
           </span>
-          {i < words.length - 1 ? " " : ""}
-        </span>
-      ))}
+        ))}
+      </span>
     </Tag>
   );
 }
