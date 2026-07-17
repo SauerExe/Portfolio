@@ -179,37 +179,46 @@ export const buildPath = [
   },
 ];
 
+// Jedes Prinzip mit optionalem Beleg: ein Link zu der Stelle auf
+// dieser Seite (oder extern), die die Aussage einlöst — "vorführen
+// statt behaupten" gilt auch für die eigene Arbeitsweise-Liste.
 export const principles = [
-  [
-    "Vorführen statt behaupten",
-    "Die Statusleiste oben zeigt echte Daten von meinen eigenen Servern. Wenn dort etwas ausfällt, sieht man es auf dieser Seite zuerst.",
-  ],
-  [
-    "Quellcode offen",
-    "Diese Seite liegt komplett öffentlich auf GitHub, inklusive der Commits, in denen ich Sachen wieder rausgeworfen habe.",
-  ],
-  [
-    "Eigene Infrastruktur",
-    "TrueNAS, Coolify und n8n laufen auf meinen eigenen Servern. Es gibt keinen Support, den ich anrufen kann, und genau das ist der Punkt.",
-  ],
-  [
-    "JavaScript nur wo nötig",
-    "Animationen laufen über CSS, wo es geht. JavaScript kommt dazu, wenn man etwas anklicken kann, nicht für Deko.",
-  ],
-  [
-    "Kein Tracking, keine Cookies",
-    "Ich könnte nicht sagen, wie viele Leute diese Seite besuchen. Es gibt keine Zählung, nur eine Theme-Einstellung im Browser.",
-  ],
-  [
-    "Offene Punkte offen benennen",
-    "Was nicht fertig ist, steht als solches da. Ein sichtbares TODO ist mir lieber als eine stille Lücke.",
-  ],
-  [
-    "Verantwortung übernehmen",
-    "Bei SimpleAct liegt die Verantwortung für Architektur und Plattform bei mir. Wenn nachts etwas ausfällt, ist das mein Problem.",
-  ],
-  [
-    "Erst verstehen, dann automatisieren",
-    "Bevor ich einen Ablauf automatisiere, will ich ihn einmal von Hand gemacht haben. Automation ohne Verständnis verschiebt das Problem nur.",
-  ],
+  {
+    title: "Vorführen statt behaupten",
+    text: "Die Statusleiste oben zeigt echte Daten von meinen eigenen Servern. Wenn dort etwas ausfällt, sieht man es auf dieser Seite zuerst.",
+    proof: { href: "#top", label: "Statusleiste ansehen" },
+  },
+  {
+    title: "Quellcode offen",
+    text: "Diese Seite liegt komplett öffentlich auf GitHub, inklusive der Commits, in denen ich Sachen wieder rausgeworfen habe.",
+    proof: { href: profile.github, label: "Quelltext auf GitHub", external: true },
+  },
+  {
+    title: "Eigene Infrastruktur",
+    text: "TrueNAS, Coolify und n8n laufen auf meinen eigenen Servern. Es gibt keinen Support, den ich anrufen kann, und genau das ist der Punkt.",
+    proof: { href: "#skills", label: "Stack ansehen" },
+  },
+  {
+    title: "JavaScript nur wo nötig",
+    text: "Animationen laufen über CSS, wo es geht. JavaScript kommt dazu, wenn man etwas anklicken kann, nicht für Deko.",
+  },
+  {
+    title: "Kein Tracking, keine Cookies",
+    text: "Ich könnte nicht sagen, wie viele Leute diese Seite besuchen. Es gibt keine Zählung, nur eine Theme-Einstellung im Browser.",
+    proof: { href: "/datenschutz", label: "Datenschutzerklärung" },
+  },
+  {
+    title: "Offene Punkte offen benennen",
+    text: "Was nicht fertig ist, steht als solches da. Ein sichtbares TODO ist mir lieber als eine stille Lücke.",
+    proof: { href: "#projekte", label: "Offene Punkte ansehen" },
+  },
+  {
+    title: "Verantwortung übernehmen",
+    text: "Bei SimpleAct liegt die Verantwortung für Architektur und Plattform bei mir. Wenn nachts etwas ausfällt, ist das mein Problem.",
+    proof: { href: "#projekte", label: "SimpleAct ansehen" },
+  },
+  {
+    title: "Erst verstehen, dann automatisieren",
+    text: "Bevor ich einen Ablauf automatisiere, will ich ihn einmal von Hand gemacht haben. Automation ohne Verständnis verschiebt das Problem nur.",
+  },
 ];

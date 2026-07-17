@@ -1481,6 +1481,33 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   line-height: 1.6;
   max-width: 56ch;
 }
+/* Beleg-Link: springt zur Stelle auf der Seite (oder extern), die
+   die Aussage einlöst — "vorführen statt behaupten" gilt auch hier. */
+.principle-proof {
+  justify-self: start;
+  margin-top: 2px;
+  font-family: var(--mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink-faint);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease;
+}
+.principle-proof::before {
+  content: "→";
+  color: var(--accent);
+  transition: transform 0.2s var(--ease-out);
+}
+.principle-proof:hover {
+  color: var(--ink);
+}
+.principle-proof:hover::before {
+  transform: translateX(4px);
+}
 @media (max-width: 560px) {
   .principle-item {
     grid-template-columns: 1fr;

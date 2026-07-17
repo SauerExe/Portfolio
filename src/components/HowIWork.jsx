@@ -14,7 +14,7 @@ export default function HowIWork() {
         <SplitHeading className="section-title" text="Wie ich arbeite" dot />
 
         <ol className="principles-list">
-          {principles.slice(0, SHOW).map(([title, text], i) => (
+          {principles.slice(0, SHOW).map(({ title, text, proof }, i) => (
             <li key={title}>
               <Reveal delay={i * 60} className="principle-item">
                 <span className="principle-num" aria-hidden="true">
@@ -23,6 +23,20 @@ export default function HowIWork() {
                 <div className="principle-body">
                   <h3 className="principle-title">{title}</h3>
                   <p className="principle-text">{text}</p>
+                  {proof && (
+                    <a
+                      className="principle-proof"
+                      href={proof.href}
+                      {...(proof.external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                    >
+                      {proof.label}
+                      {proof.external && (
+                        <span className="visually-hidden"> (öffnet in neuem Tab)</span>
+                      )}
+                    </a>
+                  )}
                 </div>
               </Reveal>
             </li>
