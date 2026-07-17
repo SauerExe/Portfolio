@@ -71,8 +71,10 @@ export default function BuildPath() {
     const ctx = gsap.context(() => {
       gsap.set(line, { scaleY: 0 });
       // Kein scrub (bidirektional an die Scrollposition gekoppelt) —
-      // die Linie soll beim Zurückscrollen nicht schrumpfen, nur den
-      // höchsten je erreichten Fortschritt halten.
+      // die Linie wächst nur, nie zurück. Sobald sie einmal komplett
+      // gezeichnet ist, killt sich der Trigger selbst: Danach kann
+      // kein Scroll-Update sie je wieder anfassen, sie bleibt fix
+      // sichtbar, statt beim nächsten Refresh/Edge-Case zu despawnen.
       let maxProgress = 0;
       ScrollTrigger.create({
         trigger: track,
@@ -82,6 +84,7 @@ export default function BuildPath() {
           if (self.progress > maxProgress) {
             maxProgress = self.progress;
             gsap.set(line, { scaleY: maxProgress });
+            if (maxProgress >= 1) self.kill();
           }
         },
       });
