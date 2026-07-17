@@ -1146,13 +1146,18 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .skills-spec {
   border-top: 1px solid var(--line);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: clamp(32px, 4vw, 56px);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(40px, 5vw, 64px);
   padding: var(--item-pad) 0;
 }
 .skills-spec-block {
   display: grid;
-  gap: clamp(16px, 3vh, 24px);
+  gap: clamp(20px, 3vh, 28px);
+  padding-bottom: clamp(20px, 3vh, 28px);
+  border-bottom: 1px solid var(--line);
+}
+.skills-spec-block:nth-child(3n) {
+  border-bottom: 0;
 }
 .skills-block-title {
   font-family: var(--mono);
@@ -1162,11 +1167,13 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   letter-spacing: 0.1em;
   margin: 0;
   font-weight: 600;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--accent-lo);
 }
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px 16px;
+  grid-template-columns: 1fr;
+  gap: 10px;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -1174,7 +1181,8 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .skills-grid-item {
   font-size: var(--text-sm);
   color: var(--ink);
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease;
+  padding: 8px 0;
 }
 .skills-grid-item span,
 .skills-grid-link {
@@ -1186,6 +1194,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .skills-grid-link {
   border-bottom: 1px solid var(--line-strong);
   padding-bottom: 2px;
+  padding-top: 0;
 }
 .skills-grid-link:hover {
   color: var(--accent-text);
@@ -1193,23 +1202,29 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 }
 @media (hover: hover) {
   .skills-grid:hover .skills-grid-item:not(:hover) {
-    opacity: 0.35;
+    opacity: 0.5;
+  }
+}
+@media (max-width: 1024px) {
+  .skills-spec {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (max-width: 768px) {
   .skills-spec {
     grid-template-columns: 1fr;
+    gap: clamp(32px, 4vw, 48px);
   }
-  .skills-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .skills-spec-block {
+    border-bottom: 1px solid var(--line);
+  }
+  .skills-spec-block:last-child {
+    border-bottom: 0;
   }
 }
 @media (max-width: 560px) {
   .skills-spec {
     gap: clamp(24px, 3vw, 32px);
-  }
-  .skills-grid {
-    grid-template-columns: 1fr;
   }
 }
 /* — End Skills — */
@@ -1220,6 +1235,7 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   padding: 0;
   display: grid;
   position: relative;
+  border-top: 1px solid var(--line);
 }
 /* Vertikale Mittellinie */
 .buildpath-list::before {
@@ -1230,48 +1246,72 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   bottom: 0;
   width: 1px;
   background: var(--line);
-  transform: translateX(-0.5px);
+  z-index: 0;
 }
-.buildpath-entry {
+.buildpath-list > li {
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid var(--line);
+}
+.buildpath-list li:last-child {
+  border-bottom: 0;
+}
+/* Linke Einträge (gerade Indizes): Body links, Periode rechts der Linie */
+.buildpath-left {
   display: grid;
-  padding: var(--item-pad) 0;
-  align-items: start;
-  border: 0;
-}
-/* Linke Einträge: Periode rechts, Body links */
-.buildpath-left .buildpath-entry {
-  grid-template-columns: 1fr 48%;
+  grid-template-columns: 1fr minmax(0, 48%);
   gap: 0 clamp(24px, 4vw, 48px);
-  text-align: right;
+  padding: var(--item-pad) 0;
   padding-right: 2%;
+  align-items: start;
+}
+.buildpath-left .buildpath-entry {
+  grid-column: 1;
+  display: contents;
 }
 .buildpath-left .buildpath-content {
+  grid-column: 1;
   display: grid;
   gap: 0;
-  grid-template-columns: auto 1fr;
-  grid-auto-flow: dense;
 }
 .buildpath-left .buildpath-period {
-  grid-column: 1;
-  padding-top: 3px;
+  grid-column: 2;
+  text-align: right;
+  order: 1;
 }
 .buildpath-left .buildpath-body {
   grid-column: 1;
-  text-align: left;
+  order: 2;
 }
-/* Rechte Einträge: Body links, Periode rechts */
-.buildpath-right .buildpath-entry {
-  grid-template-columns: 48% 1fr;
+/* Rechte Einträge (ungerade Indizes): Periode links der Linie, Body rechts */
+.buildpath-right {
+  display: grid;
+  grid-template-columns: minmax(0, 48%) 1fr;
   gap: 0 clamp(24px, 4vw, 48px);
-  text-align: left;
+  padding: var(--item-pad) 0;
   padding-left: 2%;
+  align-items: start;
+}
+.buildpath-right .buildpath-entry {
+  grid-column: 2;
+  display: contents;
+}
+.buildpath-right .buildpath-content {
+  grid-column: 2;
+  display: grid;
+  gap: 0;
 }
 .buildpath-right .buildpath-period {
-  text-align: right;
-  padding-top: 3px;
+  grid-column: 1;
+  text-align: left;
+  order: 1;
 }
-.buildpath-list li:last-child .buildpath-entry {
-  border-bottom: 0;
+.buildpath-right .buildpath-body {
+  grid-column: 2;
+  order: 2;
+}
+.buildpath-entry {
+  display: contents;
 }
 .buildpath-period {
   font-family: var(--mono);
