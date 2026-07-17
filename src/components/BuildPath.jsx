@@ -69,20 +69,22 @@ export default function BuildPath() {
     if (!track || !line || isStaticMode()) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        line,
-        { scaleY: 0 },
-        {
-          scaleY: 1,
-          ease: "none",
-          scrollTrigger: {
-            trigger: track,
-            start: "top 80%",
-            end: "bottom 65%",
-            scrub: 0.4,
-          },
+      gsap.set(line, { scaleY: 0 });
+      // Kein scrub (bidirektional an die Scrollposition gekoppelt) —
+      // die Linie soll beim Zurückscrollen nicht schrumpfen, nur den
+      // höchsten je erreichten Fortschritt halten.
+      let maxProgress = 0;
+      ScrollTrigger.create({
+        trigger: track,
+        start: "top 80%",
+        end: "bottom 65%",
+        onUpdate(self) {
+          if (self.progress > maxProgress) {
+            maxProgress = self.progress;
+            gsap.set(line, { scaleY: maxProgress });
+          }
         },
-      );
+      });
     }, track);
 
     return () => ctx.revert();

@@ -1276,6 +1276,13 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
 .buildpath-left .buildpath-body {
   grid-column: 1;
 }
+/* Rechte Einträge sitzen von Natur aus nah an der Linie (Spalte 2
+   beginnt direkt hinter dem Gap, Text ist default linksbündig).
+   Links braucht es dafür text-align:right auf der Jahreszahl —
+   sonst startet sie am äußeren statt am linien-nahen Rand. */
+.buildpath-left .buildpath-period {
+  text-align: right;
+}
 /* Rechte Einträge (ungerade Indizes): Periode + Body zusammen rechts */
 .buildpath-right {
   --bp-gap: clamp(24px, 4vw, 48px);
