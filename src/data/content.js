@@ -90,6 +90,27 @@ export const projects = [
       alt: "Buchungsstrecke von Habitaz: Verfügbarkeitskalender mit Smoobu-Anbindung für beide Standorte",
     },
   },
+  {
+    title: "Sommerfrische",
+    slug: "sommerfrische",
+    type: "Web-App",
+    status: "Live",
+    context: "Eigenes Projekt · Gruppenurlaub-Planer ohne Accounts",
+    shortDescription:
+      "Ein gemeinsamer Urlaub scheitert selten am Ziel, sondern an neun Kalendern und neun Budgets. Sommerfrische fragt beides ab — mögliche Tage, Wunschziele, Unter- und Obergrenze, Reisestil — und rechnet daraus die besten Zeiträume, ein Zielranking, die Budget-Schnittmenge und alle Blockaden aus. Geteilt wird per Link, ohne Account.",
+    role: "Konzept, Design, Entwicklung",
+    technologies: ["Next.js 16", "React 19", "TypeScript", "Redis / Upstash"],
+    liveUrl: "https://urlaub.vvashed.dev",
+    screenshot: "/images/projekte/sommerfrische/screenshot.webp",
+    // Breiter als die 16:10 der anderen Screenshots — Maße mitgeben, damit
+    // der Platz vor dem Laden stimmt.
+    mediaSize: { w: 1600, h: 768 },
+    highlights: [
+      "Zeiträume werden gewichtet bewertet: wer mitkann, wie gut die Tage passen, ob die Wunschdauer hält",
+      "Rechte hängen am Link statt am Account — der Organisator-Schlüssel verlässt die öffentliche API nie",
+      "Ein Speicher-Interface, drei Backends: Upstash über REST, Redis über TCP, lokal eine JSON-Datei",
+    ],
+  },
 ];
 
 // vvashed.dev v1 ist bewusst kein Projekt-Eintrag mehr (Meta-Referenz, kein
@@ -121,6 +142,7 @@ export const skillGroups = [
       { name: "EF Core", note: "Datenzugriff und Migrationen" },
       { name: "JWT / LDAP", note: "Auth gegen bestehende Systeme" },
       { name: "Supabase", note: "Datenbank & Auth als Service" },
+      { name: "Redis", note: "Key-Value-Speicher, REST wie TCP" },
       { name: "zod", note: "Validierung an API-Grenzen" },
     ],
     usedFor: "APIs, Auth-Flows, Datenmodellierung",

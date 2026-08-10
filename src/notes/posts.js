@@ -10,6 +10,9 @@
 // MDX-Upgrade-Pfad (bewusst noch nicht umgesetzt, weil @mdx-js/rollup eine
 // neue Dependency wäre → Rücksprache): Vite-Plugin ergänzen, Einträge als
 // .mdx-Dateien schreiben, dieser Registry-Mechanismus bleibt identisch.
+import KeinLogin, { meta as keinLoginMeta } from "./entries/kein-login-trotzdem-rechte.jsx";
+import VercelFallback, { meta as vercelFallbackMeta } from "./entries/fallback-der-auf-vercel-nicht-geht.jsx";
+import TagZuFrueh, { meta as tagZuFruehMeta } from "./entries/einen-tag-zu-frueh.jsx";
 import NpmAudit, { meta as npmAuditMeta } from "./entries/ein-nachmittag-npm-audit.jsx";
 import Terminbuchung, { meta as terminbuchungMeta } from "./entries/terminbuchung-selbst-gehostet.jsx";
 import Turnstile, { meta as turnstileMeta } from "./entries/die-turnstile-saga.jsx";
@@ -22,6 +25,9 @@ import Impressum, { meta as impressumMeta } from "./entries/impressum-aber-lesba
 import GoLiveGate, { meta as goLiveGateMeta } from "./entries/go-live-gate.jsx";
 
 export const posts = [
+  { ...keinLoginMeta, Component: KeinLogin },
+  { ...vercelFallbackMeta, Component: VercelFallback },
+  { ...tagZuFruehMeta, Component: TagZuFrueh },
   { ...npmAuditMeta, Component: NpmAudit },
   { ...terminbuchungMeta, Component: Terminbuchung },
   { ...turnstileMeta, Component: Turnstile },

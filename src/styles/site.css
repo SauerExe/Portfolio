@@ -2213,6 +2213,10 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   border: 1px solid var(--line);
   padding: 1px 6px;
   background: var(--bg-surface);
+  /* Der Fließtext hyphenisiert; Bezeichner dürfen das nicht — sonst steht
+     dort „toIS-OString()“. Lieber der ganze Token in die nächste Zeile. */
+  -webkit-hyphens: none;
+  hyphens: none;
 }
 /* Kleine Code-/Terminal-Ausschnitte in Notizen: eine Schicht tiefer
    (Surface + Linie), Akzent nur als schmale Kante links. */

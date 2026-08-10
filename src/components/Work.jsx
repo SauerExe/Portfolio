@@ -128,6 +128,8 @@ export default function Work() {
                                 project.media?.alt ??
                                 `Screenshot von ${project.title}`
                               }
+                              width={project.mediaSize?.w}
+                              height={project.mediaSize?.h}
                             />
                           </div>
                         )}

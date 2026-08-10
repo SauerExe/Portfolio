@@ -5,7 +5,10 @@ import { useRef, useState } from "react";
 // Escape und Klick auf den Backdrop schließen).
 // Existiert das Bild unter src (noch) nicht, fällt die Komponente auf
 // fallbackSrc zurück; fehlt auch das, steht ein sichtbarer Platzhalter da.
-export default function ProjectMedia({ src, alt, fallbackSrc }) {
+// width/height sind nur das Seitenverhältnis für die Platzreservierung — die
+// CSS-Regel (width: 100%, height: auto) bestimmt die echte Größe. Bilder, die
+// nicht 16:10 sind, geben ihre Maße mit, sonst springt das Layout beim Laden.
+export default function ProjectMedia({ src, alt, fallbackSrc, width = 640, height = 400 }) {
   const dialogRef = useRef(null);
   const [currentSrc, setCurrentSrc] = useState(src);
   const [broken, setBroken] = useState(false);
@@ -36,8 +39,8 @@ export default function ProjectMedia({ src, alt, fallbackSrc }) {
           src={currentSrc}
           alt={alt}
           loading="lazy"
-          width={640}
-          height={400}
+          width={width}
+          height={height}
           onError={onError}
         />
         <span className="project-media-hint mono" aria-hidden="true">
