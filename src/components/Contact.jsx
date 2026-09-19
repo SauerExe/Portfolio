@@ -30,7 +30,7 @@ export default function Contact() {
 
           <Reveal>
             <p className="contact-lead">
-              Kein Formular, kein Calendly. Eine Mail reicht.
+              Etwas Gutes im Kopf?<br />Lass uns reden.
             </p>
           </Reveal>
 

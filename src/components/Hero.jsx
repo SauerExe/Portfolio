@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { profile } from "../data/content.js";
+import { isStaticMode } from "../hooks/useStaticMode.js";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,9 +30,11 @@ export default function Hero() {
 
     const reduced =
       document.documentElement.dataset.motion === "reduced" ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      isStaticMode();
+    section.classList.toggle("is-static", reduced);
 
     const ctx = gsap.context(() => {
+      if (reduced) return;
       gsap.fromTo(
         ".hero-rise",
         { yPercent: 110 },
@@ -43,15 +46,13 @@ export default function Hero() {
         { opacity: 1, y: 0, duration: 0.85, ease: "power2.out", stagger: 0.08, delay: 0.6 },
       );
 
-      if (reduced) return;
-
       // Scroll-Pin: Hero bleibt stehen, Inhalt blendet aus,
       // das Claim steigt Wort für Wort auf und scrollt dann mit raus.
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=150%",
+          end: "+=85%",
           pin: true,
           scrub: 0.6,
           anticipatePin: 1,
@@ -78,6 +79,10 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="hero" aria-label="Intro">
+      <div className="hero-meta mono">
+        <span>Portfolio / Entwicklung &amp; Betrieb</span>
+        <span>Gelsenkirchen, DE <span aria-hidden="true">↗</span></span>
+      </div>
       <div className="hero-inner">
         {/* Left: giant name. aria-label, weil die zwei Masken-Spans ohne
             Leerzeichen aneinanderliegen — sonst liest ein Screenreader
@@ -101,8 +106,15 @@ export default function Hero() {
             <span className="hero-org">CTO · SimpleAct</span>
           </div>
 
+          <p className="hero-intro">
+            Software, die im <span>Betrieb läuft.</span>
+          </p>
+          <p className="hero-description">
+            Von der ersten Oberfläche bis zum eigenen Server.
+          </p>
+
           <nav className="hero-links" aria-label="Sprungnavigation">
-            <a href="#projekte">Projekte ansehen</a>
+            <a className="hero-primary" href="#projekte">Projekte ansehen <span aria-hidden="true">↗</span></a>
             <a href={profile.github} target="_blank" rel="noopener noreferrer">
               GitHub
             </a>
@@ -118,6 +130,13 @@ export default function Hero() {
         </div>
       </div>
 
+      <div className="hero-baseline mono" aria-hidden="true">
+        <span><i>01</i> Interface</span>
+        <span><i>02</i> Backend</span>
+        <span><i>03</i> Infrastruktur</span>
+        <span className="hero-baseline-note">Idee → Umsetzung → Betrieb</span>
+      </div>
+
       <div className="hero-claim-wrap" aria-hidden="true">
         <p className="hero-claim">
           {CLAIM_WORDS.map(([word, accent], i) => (
@@ -131,7 +150,7 @@ export default function Hero() {
         </p>
       </div>
 
-      <p className="hero-scroll-cue mono" aria-hidden="true">↓ scrollen</p>
+      <p className="hero-scroll-cue mono" aria-hidden="true">Weiter entdecken ↓</p>
     </section>
   );
 }
