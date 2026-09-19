@@ -42,17 +42,8 @@ export default function Work() {
                       aria-controls={panelId}
                       onClick={() => setOpen(isOpen ? null : project.slug)}
                     >
-                    <span className="work-row-num mono" aria-hidden="true">
+                    <span className="work-row-num mono">
                       {String(i + 1).padStart(2, "0")}
-                    </span>
-
-                    <span className={`work-preview work-preview--${project.slug}`} aria-hidden="true">
-                      <img src={project.screenshot} alt="" loading="lazy" width="640" height="400" />
-                      {project.mediaCaption && (
-                        <span className="work-preview-label mono">
-                          {project.status === "In Entwicklung" ? "Vorschau" : "Schema"}
-                        </span>
-                      )}
                     </span>
 
                     <span className="work-row-head">
