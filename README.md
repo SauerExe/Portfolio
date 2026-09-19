@@ -40,6 +40,8 @@ npm run check:server   # HTTP-, SEO- und Fehlerfall-Prüfungen nach dem Build
 Self-Hosting (Coolify): `npm run build` und `npm start`, alternativ das Dockerfile.
 Der Express-Server liefert pro Route generiertes HTML mit eigenen SEO-Tags aus,
 setzt Security-Header und antwortet für fehlende Dateien und unbekannte Seiten mit 404.
+HTML wird mit `Cache-Control: no-transform` ausgeliefert, damit Cloudflare keine
+Analytics- oder JavaScript-Detections-Skripte in die Seite einfügt.
 Vercel verwendet dieselben generierten Seiten und die Header aus `vercel.json`.
 Benötigte Env-Vars siehe [.env.example](.env.example).
 

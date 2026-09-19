@@ -23,6 +23,7 @@ try {
   for (const route of routes) {
     const res = await fetch(base + route);
     assert.equal(res.status, 200, route);
+    assert.ok(res.headers.get("cache-control").includes("no-transform"), `${route}: proxy script injection protection`);
     for (const header of ["content-security-policy", "strict-transport-security", "x-content-type-options", "referrer-policy"]) {
       assert.ok(res.headers.get(header), `${route}: missing ${header}`);
     }

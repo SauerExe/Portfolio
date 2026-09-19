@@ -13,6 +13,9 @@ import { getGeoPayload } from "./api/_lib/geo.js";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist");
 const routes = new Set(JSON.parse(readFileSync(path.join(distDir, "routes.json"), "utf8")));
+// Keep Cloudflare from injecting analytics and JavaScript Detections into HTML.
+// https://developers.cloudflare.com/web-analytics/faq/
+const htmlCacheControl = "public, max-age=0, must-revalidate, no-transform";
 
 const app = express();
 app.disable("x-powered-by");
@@ -61,11 +64,17 @@ app.get("/api/geo", async (req, res) => {
   }
 });
 
-app.use(express.static(distDir, { index: false, redirect: false, maxAge: "1h" }));
+app.use(express.static(distDir, {
+  index: false, redirect: false, maxAge: "1h",
+  setHeaders(res, filePath) {
+    if (filePath.endsWith(".html")) res.setHeader("Cache-Control", htmlCacheControl);
+  },
+}));
 
 // Only known page routes receive their generated HTML. Missing assets and
 // unknown API endpoints must never become successful HTML responses.
 app.get(/^(?!\/api(?:\/|$))(?!.*\.[^/]+\/?$).*/, (req, res) => {
+  res.set("Cache-Control", htmlCacheControl);
   const route = req.path.replace(/\/+$/, "") || "/";
   if (routes.has(route)) {
     res.sendFile(path.join(distDir, route, "index.html"));
