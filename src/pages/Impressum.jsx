@@ -1,9 +1,9 @@
 import SubPage from "./SubPage.jsx";
 import { profile } from "../data/content.js";
 
-// Bewusst ohne volle Anschrift: Diese Seite ist ein privates,
-// nicht-kommerzielles Portfolio — es werden keine Dienstleistungen
-// angeboten oder Verträge angebahnt.
+// Bewusst ohne volle Anschrift: Diese Seite ist ein persönliches
+// Portfolio — über die Seite selbst wird nichts verkauft und kein
+// Vertrag geschlossen.
 export default function Impressum() {
   return (
     <SubPage title="Impressum">
@@ -23,9 +23,10 @@ export default function Impressum() {
                 Gelsenkirchen, Deutschland
               </p>
               <p>
-                Diese Seite ist ein privates, nicht-kommerzielles Portfolio.
-                Es werden hier keine Dienstleistungen angeboten, keine Waren
-                verkauft und keine Verträge angebahnt.
+                Diese Seite ist mein persönliches Portfolio: Sie zeigt, wie
+                ich arbeite. Über die Seite selbst werden keine Waren
+                verkauft und keine Verträge geschlossen — wer mich erreichen
+                will, schreibt mir eine E-Mail.
               </p>
             </div>
 
@@ -59,7 +60,7 @@ export default function Impressum() {
               <h2>Haftung für Links</h2>
               <p>
                 Diese Seite verlinkt auf externe Websites (u. a. GitHub,
-                SimpleAct, Habitaz). Für deren Inhalte sind die jeweiligen
+                SimpleAct, Sommerfrische). Für deren Inhalte sind die jeweiligen
                 Betreiber verantwortlich; zum Zeitpunkt der Verlinkung waren
                 keine Rechtsverstöße erkennbar. Werden mir Rechtsverstöße
                 bekannt, entferne ich betroffene Links umgehend.

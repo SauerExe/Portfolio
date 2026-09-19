@@ -30,7 +30,7 @@ export default function Manifesto() {
           <div className="manifesto-text">
             <Reveal>
               <p>
-                Ich bin <strong>Timo Weiß, 22</strong>, aus Gelsenkirchen. 2023
+                Ich bin <strong>Timo Weiß</strong>, aus Gelsenkirchen. 2023
                 habe ich die Ausbildung zum Fachinformatiker für
                 Anwendungsentwicklung angefangen, mit Schwerpunkt auf{" "}
                 <strong>C#/.NET und TypeScript</strong>. Seit Juli 2026 bin ich
@@ -79,6 +79,10 @@ export default function Manifesto() {
               <div className="manifesto-meta-item">
                 <span className="manifesto-meta-label">Status</span>
                 <span className="manifesto-meta-value">Festangestellt + CTO</span>
+              </div>
+              <div className="manifesto-meta-item">
+                <span className="manifesto-meta-label">Projekte</span>
+                <span className="manifesto-meta-value">Auf Anfrage</span>
               </div>
               <div className="manifesto-meta-item">
                 <span className="manifesto-meta-label">Seit</span>

@@ -4,7 +4,7 @@ import { profile } from "../data/content.js";
 // Die Du-Form ist Absicht — die ganze Seite duzt, die Datenschutzerklärung
 // soll kein Stilbruch sein. Inhaltlich deckt sie ab, was technisch
 // tatsächlich passiert: kein Tracking, keine Cookies, aber IP-Geolocation
-// (ipwho.is), Karten-Tiles (CARTO), Spotify-Cover und Server-Logs des Hosters.
+// (ipwho.is), Spotify-Cover und Verbindungsdaten beim Hosting.
 export default function Datenschutz() {
   return (
     <SubPage title="Datenschutz">
@@ -70,7 +70,7 @@ export default function Datenschutz() {
             <div className="legal-block">
               <h2>Standort-Anzeige („Du &amp; ich")</h2>
               <p>
-                Im Kontakt-Bereich zeigt eine Karte die ungefähre Entfernung
+                Im Kontakt-Bereich zeigt eine Skizze die ungefähre Entfernung
                 zwischen meinem Standort und deinem. Dein Browser ruft dafür
                 nur meine eigene API auf. Mein Server kürzt deine IP-Adresse
                 (bei IPv4 wird das letzte Stück verworfen) und fragt erst mit
@@ -88,20 +88,13 @@ export default function Datenschutz() {
                 Daten zusammengeführt.
               </p>
               <p>
-                Für die Kartendarstellung lädt dein Browser Kartenkacheln von{" "}
-                <strong>CARTO</strong> (basemaps.cartocdn.com); dabei wird
-                deine IP-Adresse an CARTO übertragen — das ist bei jedem Abruf
-                einer externen Ressource technisch unvermeidbar.
-              </p>
-              <p>
                 <strong>Zweck:</strong> Darstellung der Entfernung als Teil
                 der Seite. <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1
                 lit. f DSGVO (berechtigtes Interesse an der Funktion; die
                 Verarbeitung ist minimal, gekürzt und flüchtig).{" "}
                 <strong>Speicherdauer:</strong> keine.{" "}
                 <strong>Widerspruch:</strong> siehe unten — außerdem kannst du
-                die Ortung technisch unterbinden (z. B. VPN nutzen oder die
-                Domain basemaps.cartocdn.com blockieren); die Seite
+                die Standort-Abfrage an /api/geo in deinem Browser blockieren; die Seite
                 funktioniert dann trotzdem.
               </p>
             </div>
@@ -171,7 +164,7 @@ export default function Datenschutz() {
             <div className="legal-block">
               <h2>Stand</h2>
               <p>
-                Juli 2026. Wenn sich an der Seite technisch etwas ändert, wird
+                September 2026. Wenn sich an der Seite technisch etwas ändert, wird
                 diese Erklärung angepasst.
               </p>
             </div>

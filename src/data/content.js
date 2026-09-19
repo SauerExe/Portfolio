@@ -5,14 +5,9 @@
 export const profile = {
   name: "Timo Weiß",
   role: "Full-Stack Developer · CTO SimpleAct",
-  tagline: "Full-Stack · Next.js/TypeScript · C#/.NET",
-  location: "Deutschland",
-  age: 22,
   email: "contact@vvashed.dev",
   github: "https://github.com/SauerExe",
 };
-
-export const heroStatement = "Ich baue Software, die im Betrieb läuft, nicht nur in der Demo.";
 
 export const marqueeItems = [
   "Next.js",
@@ -37,13 +32,14 @@ export const projects = [
     liveUrl: "https://simpleact.de",
     screenshot: "/images/projekte/simpleact/screenshot.webp",
     highlights: [
-      "Verantwortlich für Produktarchitektur als Mitgründer",
-      "Automatisierte Risikoeinordnung statt manueller Rechtsprüfung",
+      "Risikoeinordnung als strukturierter, automatisierter Prozess statt manueller Rechtsprüfung — aus der Einstufung entstehen direkt konkrete Compliance-Aufgaben",
+      "Go-Live-Gate: Ein Tenant geht erst live, wenn Pflichtdokumente nachweislich vollständig sind, nicht nur angelegt",
     ],
-    // metric: Kennzahlen-Bullet. Solange [X]/[Y]-Platzhalter drinstehen, wird
-    // die Zeile gedimmt als sichtbares TODO dargestellt; Feld einfach
-    // entfernen, wenn (noch) keine echten Zahlen da sind.
-    metric: "[X] Kunden onboarded, [Y] % Zeitersparnis bei der Risikoklassifizierung",
+    outcome:
+      "In Betrieb. Produktarchitektur, Plattform und Automatisierung liegen seit Gründung bei mir.",
+    // noteSlugs: Notizen (src/notes), die Entscheidungen aus diesem Projekt
+    // dokumentieren — werden im Panel als Beleg-Links gerendert.
+    noteSlugs: ["go-live-gate"],
   },
   {
     title: "Gewinnspiel-Anwendung für die Stadtverwaltung",
@@ -52,22 +48,18 @@ export const projects = [
     status: "Im Regelbetrieb",
     context: "Entwicklung im Anstellungsverhältnis",
     shortDescription:
-      "Gewinnspiele liefen vorher über manuell gepflegte Listen: fehleranfällig, ohne Auswertung, ohne Rechteverwaltung. Jetzt läuft das über eine Web-Plattform mit .NET 10 Web API, EF Core und einem Next.js-Admin.",
+      "Gewinnspiele liefen in der Stadtverwaltung über manuell gepflegte Listen: fehleranfällig, ohne Auswertung, ohne Rechteverwaltung.",
     role: "Konzeption, Entwicklung",
     technologies: [".NET 10", "EF Core", "JWT / LDAP", "Next.js"],
     screenshot: "/images/projekte/admin-kommune/mockup.svg",
+    mediaCaption: "Schematische Darstellung · kein Produkt-Screenshot",
     highlights: [
-      "Authentifizierung über JWT gegen bestehendes LDAP",
-      "Läuft seit Übergabe im Regelbetrieb bei der Kommune",
+      "Kein neues Nutzerverzeichnis: Authentifizierung per JWT gegen das bestehende LDAP der Verwaltung — niemand braucht ein zusätzliches Passwort",
+      "Was vorher Handarbeit war, macht jetzt die Plattform: Auswertung und Rechteverwaltung inklusive, die manuell gepflegte Liste entfällt",
+      ".NET 10 Web API mit EF Core als Backend, Admin-Oberfläche in Next.js",
     ],
-    metric: "[X] Gewinnspiele seit Launch verwaltet, [Y] Teilnehmer",
-    // media: visueller Beweis für Projekte ohne Live-Link. Bild nach
-    // public/media/ hochladen; solange es fehlt, fällt die Card auf
-    // `screenshot` zurück.
-    media: {
-      src: "/media/gewinnspiel-admin.png",
-      alt: "Admin-Oberfläche der Gewinnspiel-Anwendung: Übersicht der laufenden Gewinnspiele mit Teilnehmerzahlen und Auswertung",
-    },
+    outcome:
+      "Läuft seit Übergabe im Regelbetrieb der Kommune: bisher zwei Gewinnspiele mit rund 1.000 Teilnehmern, Tendenz wachsend. Das abgelöste Alt-System zählte in zwei Jahren 65.000 Unique-Teilnehmer — die Größenordnung, in der die Plattform gedacht ist.",
   },
   {
     title: "Habitaz",
@@ -76,19 +68,17 @@ export const projects = [
     status: "In Entwicklung",
     context: "Ferienwohnungen · Gelsenkirchen & Haltern am See",
     shortDescription:
-      "Buchungsseite für Ferienwohnungen an zwei Standorten, Gelsenkirchen und Haltern am See, mit Smoobu-Anbindung für Verfügbarkeiten und Reservierungen.",
+      "Ferienwohnungen an zwei Standorten, Gelsenkirchen und Haltern am See — Verfügbarkeiten und Reservierungen liegen bereits in Smoobu, gebucht werden soll trotzdem über eine eigene Seite.",
     role: "Konzept, Design, Entwicklung",
     technologies: ["Next.js", "TypeScript", "Smoobu API"],
     screenshot: "/images/projekte/habitaz/screenshot.webp",
+    mediaCaption: "Entwicklungsstand · Vorschau vor dem Launch",
     highlights: [
-      "Smoobu-Anbindung für Verfügbarkeiten und Buchungen",
-      "Zwei Standorte über eine gemeinsame Buchungsstrecke",
+      "Eine gemeinsame Buchungsstrecke für beide Standorte",
+      "Verfügbarkeiten und Buchungen kommen live aus der Smoobu-API statt aus einer zweiten Datenhaltung",
     ],
-    metric: "[X] Buchungen über die Smoobu-Anbindung synchronisiert",
-    media: {
-      src: "/media/habitaz-buchung.png",
-      alt: "Buchungsstrecke von Habitaz: Verfügbarkeitskalender mit Smoobu-Anbindung für beide Standorte",
-    },
+    outcome:
+      "In Entwicklung — der Eintrag hier bekommt mit dem Launch den Live-Link.",
   },
   {
     title: "Sommerfrische",
@@ -109,6 +99,13 @@ export const projects = [
       "Zeiträume werden gewichtet bewertet: wer mitkann, wie gut die Tage passen, ob die Wunschdauer hält",
       "Rechte hängen am Link statt am Account — der Organisator-Schlüssel verlässt die öffentliche API nie",
       "Ein Speicher-Interface, drei Backends: Upstash über REST, Redis über TCP, lokal eine JSON-Datei",
+    ],
+    outcome:
+      "Live und ohne Account direkt ausprobierbar. Die Entscheidungen dahinter sind in drei Notizen dokumentiert.",
+    noteSlugs: [
+      "kein-login-trotzdem-rechte",
+      "einen-tag-zu-frueh",
+      "fallback-der-auf-vercel-nicht-geht",
     ],
   },
 ];
@@ -131,7 +128,7 @@ export const skillGroups = [
       { name: "Tailwind CSS", note: "konsistentes, schnelles Styling" },
       { name: "Motion", note: "Scroll- & UI-Animationen" },
     ],
-    usedFor: "Web-Plattformen, interaktive Labs, Admin-Oberflächen",
+    usedFor: "SimpleAct, Sommerfrische, der Gewinnspiel-Admin — alle oben unter Projekte",
   },
   {
     id: "backend",
@@ -145,7 +142,7 @@ export const skillGroups = [
       { name: "Redis", note: "Key-Value-Speicher, REST wie TCP" },
       { name: "zod", note: "Validierung an API-Grenzen" },
     ],
-    usedFor: "APIs, Auth-Flows, Datenmodellierung",
+    usedFor: "Von der .NET-API der Gewinnspiel-Anwendung bis zum Redis-Speicher von Sommerfrische",
   },
   {
     id: "infra",
@@ -158,7 +155,7 @@ export const skillGroups = [
       { name: "Cloudflare Tunnel", note: "Zugriff ohne offene Ports" },
       { name: "Authelia", note: "zentrale Zugriffskontrolle" },
     ],
-    usedFor: "Eigenbetriebene Systeme, Deployments, Automatisierung",
+    usedFor: "Deployments und Automatisierung — auch diese Seite läuft auf eigenen Servern",
   },
   {
     id: "tools",

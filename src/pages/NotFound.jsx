@@ -1,11 +1,9 @@
 import SubPage from "./SubPage.jsx";
 
-// Client-seitiges Gegenstück zu public/404.html: Da Server und Vercel für
-// unbekannte Pfade index.html ausliefern (SPA-Fallback), landet ein Tippfehler
-// in der URL hier statt auf der statischen 404-Seite.
+// Client-seitiges Gegenstück zur statischen 404-Seite, auch für den Dev-Server.
 export default function NotFound() {
   return (
-    <SubPage title="404 – Seite nicht gefunden">
+    <SubPage title="404 – Seite nicht gefunden" noindex>
       <section className="section notfound" aria-label="Seite nicht gefunden">
         <div className="section-inner">
           <p className="notfound-code">

@@ -2,8 +2,6 @@ import Reveal from "./Reveal.jsx";
 import SplitHeading from "./SplitHeading.jsx";
 import { principles } from "../data/content.js";
 
-const SHOW = 5;
-
 export default function HowIWork() {
   return (
     <section className="section how" aria-label="Arbeitsweise">
@@ -14,7 +12,7 @@ export default function HowIWork() {
         <SplitHeading className="section-title" text="Wie ich arbeite" dot />
 
         <ol className="principles-list">
-          {principles.slice(0, SHOW).map(({ title, text, proof }, i) => (
+          {principles.map(({ title, text, proof }, i) => (
             <li key={title}>
               <Reveal delay={i * 60} className="principle-item">
                 <span className="principle-num" aria-hidden="true">

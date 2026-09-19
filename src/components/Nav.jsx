@@ -20,7 +20,7 @@ export default function Nav() {
       <nav aria-label="Hauptnavigation">
         <a href="/#ueber">Über</a>
         <a href="/#projekte">Projekte</a>
-        <a href="/#skills">Skills</a>
+        <a href="/#skills">Stack</a>
         <a href="/#weg">Weg</a>
         <a href="/notes" aria-current={onNotes ? "page" : undefined}>
           Notizen

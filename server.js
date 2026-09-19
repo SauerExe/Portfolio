@@ -5,15 +5,27 @@
 import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { readFileSync } from "node:fs";
 import { getStatusPayload } from "./api/_lib/status.js";
 import { getNowPlayingPayload } from "./api/_lib/spotify.js";
 import { getGeoPayload } from "./api/_lib/geo.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const distDir = path.join(__dirname, "dist");
+const routes = new Set(JSON.parse(readFileSync(path.join(distDir, "routes.json"), "utf8")));
 
 const app = express();
 app.disable("x-powered-by");
+app.use((req, res, next) => {
+  res.set({
+    "Strict-Transport-Security": "max-age=31536000",
+    "X-Content-Type-Options": "nosniff",
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    // React/GSAP use style attributes; scripts and style elements stay same-origin.
+    "Content-Security-Policy": "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' https://i.scdn.co; font-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
+  });
+  next();
+});
 
 app.get("/api/status", async (req, res) => {
   try {
@@ -49,15 +61,23 @@ app.get("/api/geo", async (req, res) => {
   }
 });
 
-app.use(express.static(distDir, { index: false, maxAge: "1h" }));
+app.use(express.static(distDir, { index: false, redirect: false, maxAge: "1h" }));
 
-// Alles außer /api/* fällt auf die SPA zurück (Single-Page, keine Client-Routen
-// außer Hash-Anker, daher reicht ein einfacher Fallback statt echtem Routing).
-app.get(/^(?!\/api\/).*/, (req, res) => {
-  res.sendFile(path.join(distDir, "index.html"));
+// Only known page routes receive their generated HTML. Missing assets and
+// unknown API endpoints must never become successful HTML responses.
+app.get(/^(?!\/api(?:\/|$))(?!.*\.[^/]+\/?$).*/, (req, res) => {
+  const route = req.path.replace(/\/+$/, "") || "/";
+  if (routes.has(route)) {
+    res.sendFile(path.join(distDir, route, "index.html"));
+  } else {
+    res.set("X-Robots-Tag", "noindex").status(404).sendFile(path.join(distDir, "404.html"));
+  }
+});
+app.use((req, res) => {
+  res.status(404).type("text").send("Not found");
 });
 
 const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`vvashed.dev läuft auf Port ${port}`);
+const server = app.listen(port, () => {
+  console.log(`vvashed.dev läuft auf Port ${server.address().port}`);
 });

@@ -10,6 +10,7 @@ import Work from "../components/Work.jsx";
 import Skills from "../components/Skills.jsx";
 import BuildPath from "../components/BuildPath.jsx";
 import HowIWork from "../components/HowIWork.jsx";
+import NotesTeaser from "../components/NotesTeaser.jsx";
 import Contact from "../components/Contact.jsx";
 
 export default function Home() {
@@ -28,6 +29,7 @@ export default function Home() {
         <Skills />
         <BuildPath />
         <HowIWork />
+        <NotesTeaser />
         <Contact />
       </main>
       <A11yWidget />

@@ -3,6 +3,7 @@ import Reveal from "./Reveal.jsx";
 import SplitHeading from "./SplitHeading.jsx";
 import ProjectMedia from "./ProjectMedia.jsx";
 import { projects } from "../data/content.js";
+import { getPost } from "../notes/posts.js";
 
 function statusClass(status) {
   if (!status) return "";
@@ -11,10 +12,6 @@ function statusClass(status) {
   if (s.includes("entwicklung")) return "is-wip";
   return "";
 }
-
-// Kennzahlen-Bullets mit [X]/[Y]-Platzhaltern werden gedimmt dargestellt
-// (sichtbares TODO), bis echte Zahlen eingetragen sind.
-const hasPlaceholder = (text) => /\[[^\]]+\]/.test(text);
 
 export default function Work() {
   const [open, setOpen] = useState(null);
@@ -68,25 +65,49 @@ export default function Work() {
                     <div className="work-panel-inner">
                       <div className="work-panel-body">
                         <div className="work-panel-info">
-                          <p className="work-panel-desc">{project.shortDescription}</p>
+                          {/* Mini-Case-Study: Ausgangslage → Entscheidungen →
+                              Ergebnis. Die Labels machen aus der Beschreibung
+                              eine nachvollziehbare Argumentation statt einer
+                              Feature-Liste. */}
+                          <div className="work-panel-block">
+                            <span className="work-panel-label mono">Ausgangslage</span>
+                            <p className="work-panel-desc">{project.shortDescription}</p>
+                          </div>
 
-                          {(project.highlights?.length > 0 || project.metric) && (
-                            <ul className="work-panel-highlights">
-                              {project.highlights?.map((h) => (
-                                <li key={h}>{h}</li>
-                              ))}
-                              {project.metric && (
-                                <li
-                                  className={
-                                    hasPlaceholder(project.metric)
-                                      ? "is-placeholder"
-                                      : undefined
-                                  }
-                                >
-                                  {project.metric}
-                                </li>
-                              )}
-                            </ul>
+                          {project.highlights?.length > 0 && (
+                            <div className="work-panel-block">
+                              <span className="work-panel-label mono">Entscheidungen</span>
+                              <ul className="work-panel-highlights">
+                                {project.highlights.map((h) => (
+                                  <li key={h}>{h}</li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+
+                          {project.outcome && (
+                            <div className="work-panel-block">
+                              <span className="work-panel-label mono">Ergebnis</span>
+                              <p className="work-panel-desc">{project.outcome}</p>
+                            </div>
+                          )}
+
+                          {project.noteSlugs?.length > 0 && (
+                            <div className="work-panel-notes">
+                              {project.noteSlugs.map((slug) => {
+                                const post = getPost(slug);
+                                if (!post) return null;
+                                return (
+                                  <a
+                                    key={slug}
+                                    className="work-panel-note-link"
+                                    href={`/notes/${slug}`}
+                                  >
+                                    Notiz: {post.title}
+                                  </a>
+                                );
+                              })}
+                            </div>
                           )}
 
                           <div className="work-panel-tags">
@@ -126,11 +147,14 @@ export default function Work() {
                               }
                               alt={
                                 project.media?.alt ??
-                                `Screenshot von ${project.title}`
+                                `${project.title}: ${project.mediaCaption ?? "Screenshot"}`
                               }
                               width={project.mediaSize?.w}
                               height={project.mediaSize?.h}
                             />
+                            {project.mediaCaption && (
+                              <p className="work-media-caption mono">{project.mediaCaption}</p>
+                            )}
                           </div>
                         )}
                       </div>

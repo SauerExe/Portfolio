@@ -9,7 +9,7 @@ export default function NotePost({ slug }) {
   const { Component } = post;
 
   return (
-    <SubPage title={post.title}>
+    <SubPage title={post.title} description={post.teaser} article>
       <section className="section notes" aria-label={post.title}>
         <div className="section-inner">
           <article className="note-article">

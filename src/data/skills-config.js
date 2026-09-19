@@ -6,9 +6,10 @@
 // Zum Eintragen einfach die URL ergänzen, z. B.:
 //   { skill: "React / Next.js", repoUrl: "https://github.com/SauerExe/vvashed-dev" },
 export const skillRepos = [
-  // Interface
-  { skill: "TypeScript / JavaScript", repoUrl: "" },
-  { skill: "React / Next.js", repoUrl: "" },
+  // Interface — das Portfolio-Repo ist der öffentliche Beleg für React/JS;
+  // weitere Repos (SimpleAct, Kundenprojekte) sind privat und bleiben ohne Link.
+  { skill: "TypeScript / JavaScript", repoUrl: "https://github.com/SauerExe/Portfolio" },
+  { skill: "React / Next.js", repoUrl: "https://github.com/SauerExe/Portfolio" },
   { skill: "Tailwind CSS", repoUrl: "" },
   { skill: "Motion", repoUrl: "" },
 
@@ -27,7 +28,7 @@ export const skillRepos = [
   { skill: "Authelia", repoUrl: "" },
 
   // Werkzeuge
-  { skill: "Git & GitHub", repoUrl: "" },
+  { skill: "Git & GitHub", repoUrl: "https://github.com/SauerExe/Portfolio" },
   { skill: "Vercel", repoUrl: "" },
 ];
 
@@ -36,8 +37,4 @@ const normalize = (s) => s.toLowerCase().replace(/\s+/g, " ").trim();
 export function repoForSkill(name) {
   const entry = skillRepos.find((r) => normalize(r.skill) === normalize(name));
   return entry?.repoUrl || null;
-}
-
-export function hasAnyRepoLinks() {
-  return skillRepos.some((r) => r.repoUrl);
 }

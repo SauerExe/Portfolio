@@ -1,0 +1,37 @@
+      * { box-sizing: border-box; margin: 0; }
+      body {
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        background: oklch(10% 0.005 50);
+        color: oklch(91% 0.004 75);
+        font-family: "Space Grotesk", system-ui, -apple-system, sans-serif;
+        padding: 24px;
+      }
+      main { max-width: 480px; }
+      .code {
+        font-size: clamp(4rem, 18vw, 8rem);
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.03em;
+      }
+      .code span { color: oklch(66% 0.12 40); }
+      p {
+        margin-top: 20px;
+        color: oklch(58% 0.005 70);
+        line-height: 1.6;
+      }
+      a {
+        display: inline-block;
+        margin-top: 28px;
+        color: oklch(91% 0.004 75);
+        font-family: ui-monospace, monospace;
+        font-size: 0.8rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        text-decoration: none;
+        border: 1px solid oklch(30% 0.005 55);
+        padding: 12px 20px;
+        transition: border-color 0.2s ease, color 0.2s ease;
+      }
+      a:hover { border-color: oklch(52% 0.14 38); color: oklch(66% 0.12 40); }

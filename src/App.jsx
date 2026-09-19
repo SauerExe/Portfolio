@@ -7,9 +7,8 @@ import NotFound from "./pages/NotFound.jsx";
 
 // Mini-Router ohne Dependency: Links auf Unterseiten sind normale
 // <a href>-Navigationen (volle Seitenladung, kein History-API nötig).
-// Der Server liefert für alle Nicht-API-Pfade index.html aus
-// (server.js-Fallback bzw. vercel.json-Rewrite), hier wird dann anhand
-// des Pfads entschieden, was gerendert wird.
+// Der Build erzeugt je Route HTML mit eigenen Metadaten. Hier wird
+// anhand des Pfads entschieden, welcher Seiteninhalt gerendert wird.
 export default function App() {
   const path = window.location.pathname.replace(/\/+$/, "") || "/";
 

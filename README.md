@@ -10,7 +10,7 @@ Software, die im Betrieb läuft, nicht nur in der Demo: Die Statusleiste und die
 
 - **Frontend:** [Vite](https://vitejs.dev) + React, plain CSS mit Cascade Layers und OKLCH-Farben
 - **Animation:** [GSAP](https://gsap.com) (ScrollTrigger) + [Lenis](https://lenis.darkroom.engineering) Smooth Scroll
-- **Karte:** [Leaflet](https://leafletjs.com) mit CARTO-Dark-Tiles (lazy geladen)
+- **Standort:** eigene SVG-Skizze, ohne Kartenanbieter oder zusätzliche Bibliothek
 - **API:** Serverless Functions unter `api/` (Vercel), im Dev über ein Vite-Plugin gespiegelt — dieselben Handler, keine doppelte Implementierung
 
 ## Lokal starten
@@ -24,8 +24,9 @@ npm run dev            # http://localhost:5173
 Ohne `.env` laufen die Live-Karten im Fallback-Zustand, der Rest der Seite funktioniert normal.
 
 ```bash
-npm run build          # Produktions-Build nach dist/
-npm run preview        # Build lokal testen
+npm run build          # Build + Seiten-Metadaten + Sitemap nach dist/
+npm run preview        # Build lokal ansehen
+npm run check:server   # HTTP-, SEO- und Fehlerfall-Prüfungen nach dem Build
 ```
 
 ## Prinzipien
@@ -36,4 +37,12 @@ npm run preview        # Build lokal testen
 
 ## Deploy
 
-Läuft als statischer Vite-Build mit Serverless Functions auf Vercel. Benötigte Env-Vars siehe [.env.example](.env.example).
+Self-Hosting (Coolify): `npm run build` und `npm start`, alternativ das Dockerfile.
+Der Express-Server liefert pro Route generiertes HTML mit eigenen SEO-Tags aus,
+setzt Security-Header und antwortet für fehlende Dateien und unbekannte Seiten mit 404.
+Vercel verwendet dieselben generierten Seiten und die Header aus `vercel.json`.
+Benötigte Env-Vars siehe [.env.example](.env.example).
+
+Die Sitemap und HTML-Metadaten werden bei jedem Build aus `src/notes/posts.js`
+und `src/data/seo.js` erzeugt. Neue Notizen brauchen keinen manuellen Sitemap-Eintrag.
+Die Inhalts-Komponenten selbst werden weiterhin im Browser gerendert.
