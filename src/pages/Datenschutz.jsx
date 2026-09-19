@@ -70,9 +70,11 @@ export default function Datenschutz() {
             <div className="legal-block">
               <h2>Standort-Anzeige („Du &amp; ich")</h2>
               <p>
-                Im Kontakt-Bereich zeigt eine Skizze die ungefähre Entfernung
-                zwischen meinem Standort und deinem. Dein Browser ruft dafür
-                nur meine eigene API auf. Mein Server kürzt deine IP-Adresse
+                Im Kontakt-Bereich zeigt eine Karte die ungefähre Entfernung
+                zwischen meinem Standort und deinem. Die Kartenumrisse liegen
+                auf meinem Server, es werden keine Kartenkacheln von Dritten
+                geladen. Dein Browser ruft für die Ortung nur meine eigene
+                API auf. Mein Server kürzt deine IP-Adresse
                 (bei IPv4 wird das letzte Stück verworfen) und fragt erst mit
                 dieser gekürzten IP den Dienst <strong>ipwho.is</strong> an.
                 Der Dienst sieht also weder deinen Browser noch deine

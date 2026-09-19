@@ -8,7 +8,8 @@
     "build": "vite build && node scripts/generate-seo.mjs",
     "preview": "vite preview",
     "start": "node server.js",
-    "check:server": "node scripts/check-server.mjs"
+    "check:server": "node scripts/check-server.mjs",
+    "geo:outlines": "node scripts/build-geo-outlines.mjs"
   },
   "dependencies": {
     "express": "^4.22.2",

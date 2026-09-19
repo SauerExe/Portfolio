@@ -10,7 +10,7 @@ Software, die im Betrieb läuft, nicht nur in der Demo: Die Statusleiste und die
 
 - **Frontend:** [Vite](https://vitejs.dev) + React, plain CSS mit Cascade Layers und OKLCH-Farben
 - **Animation:** [GSAP](https://gsap.com) (ScrollTrigger) + [Lenis](https://lenis.darkroom.engineering) Smooth Scroll
-- **Standort:** eigene SVG-Skizze, ohne Kartenanbieter oder zusätzliche Bibliothek
+- **Standort:** eigene SVG-Karte (Mercator, Umrisse von [Natural Earth](https://www.naturalearthdata.com), `npm run geo:outlines`), ohne Kartenanbieter oder zusätzliche Bibliothek
 - **API:** Serverless Functions unter `api/` (Vercel), im Dev über ein Vite-Plugin gespiegelt — dieselben Handler, keine doppelte Implementierung
 
 ## Lokal starten

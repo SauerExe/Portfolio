@@ -1809,18 +1809,31 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
     linear-gradient(90deg, var(--blueprint-line) 1px, transparent 1px);
   background-size: 24px 24px;
 }
-.geo-blueprint { width: 100%; height: auto; }
-.geo-axis, .geo-orbit { stroke: var(--line-strong); stroke-width: 1; fill: none; }
-.geo-axis { stroke-dasharray: 2 6; }
+.geo-blueprint { width: 100%; height: auto; display: block; }
+.geo-land {
+  fill: oklch(100% 0 0 / 0.04);
+  stroke: var(--line-strong);
+  stroke-width: 0.8;
+  stroke-linejoin: round;
+}
 .geo-route { stroke: var(--accent-text); stroke-width: 1.5; stroke-dasharray: 5 7; fill: none; }
 .geo-point-ring { stroke: var(--accent-text); fill: none; }
 .geo-point { fill: var(--accent-text); }
 .geo-point.geo-visitor { fill: var(--ink); }
 .geo-point-ring.geo-visitor { stroke: var(--ink); }
-.geo-label, .geo-coordinate, .geo-distance { font-family: var(--mono); }
+/* Text bekommt einen Halo in Hintergrundfarbe, damit er über Küsten und
+   Grenzen lesbar bleibt (paint-order: erst Stroke, dann Fill). */
+.geo-label, .geo-coordinate, .geo-distance {
+  font-family: var(--mono);
+  paint-order: stroke;
+  stroke: var(--bg);
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
 .geo-label { fill: var(--ink); font-size: 12px; letter-spacing: 1.5px; }
 .geo-coordinate { fill: var(--ink-faint); font-size: 9px; }
 .geo-distance { fill: var(--accent-text); font-size: 17px; }
+.geo-scale path { stroke: var(--ink-faint); stroke-width: 1.2; fill: none; }
 .geo-corners { stroke: var(--accent-text); stroke-width: 2; fill: none; }
 .geo-text {
   display: grid;
