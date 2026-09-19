@@ -103,23 +103,24 @@
 
 @layer tokens {
 :root {
-  /* Near-black base, warm undertone */
-  --bg: oklch(10% 0.005 50);
-  --bg-surface: oklch(14% 0.005 50);
-  --ink: oklch(91% 0.004 75);
+  /* Warmer Anthrazit-Braun statt Near-Black — Linien und Ink sind auf
+     die hellere Basis nachgezogen, sonst verschwinden die Strukturlinien. */
+  --bg: oklch(15% 0.008 65);
+  --bg-surface: oklch(19% 0.009 65);
+  --ink: oklch(94% 0.014 80);
   /* AA-Kontrast auf --bg: dim ~7:1, faint ~4.6:1 */
-  --ink-dim: oklch(66% 0.005 70);
-  --ink-faint: oklch(63% 0.004 65);
+  --ink-dim: oklch(74% 0.01 75);
+  --ink-faint: oklch(67% 0.009 75);
 
   /* Terrakotta / Backstein-Rot — Ruhrpott-Rot, kein Signalorange */
   --accent: oklch(52% 0.14 38);
-  --accent-text: oklch(66% 0.12 40);
+  --accent-text: oklch(75% 0.13 48);
   --accent-lo: oklch(52% 0.14 38 / 0.35);
   --scene-accent: var(--accent);
 
   /* Structural lines */
-  --line: oklch(20% 0.004 55);
-  --line-strong: oklch(30% 0.005 55);
+  --line: oklch(28% 0.009 65);
+  --line-strong: oklch(38% 0.012 65);
 
   --statusbar-h: 26px;
   --nav-h: 76px;
@@ -2540,6 +2541,9 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   gap: 12px 20px;
 }
 /* Blueprint details: structural grid, registration marks and warm edges. */
+.hero {
+  background: radial-gradient(ellipse at 78% 45%, oklch(52% 0.09 48 / 0.12), transparent 55%);
+}
 .hero::before {
   content: "";
   position: absolute;
@@ -2548,8 +2552,11 @@ html[data-motion="reduced"] *, html[data-motion="reduced"] *::before, html[data-
   background-image:
     linear-gradient(var(--blueprint-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--blueprint-line) 1px, transparent 1px);
-  background-size: 64px 64px;
-  mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+  background-size: 80px 80px;
+  mask-image: linear-gradient(to bottom, transparent, black 35%, black 70%, transparent);
+}
+.contact {
+  background: radial-gradient(ellipse at 100% 0, oklch(52% 0.09 48 / 0.12), transparent 45%);
 }
 .hero-inner { position: relative; }
 .hero-rule {
