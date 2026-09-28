@@ -1,6 +1,4 @@
-// Inhalte der v3-Startseite (Claude-Design „vvashed Portfolio v3").
-// Bewusst eigene, gestraffte Texte — Unterseiten und Notizen lesen
-// weiterhin aus src/data/content.js.
+// Inhalte der Startseite (Claude-Design „vvashed Portfolio v3").
 
 export const EMAIL = "contact@vvashed.dev";
 export const GITHUB = "https://github.com/SauerExe";

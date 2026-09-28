@@ -24,14 +24,6 @@ function apiDevPlugin() {
             res.end(JSON.stringify(payload));
             return;
           }
-          if (req.url === "/api/geo") {
-            const { getGeoPayload } = await import("./api/_lib/geo.js");
-            const payload = await getGeoPayload(req.socket?.remoteAddress);
-            res.setHeader("Content-Type", "application/json");
-            res.setHeader("Cache-Control", "no-store");
-            res.end(JSON.stringify(payload));
-            return;
-          }
         } catch {
           res.statusCode = 200;
           res.setHeader("Content-Type", "application/json");

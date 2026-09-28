@@ -1,5 +1,5 @@
 import SubPage from "./SubPage.jsx";
-import { profile } from "../data/content.js";
+import { EMAIL } from "../v3/content.js";
 
 // Bewusst ohne volle Anschrift: Diese Seite ist ein persönliches
 // Portfolio — über die Seite selbst wird nichts verkauft und kein
@@ -34,8 +34,8 @@ export default function Impressum() {
               <h2>Kontakt</h2>
               <p>
                 E-Mail:{" "}
-                <a className="text-link" href={`mailto:${profile.email}`}>
-                  {profile.email}
+                <a className="text-link" href={`mailto:${EMAIL}`}>
+                  {EMAIL}
                 </a>
               </p>
             </div>

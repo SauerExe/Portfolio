@@ -4,13 +4,12 @@ Portfolio von [Timo Weiß](https://vvashed.dev) — Full-Stack Developer aus Gel
 
 ![vvashed.dev](public/og.png)
 
-Software, die im Betrieb läuft, nicht nur in der Demo: Die Statusleiste und die Karten im „Maschinenraum" zeigen Live-Daten von meiner eigenen Infrastruktur (Uptime Kuma, Spotify, IP-Geolocation).
+Software, die im Betrieb läuft, nicht nur in der Demo: Die Statusleiste und die Karten im „Maschinenraum" zeigen Live-Daten von meiner eigenen Infrastruktur (Uptime Kuma, Spotify).
 
 ## Stack
 
-- **Frontend:** [Vite](https://vitejs.dev) + React, plain CSS mit Cascade Layers und OKLCH-Farben
-- **Animation:** [GSAP](https://gsap.com) (ScrollTrigger) + [Lenis](https://lenis.darkroom.engineering) Smooth Scroll
-- **Standort:** eigene SVG-Karte (Mercator, Umrisse von [Natural Earth](https://www.naturalearthdata.com), `npm run geo:outlines`), ohne Kartenanbieter oder zusätzliche Bibliothek
+- **Frontend:** [Vite](https://vitejs.dev) + React, plain CSS mit OKLCH-Farben, Design aus Claude Design („vvashed Portfolio v3")
+- **Animation:** ohne Bibliothek — CSS-Transitions, IntersectionObserver und ein einzelner rAF-Scroll-Handler (`src/v3/useScrollFx.js`)
 - **API:** Serverless Functions unter `api/` (Vercel), im Dev über ein Vite-Plugin gespiegelt — dieselben Handler, keine doppelte Implementierung
 
 ## Lokal starten

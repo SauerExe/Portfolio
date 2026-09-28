@@ -1,15 +1,15 @@
 import { useEffect } from "react";
-import StatusBar from "../components/StatusBar.jsx";
-import Nav from "../components/Nav.jsx";
-import SiteFooter from "../components/SiteFooter.jsx";
-import A11yWidget from "../components/A11yWidget.jsx";
+import { A11yPanel, SiteFooter, TopBar, useLiveData, usePrefs } from "../v3/chrome.jsx";
 import { pageMeta, siteUrl } from "../data/seo.js";
+import "../styles/v3.css";
 
 // Gemeinsame Hülle für Unterseiten (Impressum, Datenschutz, Notizen, 404):
-// gleiche Statusleiste, Nav und Footer wie die Startseite, aber ohne
-// Smooth Scroll und Scroll-Animationen — kurze Seiten brauchen das nicht
-// („JavaScript nur wo nötig").
+// dieselbe Kopfzeile, derselbe Footer und dasselbe Darstellungs-Panel wie
+// die Startseite, aber ohne Scroll-Animationen — kurze Seiten brauchen das nicht.
 export default function SubPage({ title, description, article = false, noindex = false, children }) {
+  const { rootProps, panel } = usePrefs();
+  const { status, track } = useLiveData();
+
   useEffect(() => {
     const path = window.location.pathname.replace(/\/+$/, "") || "/";
     const summary = description ?? pageMeta[path]?.description ?? title;
@@ -36,15 +36,16 @@ export default function SubPage({ title, description, article = false, noindex =
   }, [title, description, article, noindex]);
 
   return (
-    <>
-      <a className="skip-link" href="#top">Zum Inhalt springen</a>
-      <StatusBar />
-      <Nav />
-      <main id="top" tabIndex={-1} className="subpage">
+    <div className="v3 v3-sub" {...rootProps}>
+      <a className="v3-skip" href="#top">Zum Inhalt springen</a>
+      <TopBar status={status} track={track} />
+      <main id="top" tabIndex={-1} style={{ outline: "none" }}>
         {children}
       </main>
-      <SiteFooter />
-      <A11yWidget />
-    </>
+      <div className="v3-footer-wrap">
+        <SiteFooter />
+      </div>
+      <A11yPanel {...panel} />
+    </div>
   );
 }

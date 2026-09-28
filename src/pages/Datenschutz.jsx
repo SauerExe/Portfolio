@@ -1,10 +1,10 @@
 import SubPage from "./SubPage.jsx";
-import { profile } from "../data/content.js";
+import { EMAIL } from "../v3/content.js";
 
 // Die Du-Form ist Absicht — die ganze Seite duzt, die Datenschutzerklärung
 // soll kein Stilbruch sein. Inhaltlich deckt sie ab, was technisch
-// tatsächlich passiert: kein Tracking, keine Cookies, aber IP-Geolocation
-// (ipwho.is), Spotify-Cover und Verbindungsdaten beim Hosting.
+// tatsächlich passiert: kein Tracking, keine Cookies, aber Spotify-Cover
+// und Verbindungsdaten beim Hosting.
 export default function Datenschutz() {
   return (
     <SubPage title="Datenschutz">
@@ -34,8 +34,8 @@ export default function Datenschutz() {
                 Gelsenkirchen, Deutschland
                 <br />
                 E-Mail:{" "}
-                <a className="text-link" href={`mailto:${profile.email}`}>
-                  {profile.email}
+                <a className="text-link" href={`mailto:${EMAIL}`}>
+                  {EMAIL}
                 </a>
               </p>
             </div>
@@ -64,40 +64,6 @@ export default function Datenschutz() {
                 Zugriffs-Logging und werte keine Server-Logs aus;
                 Verbindungsdaten fallen nur flüchtig an, soweit sie für die
                 Auslieferung technisch nötig sind.
-              </p>
-            </div>
-
-            <div className="legal-block">
-              <h2>Standort-Anzeige („Du &amp; ich")</h2>
-              <p>
-                Im Kontakt-Bereich zeigt eine Karte die ungefähre Entfernung
-                zwischen meinem Standort und deinem. Die Kartenumrisse liegen
-                auf meinem Server, es werden keine Kartenkacheln von Dritten
-                geladen. Dein Browser ruft für die Ortung nur meine eigene
-                API auf. Mein Server kürzt deine IP-Adresse
-                (bei IPv4 wird das letzte Stück verworfen) und fragt erst mit
-                dieser gekürzten IP den Dienst <strong>ipwho.is</strong> an.
-                Der Dienst sieht also weder deinen Browser noch deine
-                vollständige IP-Adresse. Die Antwort ist eine grobe
-                Ortsangabe (Stadt, Koordinaten auf Stadtebene) — keine genaue
-                Position.
-              </p>
-              <p>
-                <strong>Es wird nichts gespeichert:</strong> weder von mir
-                noch auf meinen Servern; die Antwort ist zudem ausdrücklich
-                vom Caching ausgenommen. Die Ortsangabe existiert nur,
-                solange die Seite geöffnet ist, und wird nicht mit anderen
-                Daten zusammengeführt.
-              </p>
-              <p>
-                <strong>Zweck:</strong> Darstellung der Entfernung als Teil
-                der Seite. <strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1
-                lit. f DSGVO (berechtigtes Interesse an der Funktion; die
-                Verarbeitung ist minimal, gekürzt und flüchtig).{" "}
-                <strong>Speicherdauer:</strong> keine.{" "}
-                <strong>Widerspruch:</strong> siehe unten — außerdem kannst du
-                die Standort-Abfrage an /api/geo in deinem Browser blockieren; die Seite
-                funktioniert dann trotzdem.
               </p>
             </div>
 
@@ -153,8 +119,8 @@ export default function Datenschutz() {
                   Abs. 1 lit. f DSGVO (Art. 21 DSGVO)
                 </strong>
                 . Eine formlose E-Mail an{" "}
-                <a className="text-link" href={`mailto:${profile.email}`}>
-                  {profile.email}
+                <a className="text-link" href={`mailto:${EMAIL}`}>
+                  {EMAIL}
                 </a>{" "}
                 reicht. Außerdem kannst du dich bei einer
                 Datenschutz-Aufsichtsbehörde beschweren (Art. 77 DSGVO) — für
