@@ -64,10 +64,16 @@ app.get("/api/geo", async (req, res) => {
   }
 });
 
+// Gehashte Assets sind unveränderlich: lange TTL, damit Browser und
+// Cloudflare-Edge sie über einen Deploy hinweg behalten. Beim Rolling-Update
+// beantwortet sonst der alte Container kurz Anfragen nach dem neuen CSS
+// mit 404 — und die Seite steht unstyled da.
+const assetsDir = path.join(distDir, "assets") + path.sep;
 app.use(express.static(distDir, {
   index: false, redirect: false, maxAge: "1h",
   setHeaders(res, filePath) {
     if (filePath.endsWith(".html")) res.setHeader("Cache-Control", htmlCacheControl);
+    else if (filePath.startsWith(assetsDir)) res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
   },
 }));
 
@@ -79,11 +85,14 @@ app.get(/^(?!\/api(?:\/|$))(?!.*\.[^/]+\/?$).*/, (req, res) => {
   if (routes.has(route)) {
     res.sendFile(path.join(distDir, route, "index.html"));
   } else {
-    res.set("X-Robots-Tag", "noindex").status(404).sendFile(path.join(distDir, "404.html"));
+    res.set({ "X-Robots-Tag": "noindex", "Cache-Control": "no-store" });
+    res.status(404).sendFile(path.join(distDir, "404.html"));
   }
 });
+// 404 nie cachen: Cloudflare hält Fehlerantworten sonst minutenlang im Edge —
+// ein während des Deploys fehlendes Asset bliebe dann "fehlend".
 app.use((req, res) => {
-  res.status(404).type("text").send("Not found");
+  res.set("Cache-Control", "no-store").status(404).type("text").send("Not found");
 });
 
 const port = process.env.PORT || 3000;

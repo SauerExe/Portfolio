@@ -39,12 +39,18 @@ try {
   for (const route of ["/media/missing.png", "/missing.js", "/api/missing", "/api", "/unknown", "/notes/unknown"]) {
     const res = await fetch(base + route);
     assert.equal(res.status, 404, route);
+    assert.equal(res.headers.get("cache-control"), "no-store", `${route}: 404 must not be cached`);
     if (route.includes(".") || route.startsWith("/api")) {
       assert.ok(!res.headers.get("content-type").includes("text/html"), `${route}: unexpected HTML`);
     } else {
       assert.equal(res.headers.get("x-robots-tag"), "noindex");
     }
   }
+  const home = await fetch(base + "/").then((res) => res.text());
+  const asset = home.match(/href="(\/assets\/[^"]+\.css)"/)[1];
+  const assetRes = await fetch(base + asset);
+  assert.equal(assetRes.status, 200, asset);
+  assert.ok(assetRes.headers.get("cache-control").includes("immutable"), `${asset}: hashed assets must be immutable`);
   const trailingSlash = await fetch(`${base}/notes/`).then((res) => res.text());
   assert.ok(trailingSlash.includes('href="https://vvashed.dev/notes"'));
   console.log(`Passed: ${routes.length} pages, metadata, sitemap, security headers, trailing slash and 6 negative route cases.`);
