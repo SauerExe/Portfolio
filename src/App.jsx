@@ -1,4 +1,4 @@
-import Home from "./pages/Home.jsx";
+import Home from "./v3/HomeV3.jsx";
 import Impressum from "./pages/Impressum.jsx";
 import Datenschutz from "./pages/Datenschutz.jsx";
 import NotesIndex from "./pages/NotesIndex.jsx";
