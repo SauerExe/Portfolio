@@ -3,8 +3,8 @@ import { EMAIL } from "../v3/content.js";
 
 // Die Du-Form ist Absicht — die ganze Seite duzt, die Datenschutzerklärung
 // soll kein Stilbruch sein. Inhaltlich deckt sie ab, was technisch
-// tatsächlich passiert: kein Tracking, keine Cookies, aber Spotify-Cover
-// und Verbindungsdaten beim Hosting.
+// tatsächlich passiert: keine Cookies, anonyme Zählung mit selbst gehostetem
+// Umami, Spotify-Cover und Verbindungsdaten beim Hosting.
 export default function Datenschutz() {
   return (
     <SubPage title="Datenschutz">
@@ -19,10 +19,10 @@ export default function Datenschutz() {
             <div className="legal-block">
               <h2>Das Wichtigste zuerst</h2>
               <p>
-                Diese Seite kommt ohne Tracking, ohne Analyse-Tools, ohne
-                Werbenetzwerke und ohne Cookies aus. Es gibt keine Zählung,
-                wie viele Leute sie besuchen. Was technisch trotzdem an Daten
-                anfällt, steht vollständig hier.
+                Diese Seite kommt ohne Cookies, ohne Werbenetzwerke und ohne
+                Tracker von Drittanbietern aus. Wie viele Leute sie besuchen,
+                zähle ich anonym mit Umami auf meinem eigenen Server. Was
+                technisch an Daten anfällt, steht vollständig hier.
               </p>
             </div>
 
@@ -64,6 +64,36 @@ export default function Datenschutz() {
                 Zugriffs-Logging und werte keine Server-Logs aus;
                 Verbindungsdaten fallen nur flüchtig an, soweit sie für die
                 Auslieferung technisch nötig sind.
+              </p>
+            </div>
+
+            <div className="legal-block">
+              <h2>Besucherstatistik (Umami)</h2>
+              <p>
+                Um zu sehen, welche Seiten gelesen werden und woher Besuche
+                kommen, nutze ich Umami. Umami läuft auf meinem eigenen Server
+                unter zahlen.vvashed.dev; es gibt keinen externen Anbieter und
+                keine Weitergabe an Dritte. Umami setzt keine Cookies und
+                speichert nichts in deinem Browser.
+              </p>
+              <p>
+                Erfasst werden: aufgerufene Seite, verweisende Seite,
+                Browser, Betriebssystem, Gerätetyp, Bildschirmgröße, Sprache
+                sowie Land, Region und Stadt, grob abgeleitet aus der
+                IP-Adresse. Die IP-Adresse
+                selbst wird nicht gespeichert. Aus ihr und dem User-Agent
+                bildet Umami eine Kennung, die sich regelmäßig ändert, damit
+                ein Besuch nur einmal zählt — ein Profil über mehrere Besuche
+                hinweg entsteht so nicht.
+              </p>
+              <p>
+                <strong>Zweck:</strong> Verbesserung der Seite anhand
+                anonymer Nutzungszahlen. <strong>Rechtsgrundlage:</strong>{" "}
+                Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einer
+                Reichweitenmessung ohne Eingriff in dein Endgerät).{" "}
+                <strong>Speicherdauer:</strong> Die anonymen Zählwerte bleiben
+                gespeichert, bis ich sie lösche. Wenn du nicht gezählt werden
+                willst, genügt ein Werbe- oder Tracking-Blocker.
               </p>
             </div>
 

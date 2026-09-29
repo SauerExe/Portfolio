@@ -127,7 +127,7 @@ export const principles = [
   ["Vorführen statt behaupten", "Die Statusleiste oben zeigt echte Daten meiner eigenen Server. Fällt dort etwas aus, ist es hier zuerst sichtbar."],
   ["Quellcode offen", "Diese Seite und ReplayHaven liegen öffentlich auf GitHub — inklusive der Commits, in denen ich Dinge wieder verworfen habe."],
   ["Eigene Infrastruktur", "TrueNAS, Coolify und n8n laufen auf eigenen Servern. Fällt etwas aus, löse ich es selbst — dadurch kenne ich den Stack bis zur untersten Schicht."],
-  ["Kein Tracking, keine Cookies", "Diese Seite zählt keine Besucher und setzt keine Cookies."],
+  ["Keine Cookies, keine Fremd-Tracker", "Besuche zähle ich anonym mit Umami auf meinem eigenen Server — ohne Cookies, ohne Profile, ohne Daten an Dritte."],
   ["Offene Punkte offen benennen", "Was nicht fertig ist, wird auch so benannt. Ein sichtbarer offener Punkt ist mir lieber als eine stille Lücke."],
   ["Erst verstehen, dann automatisieren", "Bevor ich einen Ablauf automatisiere, will ich ihn einmal von Hand gemacht haben."],
 ];

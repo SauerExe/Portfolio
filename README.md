@@ -30,7 +30,8 @@ npm run check:server   # HTTP-, SEO- und Fehlerfall-Prüfungen nach dem Build
 
 ## Prinzipien
 
-- Kein Tracking, keine Cookies — gespeichert wird nur die Darstellungs-Einstellung, lokal im Browser
+- Keine Cookies — gespeichert wird nur die Darstellungs-Einstellung, lokal im Browser
+- Besucherzählung mit selbst gehostetem Umami (`zahlen.vvashed.dev`), cookielos und ohne Weitergabe an Dritte
 - Barrierefreiheit: Textgröße, Kontrast und Motion sind über das Panel unten rechts einstellbar
 - `?static` in der URL deaktiviert Smooth Scroll und Scroll-Animationen (praktisch für Screenshots und Crawler)
 

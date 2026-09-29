@@ -191,7 +191,7 @@ export function A11yPanel({ values, setters }) {
             <div className="v3-a11y-head">
               <div>
                 <span>Darstellung</span>
-                <span>Bleibt lokal im Browser. Keine Cookies, kein Tracking.</span>
+                <span>Bleibt lokal im Browser. Keine Cookies.</span>
               </div>
               <button type="button" className="v3-a11y-close" aria-label="Schließen" onClick={() => setOpen(false)}>×</button>
             </div>
