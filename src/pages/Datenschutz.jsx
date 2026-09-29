@@ -77,6 +77,11 @@ export default function Datenschutz() {
                 speichert nichts in deinem Browser.
               </p>
               <p>
+                Dieser Abschnitt und die übrige Erklärung gelten ebenso für
+                replayhaven.vvashed.dev, die Seite meines Projekts
+                ReplayHaven.
+              </p>
+              <p>
                 Erfasst werden: aufgerufene Seite, verweisende Seite,
                 Browser, Betriebssystem, Gerätetyp, Bildschirmgröße, Sprache
                 sowie Land, Region und Stadt, grob abgeleitet aus der
