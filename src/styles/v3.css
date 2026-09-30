@@ -326,6 +326,7 @@
 .v3-word { display: inline-block; overflow: clip; vertical-align: bottom; padding-bottom: 0.08em; margin-bottom: -0.08em; }
 .v3-word > span { display: inline-block; transform: translateY(115%); }
 .v3[data-motion="off"] .v3-hero-claim { display: none; }
+.v3-hero-offer { font-size: 15px; line-height: 1.55; color: var(--ink-70); max-width: 30ch; text-wrap: pretty; }
 /* Claim als Text: für Screenreader immer, sichtbar wenn Motion aus */
 .v3-hero-tagline {
   position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;

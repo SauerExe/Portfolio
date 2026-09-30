@@ -3,6 +3,11 @@
 export const EMAIL = "contact@vvashed.dev";
 export const GITHUB = "https://github.com/SauerExe";
 
+// Mail-Link mit Vorlage: dieselben drei Fragen, die der Kontaktbereich stellt
+export const MAIL_PROJECT =
+  `mailto:${EMAIL}?subject=${encodeURIComponent("Projektanfrage über vvashed.dev")}` +
+  `&body=${encodeURIComponent("Hallo Timo,\n\nWas soll entstehen?\n\n\nWas existiert bereits?\n\n\nBis wann?\n\n")}`;
+
 export const marqueeItems = [
   "Next.js",
   "TypeScript",

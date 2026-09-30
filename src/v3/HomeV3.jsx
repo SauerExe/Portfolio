@@ -4,6 +4,7 @@ import { useScrollFx } from "./useScrollFx.js";
 import {
   EMAIL,
   GITHUB,
+  MAIL_PROJECT,
   buildPath,
   marqueeItems,
   principles,
@@ -41,11 +42,14 @@ function Hero() {
               <span>Full-Stack Developer</span>
               <span>CTO · SimpleAct</span>
             </p>
+            <p className="v3-hero-offer">
+              Auf Anfrage: Portale, Buchungsstrecken und Admin-Tools für kleine und mittlere Betriebe.
+            </p>
             <p className="v3-hero-tagline">{CLAIM.join(" ")}</p>
             <nav className="v3-hero-jump" aria-label="Sprungnavigation">
               <a className="fx" href="#projekte"><span className="acc">→</span>Projekte ansehen</a>
               <a className="fx" href={GITHUB}><span className="acc">→</span>GitHub</a>
-              <a className="fx" href={`mailto:${EMAIL}`}><span className="acc">→</span>Kontakt</a>
+              <a className="fx" href={MAIL_PROJECT}><span className="acc">→</span>Kontakt</a>
             </nav>
           </div>
         </div>
@@ -467,7 +471,7 @@ function Contact({ status, track }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      window.location.href = `mailto:${EMAIL}`;
+      window.location.href = MAIL_PROJECT;
     }
   };
   return (
@@ -495,7 +499,7 @@ function Contact({ status, track }) {
             <span className="v3-label">Der erste Schritt</span>
             <p>Zwei Sätze Kontext reichen: was entstehen soll, was bereits existiert und bis wann.</p>
             <div className="v3-links is-tight">
-              <a className="fx" href={`mailto:${EMAIL}`}>Mail öffnen ↗</a>
+              <a className="fx" href={MAIL_PROJECT}>Mail mit Vorlage öffnen ↗</a>
               <a className="fx" href={GITHUB}>GitHub ↗</a>
             </div>
           </div>
