@@ -2,6 +2,7 @@ export const meta = {
   slug: "csp-verdoppelt-sich-selbst",
   title: "CSP verdoppelt sich selbst",
   date: "Juni 2026",
+  project: "SimpleAct",
   teaser:
     "Die Content-Security-Policy kam doppelt: einmal vom Reverse Proxy, einmal von der App. Jetzt gibt es eine Quelle der Wahrheit.",
 };

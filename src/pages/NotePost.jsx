@@ -13,7 +13,7 @@ export default function NotePost({ slug }) {
       <section className="section notes" aria-label={post.title}>
         <div className="section-inner">
           <article className="note-article">
-            <span className="kicker">Notiz · {post.date}</span>
+            <span className="kicker">Notiz · {post.project ? `${post.project} · ` : ""}{post.date}</span>
             <h1 className="section-title">
               {post.title}
               <span className="accent">.</span>

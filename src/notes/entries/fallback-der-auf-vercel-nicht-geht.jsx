@@ -2,6 +2,7 @@ export const meta = {
   slug: "fallback-der-auf-vercel-nicht-geht",
   title: "Ein Fallback, der auf Vercel nicht gehen kann",
   date: "August 2026",
+  project: "Sommerfrische",
   teaser:
     "Ohne Redis schreibt der Urlaubsplaner in eine JSON-Datei. Auf Vercel geht das nicht — statt EROFS-Stacktrace steht da jetzt, was zu tun ist.",
 };

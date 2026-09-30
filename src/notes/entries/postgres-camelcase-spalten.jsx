@@ -2,6 +2,7 @@ export const meta = {
   slug: "postgres-camelcase-spalten",
   title: "Postgres mag keine camelCase-Spalten",
   date: "März 2026",
+  project: "SimpleAct",
   teaser:
     "Ein Subscription-Bug, der nur in Produktion auftrat. Lehre: Staging sollte dieselbe DB wie Prod nutzen, nicht nur „eine DB“.",
 };

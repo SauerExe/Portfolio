@@ -2,6 +2,7 @@ export const meta = {
   slug: "kein-login-trotzdem-rechte",
   title: "Kein Login, trotzdem Rechte",
   date: "August 2026",
+  project: "Sommerfrische",
   teaser:
     "Der Urlaubsplaner hat keine Accounts. Wer was darf, hängt am Link — und der Organisator-Schlüssel wird von der öffentlichen API nie ausgeliefert.",
 };

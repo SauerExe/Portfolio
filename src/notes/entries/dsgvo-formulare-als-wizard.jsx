@@ -2,6 +2,7 @@ export const meta = {
   slug: "dsgvo-formulare-als-wizard",
   title: "DSGVO-Formulare als Wizard statt Wall of Fields",
   date: "Mai 2026",
+  project: "SimpleAct",
   teaser:
     "RoPA, DPIA und TOMs schrittweise statt als eine lange Seite — der meistgenannte Frust aus Nutzergesprächen.",
 };

@@ -2,6 +2,7 @@ export const meta = {
   slug: "einen-tag-zu-frueh",
   title: "Einen Tag zu früh",
   date: "August 2026",
+  project: "Sommerfrische",
   teaser:
     "toISOString() auf ein lokal gemeintes Datum schiebt in Berlin den Kalendertag zurück. Im Urlaubsplaner rechnet deshalb alles in lokaler Zeit.",
 };

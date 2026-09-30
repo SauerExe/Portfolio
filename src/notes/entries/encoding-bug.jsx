@@ -2,6 +2,7 @@ export const meta = {
   slug: "encoding-bug",
   title: "Ein Encoding-Bug, der nicht totzukriegen ist",
   date: "März 2026",
+  project: "SimpleAct",
   teaser:
     "Wieder kaputte Umlaute — dritte oder vierte Runde. Diesmal einen Check gebaut, der das vorher abfängt.",
 };

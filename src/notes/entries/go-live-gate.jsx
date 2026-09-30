@@ -2,6 +2,7 @@ export const meta = {
   slug: "go-live-gate",
   title: "Go-Live Gate",
   date: "Februar 2026",
+  project: "SimpleAct",
   teaser:
     "Vor dem Go-Live prüft SimpleAct jetzt automatisch, ob Pflichtdokumente wirklich vollständig sind — nicht nur angelegt.",
 };

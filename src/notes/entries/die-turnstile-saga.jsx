@@ -2,6 +2,7 @@ export const meta = {
   slug: "die-turnstile-saga",
   title: "Die Turnstile-Saga",
   date: "Juni 2026",
+  project: "SimpleAct",
   teaser:
     "Fast eine Woche Cloudflare Turnstile: kleines Detail, unverhältnismäßig viel Zeit gekostet.",
 };

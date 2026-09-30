@@ -2,6 +2,7 @@ export const meta = {
   slug: "terminbuchung-selbst-gehostet",
   title: "Terminbuchung selbst gehostet",
   date: "Juli 2026",
+  project: "SimpleAct",
   teaser:
     "Meetergo-Embed durch eine eigene Lösung ersetzt — keine fremde Domain mehr, die im Booking-Flow Daten sieht.",
 };

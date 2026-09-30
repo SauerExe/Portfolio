@@ -2,6 +2,7 @@ export const meta = {
   slug: "ein-nachmittag-npm-audit",
   title: "Ein Nachmittag npm audit",
   date: "Juli 2026",
+  project: "SimpleAct",
   teaser:
     "Kein einzelner großer Fix, eher zehn kleine — aber genau solche Nachmittage verhindern die großen Probleme später.",
 };

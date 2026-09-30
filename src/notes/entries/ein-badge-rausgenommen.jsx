@@ -2,6 +2,7 @@ export const meta = {
   slug: "ein-badge-rausgenommen",
   title: "Ein Badge, den ich rausgenommen habe",
   date: "April 2026",
+  project: "SimpleAct",
   teaser:
     "Ein Reviews-Badge, bevor es echte Reviews gab: sah gut aus, war aber schlicht nicht wahr.",
 };
