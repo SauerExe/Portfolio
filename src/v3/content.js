@@ -82,7 +82,7 @@ export const skillGroups = [
     claim: "Web-Plattformen mit Next.js und TypeScript, klar strukturiert und schnell.",
     items: [
       ["TypeScript / JavaScript", "typsicher, ohne Ballast"],
-      ["React / Next.js", "Full-Stack-React, SSR & RSC"],
+      ["React / Next.js", "schnelle Seiten, gut auffindbar"],
       ["Tailwind CSS", "konsistentes, schnelles Styling"],
       ["Motion", "Scroll- & UI-Animationen"],
     ],
@@ -93,7 +93,7 @@ export const skillGroups = [
     items: [
       ["C# / .NET 10", "Web APIs, Anwendungsentwicklung"],
       ["EF Core", "Datenzugriff und Migrationen"],
-      ["JWT / LDAP", "Auth gegen bestehende Systeme"],
+      ["JWT / LDAP", "Anmeldung über vorhandene Firmenkonten"],
       ["Supabase · Redis", "Datenbank, Auth, Key-Value"],
       ["Node.js · SQLite", "Backend von ReplayHaven"],
     ],
@@ -102,11 +102,11 @@ export const skillGroups = [
     label: "Infrastruktur & Automation",
     claim: "Eigener Betrieb statt Managed-Abhängigkeit, vom Server bis zum Deploy.",
     items: [
-      ["TrueNAS", "zentrale Storage-Basis"],
-      ["Coolify · Docker", "Container-Deployments"],
-      ["n8n", "Workflow-Automatisierung"],
-      ["Cloudflare Tunnel", "Zugriff ohne offene Ports"],
-      ["Authelia", "zentrale Zugriffskontrolle"],
+      ["TrueNAS", "Daten auf eigener Hardware"],
+      ["Coolify · Docker", "neue Versionen kontrolliert live bringen"],
+      ["n8n", "wiederkehrende Abläufe automatisieren"],
+      ["Cloudflare Tunnel", "erreichbar, ohne den Server offen ins Netz zu stellen"],
+      ["Authelia", "ein Login für alle internen Tools"],
     ],
   },
   {
