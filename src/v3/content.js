@@ -32,6 +32,7 @@ export const projects = [
     outcome: "In Betrieb. Produktarchitektur, Plattform und Automatisierung liegen seit Gründung bei mir.",
     tech: ["Next.js", "TypeScript", "Supabase", "n8n"],
     url: "https://simpleact.de",
+    notes: ["go-live-gate"],
   },
   {
     title: "Gewinnspiel-Plattform für die Stadtverwaltung",
@@ -55,6 +56,7 @@ export const projects = [
     outcome: "Live und ohne Account direkt ausprobierbar. Rechte hängen am Link statt am Account.",
     tech: ["Next.js 16", "React 19", "TypeScript", "Redis / Upstash"],
     url: "https://urlaub.vvashed.dev",
+    notes: ["kein-login-trotzdem-rechte", "einen-tag-zu-frueh", "fallback-der-auf-vercel-nicht-geht"],
   },
   {
     title: "Habitaz",

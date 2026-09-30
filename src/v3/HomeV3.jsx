@@ -11,6 +11,7 @@ import {
   replayHaven,
   skillGroups,
 } from "./content.js";
+import { getPost } from "../notes/posts.js";
 import "../styles/v3.css";
 
 const pad = (n) => String(n).padStart(2, "0");
@@ -197,6 +198,20 @@ function Projects({ active, scrolly, onSelect, reduced }) {
                 <span className="v3-label">Ergebnis</span>
                 <p>{p.outcome}</p>
               </div>
+              {p.notes && (
+                <div className="v3-proj-block" data-ptext>
+                  <span className="v3-label">Entscheidungen dazu</span>
+                  <ul className="v3-proj-notes">
+                    {p.notes.map(getPost).filter(Boolean).map((n) => (
+                      <li key={n.slug}>
+                        <a className="fx" href={`/notes/${n.slug}`}>
+                          <span className="acc">→</span> {n.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
               <div className="v3-proj-foot">
                 <div className="v3-proj-tech">
                   {p.tech.map((t) => <span key={t}>{t}</span>)}
