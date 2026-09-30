@@ -30,10 +30,24 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
     const wordmark = q("[data-wordmark]");
     const wmLetters = qa("[data-wm]");
     let bpMax = 0;
+    // Noch verdeckte Reveal-Elemente. Bewusst im Scroll-Handler geprüft statt
+    // per IntersectionObserver: der meldet bei CSS-zoom (Textgröße „L“) nicht
+    // zuverlässig, und die Elemente blieben dann unsichtbar.
+    const pending = new Set();
+    const pendingBp = new Set();
+    const reveal = (el) => {
+      pending.delete(el);
+      el.classList.remove("is-pending");
+      if (el.dataset.reveal === "clip") el.style.clipPath = "inset(-20% -5% -25% -5%)";
+    };
     let lastIdx = -1;
 
     const update = () => {
       const vh = window.innerHeight;
+      pending.forEach((el) => { if (el.getBoundingClientRect().top < vh * 0.9) reveal(el); });
+      pendingBp.forEach((el) => {
+        if (el.getBoundingClientRect().top < vh * 0.86) { el.classList.add("is-in"); pendingBp.delete(el); }
+      });
       const max = document.documentElement.scrollHeight - vh;
       if (bar) bar.style.transform = `scaleX(${max > 0 ? clamp01(window.scrollY / max) : 0})`;
 
@@ -134,39 +148,29 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
     update();
 
     // Reveals: Elemente unterhalb des ersten Viewports starten verdeckt
-    let io;
     if (!reduced) {
       const vh = window.innerHeight;
-      io = new IntersectionObserver(
-        (entries) => entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          e.target.classList.remove("is-pending");
-          if (e.target.dataset.reveal === "clip") e.target.style.clipPath = "inset(-20% -5% -25% -5%)";
-          io.unobserve(e.target);
-        }),
-        { rootMargin: "0px 0px -10% 0px" },
-      );
       const ease = "cubic-bezier(.16,1,.3,1)";
       qa("[data-reveal]").forEach((el) => {
-        if (el.getBoundingClientRect().top < vh * 0.92) return;
+        // Schon sichtbar: sofort zeigen — auch falls ein früherer Lauf
+        // (z. B. vor dem Einlesen gespeicherter Einstellungen) es versteckt hat
+        if (el.getBoundingClientRect().top < vh * 0.92) {
+          el.classList.remove("is-pending");
+          return;
+        }
         const sibs = [...el.parentElement.children].filter((c) => c.hasAttribute("data-reveal"));
         const d = Math.min(sibs.indexOf(el), 5) * 80;
         el.style.transition = `opacity .9s ${ease} ${d}ms, transform 1.1s ${ease} ${d}ms, clip-path 1.2s ${ease} ${d}ms, background .25s`;
         el.classList.add("is-pending");
-        io.observe(el);
+        pending.add(el);
       });
     } else {
       qa("[data-reveal]").forEach((el) => { el.classList.remove("is-pending"); el.style.clipPath = ""; });
     }
 
-    // Build-Log-Einträge
-    const bio = new IntersectionObserver(
-      (entries) => entries.forEach((e) => {
-        if (e.isIntersecting) { e.target.classList.add("is-in"); bio.unobserve(e.target); }
-      }),
-      { rootMargin: "0px 0px -14% 0px" },
-    );
-    qa("[data-bp]").forEach((el) => bio.observe(el));
+    // Build-Log-Einträge (gleiche Prüfung wie die Reveals)
+    qa("[data-bp]:not(.is-in)").forEach((el) => pendingBp.add(el));
+    update();
 
     // Hero-Name folgt leicht dem Mauszeiger
     const lines = qa("[data-hx]");
@@ -206,9 +210,12 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
       window.removeEventListener("scroll", kickMarquee);
       cancelAnimationFrame(raf);
       cancelAnimationFrame(loopId);
-      io?.disconnect();
+      pending.clear();
+      qa("[data-reveal].is-pending").forEach((el) => el.classList.remove("is-pending"));
+      const anim = mq?.getAnimations?.()[0];
+      if (anim) anim.playbackRate = 1;
       rowbars.forEach((b) => { b.style.transform = ""; });
-      bio.disconnect();
+      pendingBp.clear();
     };
   }, [rootRef, reduced, scrolly, onProject]);
 }

@@ -208,7 +208,10 @@
 }
 
 /* ---------- Hero ---------- */
-.v3-hero { position: relative; height: calc(250vh / var(--z)); }
+.v3-hero { position: relative; height: calc(100vh / var(--z)); }
+@media (prefers-reduced-motion: no-preference) {
+  .v3[data-motion="on"] .v3-hero { height: calc(250vh / var(--z)); }
+}
 .v3[data-motion="off"] .v3-hero { height: calc(100vh / var(--z)); }
 .v3-hero-stage {
   position: sticky;
@@ -398,11 +401,22 @@
 .v3-acc { color: var(--acc); }
 .v3-proj-track { position: relative; }
 .v3-proj-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; align-items: start; }
-.v3-proj-track.is-scrolly { height: calc(100vh + var(--n) * 55vh); }
-.v3-proj-track.is-scrolly .v3-proj-layout {
-  position: sticky;
-  top: 100px;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+@media (min-width: 1000px) and (min-height: 560px) and (prefers-reduced-motion: no-preference) {
+  /* Media Query zusätzlich zur Klasse: Das vorgerenderte HTML trägt immer
+     is-scrolly (Server kennt den Viewport nicht) — so springt auf Handys
+     nichts, bevor JavaScript übernimmt. Dieselbe Bedingung wie in HomeV3. */
+  .v3-proj-track.is-scrolly { height: calc(100vh + var(--n) * 55vh); }
+  .v3-proj-track.is-scrolly .v3-proj-layout {
+    position: sticky;
+    top: 100px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  }
+    .v3-proj-track.is-scrolly .v3-proj-block p {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+  }
 }
 .v3-proj-list { display: flex; flex-direction: column; border-top: 1px solid var(--line); }
 .v3-proj-row {
@@ -489,12 +503,6 @@
 .v3-proj-block { display: flex; flex-direction: column; gap: 6px; }
 .v3-proj-block .v3-label { color: var(--ink-64); }
 .v3-proj-block p { font-size: 16px; line-height: 1.6; color: var(--ink-80); text-wrap: pretty; }
-.v3-proj-track.is-scrolly .v3-proj-block p {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-}
 .v3-proj-notes { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 2px 20px; font-size: 15px; color: var(--ink); }
 .v3-proj-notes a { display: inline-block; padding: 2px 0; }
 .v3-proj-foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
