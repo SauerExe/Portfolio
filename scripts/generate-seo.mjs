@@ -1,12 +1,18 @@
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { createServer } from "vite";
+import { createElement } from "react";
+import { renderToString } from "react-dom/server";
 import { pageMeta, noteMeta, siteUrl } from "../src/data/seo.js";
 
 // Load the actual JSX registry through Vite, so new notes need no second list.
+// Jede Route wird außerdem vorgerendert: Das HTML enthält den Seiteninhalt
+// schon vor dem JavaScript (schnellere erste Darstellung, lesbar ohne JS),
+// src/main.jsx hydriert es dann nur noch.
 const vite = await createServer({ server: { hmr: false, watch: null }, appType: "custom" });
 try {
   const { posts } = await vite.ssrLoadModule("/src/notes/posts.js");
+  const { default: App } = await vite.ssrLoadModule("/src/App.jsx");
   const pages = { ...pageMeta };
   for (const post of posts) {
     if (!/^[\w-]+$/.test(post.slug) || pages[`/notes/${post.slug}`]) {
@@ -31,14 +37,19 @@ try {
             "og:description": meta.description, "og:url": url, "og:type": meta.type ?? "website" };
           return `<meta ${attr}="${name}" content="${escape(values[name])}" />`;
         });
+    globalThis.__SSR_PATH__ = route;
+    const body = renderToString(createElement(App));
+    if (!body) throw new Error(`Prerender produced no markup for ${route}`);
+    const page = html.replace('<div id="root"></div>', () => `<div id="root">${body}</div>`);
+    if (page === html) throw new Error("Template is missing <div id=\"root\"></div>");
     const dir = path.join("dist", route);
     await mkdir(dir, { recursive: true });
-    await writeFile(path.join(dir, "index.html"), html);
+    await writeFile(path.join(dir, "index.html"), page);
   }
   const urls = Object.keys(pages).map((route) => `  <url><loc>${siteUrl}${route}</loc></url>`);
   await writeFile("dist/sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`);
   await writeFile("dist/routes.json", JSON.stringify(Object.keys(pages)));
-  console.log(`SEO: ${urls.length} pages with individual metadata and sitemap entries.`);
+  console.log(`SEO: ${urls.length} pages prerendered with individual metadata and sitemap entries.`);
 } finally {
   await vite.close();
 }

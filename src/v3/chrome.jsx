@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { currentPath } from "../lib/path.js";
 import { usePolling } from "../hooks/usePolling.js";
 import { useMotionPref } from "../hooks/useMotionPref.js";
 
@@ -13,21 +14,30 @@ export const STATUS = {
   unknown: { bar: "Server: unbekannt", card: "Unbekannt", color: "oklch(58% 0.01 290)" },
 };
 
+// Alle Browser-Werte starten mit dem Server-Default und werden erst im
+// Effekt gelesen, damit das vorgerenderte HTML beim Hydrieren passt.
 function usePersisted(key, initial) {
-  const [value, setValue] = useState(() => {
-    try { return localStorage.getItem(key) ?? initial; } catch { return initial; }
-  });
+  const [value, setValue] = useState(initial);
+  const loaded = useRef(false);
   useEffect(() => {
+    if (!loaded.current) {
+      loaded.current = true;
+      try {
+        const stored = localStorage.getItem(key);
+        if (stored !== null && stored !== value) return setValue(stored);
+      } catch {}
+    }
     try { localStorage.setItem(key, value); } catch {}
   }, [key, value]);
   return [value, setValue];
 }
 
 export function useMedia(query) {
-  const [match, setMatch] = useState(() => window.matchMedia(query).matches);
+  const [match, setMatch] = useState(false);
   useEffect(() => {
     const mql = window.matchMedia(query);
     const on = () => setMatch(mql.matches);
+    on();
     mql.addEventListener("change", on);
     return () => mql.removeEventListener("change", on);
   }, [query]);
@@ -41,7 +51,8 @@ export function usePrefs() {
   const [contrast, setContrast] = usePersisted("vv-contrast", "normal");
   const [motionOff, setMotionOff] = useMotionPref();
   const systemReduced = useMedia("(prefers-reduced-motion: reduce)");
-  const staticMode = new URLSearchParams(window.location.search).has("static");
+  const [staticMode, setStaticMode] = useState(false);
+  useEffect(() => setStaticMode(new URLSearchParams(window.location.search).has("static")), []);
   const reduced = motionOff || systemReduced || staticMode;
   return {
     reduced,
@@ -62,8 +73,9 @@ export function useLiveData() {
 function useClock() {
   const fmt = () =>
     new Date().toLocaleTimeString("de-DE", { hour: "2-digit", minute: "2-digit", timeZone: "Europe/Berlin" }) + " Uhr";
-  const [clock, setClock] = useState(fmt);
+  const [clock, setClock] = useState("");
   useEffect(() => {
+    setClock(fmt());
     const id = setInterval(() => setClock(fmt()), 20_000);
     return () => clearInterval(id);
   }, []);
@@ -111,7 +123,7 @@ export function TopBar({ status, track }) {
 }
 
 export function SiteFooter() {
-  const path = window.location.pathname;
+  const path = currentPath();
   const current = (href) => (path === href || path.startsWith(`${href}/`) ? "page" : undefined);
   return (
     <footer className="v3-footer">

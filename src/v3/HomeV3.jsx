@@ -12,7 +12,6 @@ import {
   skillGroups,
 } from "./content.js";
 import { getPost } from "../notes/posts.js";
-import "../styles/v3.css";
 
 const pad = (n) => String(n).padStart(2, "0");
 
@@ -109,7 +108,7 @@ function ReplayHaven() {
             </div>
           </div>
           <a className="v3-rh-shot" href={replayHaven.url} tabIndex={-1}>
-            <img src={replayHaven.screenshot} alt="ReplayHaven Web-Bibliothek" width="1440" height="900" loading="lazy" />
+            <img src={replayHaven.screenshot} alt="ReplayHaven Web-Bibliothek" width="1200" height="750" loading="lazy" />
           </a>
         </div>
       </div>
@@ -180,7 +179,7 @@ function Projects({ active, scrolly, onSelect, reduced }) {
             </div>
             <div className="v3-proj-detail" data-reveal="up" ref={detailRef}>
               <div className={`v3-proj-media${p.secret ? " is-secret" : ""}`}>
-                <img ref={imgRef} src={p.screenshot} alt={p.title} width="1600" height="1000" />
+                <img ref={imgRef} src={p.screenshot} alt={p.title} width="1600" height="1000" loading="lazy" />
                 {p.secret && (
                   <div className="v3-stamp-wrap">
                     <div className="v3-stamp">
@@ -238,7 +237,7 @@ function About() {
         </p>
         <div className="v3-about-grid">
           <div className="v3-portrait" data-reveal="up">
-            <img data-parallax="0.07" src="/me.webp" alt="Portrait von Timo Weiß" width="1023" height="1537" loading="lazy" />
+            <img data-parallax="0.07" src="/me.webp" alt="Portrait von Timo Weiß" width="720" height="1082" loading="lazy" />
             <span className="v3-tag">Timo Weiß · Gelsenkirchen</span>
           </div>
           <div className="v3-about-text" data-reveal="up">
@@ -525,13 +524,7 @@ export default function HomeV3() {
   // Bei vergrößerter Schrift passt das Sticky-Panel nicht mehr in den Viewport
   const scrolly = !projNarrow && !reduced && rootProps["data-textsize"] === "m";
   const [active, setActive] = useState(0);
-  const [ready, setReady] = useState(false);
   const { status, track } = useLiveData();
-
-  useEffect(() => {
-    const t = setTimeout(() => setReady(true), 60);
-    return () => clearTimeout(t);
-  }, []);
 
   const onProject = useCallback((i) => setActive(i), []);
   useScrollFx(rootRef, { reduced, scrolly, onProject });
@@ -545,7 +538,7 @@ export default function HomeV3() {
   };
 
   return (
-    <div ref={rootRef} className={`v3 v3-home${ready ? " is-ready" : ""}`} {...rootProps}>
+    <div ref={rootRef} className="v3 v3-home" {...rootProps}>
       <a className="v3-skip" href="#main">Zum Inhalt springen</a>
       <TopBar status={status} track={track} />
       <main id="main" tabIndex={-1} style={{ outline: "none" }}>

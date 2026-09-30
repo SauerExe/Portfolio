@@ -15,8 +15,8 @@ export const marqueeItems = [
 ];
 
 export const replayHaven = {
-  icon: "/images/projekte/replayhaven/icon-192.png",
-  screenshot: "/images/projekte/replayhaven/app-home.jpg",
+  icon: "/images/projekte/replayhaven/icon.webp",
+  screenshot: "/images/projekte/replayhaven/app-home.webp",
   url: "https://replayhaven.vvashed.dev",
   repo: "https://github.com/SauerExe/ReplayHaven",
 };

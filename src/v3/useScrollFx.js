@@ -19,6 +19,7 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
     const heroInner = q("[data-hero-inner]");
     const heroGrid = q("[data-herogrid]");
     const cue = q("[data-cue]");
+    const claim = q(".v3-hero-claim");
     const words = qa("[data-sw]");
     const drifts = qa("[data-drift]");
     const parallax = qa("[data-parallax]");
@@ -44,6 +45,9 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
         heroInner.style.opacity = 1 - k;
         heroInner.style.transform = `translateY(${-10 * k}%)`;
         if (cue) cue.style.opacity = 1 - clamp01(p / 0.08);
+        // Erst beim Scrollen sichtbar — sonst wertet der Browser den noch
+        // weggeklappten Claim als größtes Element (LCP) statt des Namens.
+        if (claim) claim.style.visibility = p > 0.15 ? "visible" : "";
         if (!reduced) {
           words.forEach((w, i) => {
             const t = clamp01((p - 0.22 - i * 0.03) / 0.4);

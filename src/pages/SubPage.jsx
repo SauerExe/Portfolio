@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { A11yPanel, SiteFooter, TopBar, useLiveData, usePrefs } from "../v3/chrome.jsx";
 import { pageMeta, siteUrl } from "../data/seo.js";
-import "../styles/v3.css";
 
 // Gemeinsame Hülle für Unterseiten (Impressum, Datenschutz, Notizen, 404):
 // dieselbe Kopfzeile, derselbe Footer und dasselbe Darstellungs-Panel wie
