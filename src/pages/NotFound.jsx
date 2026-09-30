@@ -6,9 +6,9 @@ export default function NotFound() {
     <SubPage title="404 – Seite nicht gefunden" noindex>
       <section className="section notfound" aria-label="Seite nicht gefunden">
         <div className="section-inner">
-          <p className="notfound-code">
+          <h1 className="notfound-code">
             404<span className="accent">.</span>
-          </p>
+          </h1>
           <p className="notfound-text">
             Diese Seite gibt es nicht.
           </p>

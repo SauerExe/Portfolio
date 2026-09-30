@@ -42,6 +42,7 @@ function Hero() {
               <span>Full-Stack Developer</span>
               <span>CTO · SimpleAct</span>
             </p>
+            <p className="v3-hero-tagline">{CLAIM.join(" ")}</p>
             <nav className="v3-hero-jump" aria-label="Sprungnavigation">
               <a className="fx" href="#projekte"><span className="acc">→</span>Projekte ansehen</a>
               <a className="fx" href={GITHUB}><span className="acc">→</span>GitHub</a>
@@ -177,9 +178,9 @@ function Projects({ active, scrolly, onSelect, reduced }) {
                 </button>
               ))}
             </div>
-            <div className="v3-proj-detail" data-reveal="up" ref={detailRef} aria-live="polite">
+            <div className="v3-proj-detail" data-reveal="up" ref={detailRef}>
               <div className={`v3-proj-media${p.secret ? " is-secret" : ""}`}>
-                <img ref={imgRef} src={p.screenshot} alt={p.title} />
+                <img ref={imgRef} src={p.screenshot} alt={p.title} width="1600" height="1000" />
                 {p.secret && (
                   <div className="v3-stamp-wrap">
                     <div className="v3-stamp">
@@ -228,15 +229,16 @@ function Projects({ active, scrolly, onSelect, reduced }) {
 
 function About() {
   return (
-    <section id="ueber" className="v3-section v3-about v3-fade-down">
+    <section id="ueber" className="v3-section v3-about v3-fade-down" aria-labelledby="ueber-h">
       <div className="v3-inner">
+        <h2 id="ueber-h" className="visually-hidden">Über mich</h2>
         <p className="v3-about-lead" data-drift="0.05" data-reveal="clip">
           Seit 2018 schreibe ich Code. Erst Spiele in Unity, heute{" "}
           <span className="v3-acc">SaaS-Plattformen</span> und die Server darunter.
         </p>
         <div className="v3-about-grid">
           <div className="v3-portrait" data-reveal="up">
-            <img data-parallax="0.07" src="/me.webp" alt="Portrait von Timo Weiß" loading="lazy" />
+            <img data-parallax="0.07" src="/me.webp" alt="Portrait von Timo Weiß" width="1023" height="1537" loading="lazy" />
             <span className="v3-tag">Timo Weiß · Gelsenkirchen</span>
           </div>
           <div className="v3-about-text" data-reveal="up">
@@ -278,11 +280,12 @@ function About() {
 
 function Stack() {
   return (
-    <section id="stack" className="v3-section v3-stack v3-fade-up">
+    <section id="stack" className="v3-section v3-stack v3-fade-up" aria-labelledby="stack-h">
+      <h2 id="stack-h" className="visually-hidden">Stack</h2>
       <div className="v3-inner">
         <div className="v3-stack-aside">
           <div className="v3-stack-photo" data-reveal="up">
-            <img src="/images/setup/setup-photo.webp" alt="Homelab-Setup mit Server und NAS" loading="lazy" />
+            <img src="/images/setup/setup-photo.webp" alt="Homelab-Setup mit Server und NAS" width="960" height="1200" loading="lazy" />
           </div>
           <div className="v3-stack-meta">
             <span>Homelab · Gelsenkirchen</span>
@@ -361,8 +364,9 @@ function BuildLog() {
 
 function Principles() {
   return (
-    <section className="v3-section v3-principles v3-fade-up" aria-label="Arbeitsweise">
+    <section className="v3-section v3-principles v3-fade-up" aria-labelledby="arbeitsweise-h">
       <div className="v3-inner">
+        <h2 id="arbeitsweise-h" className="visually-hidden">Arbeitsweise</h2>
         <p className="v3-principles-intro" data-reveal="up">
           Sechs Regeln, nach denen ich baue — und nach denen auch diese Seite gebaut ist.
         </p>
@@ -470,7 +474,7 @@ function Contact({ status, track }) {
   return (
     <section id="kontakt" className="v3-contact v3-fade-down">
       <div className="v3-inner">
-        <span className="v3-kicker">Kontakt</span>
+        <h2 className="v3-kicker">Kontakt</h2>
         <p className="v3-contact-lead" data-reveal="up">Kein Formular, kein Calendly. Eine Mail reicht.</p>
         <button type="button" className="v3-mail" data-reveal="clip" onClick={copy}>
           <span>contact@<wbr />vvashed.dev</span>
@@ -500,7 +504,7 @@ function Contact({ status, track }) {
 
         <div className="v3-engine">
           <div className="v3-engine-head" data-reveal="up">
-            <span className="v3-kicker">Maschinenraum</span>
+            <h3 className="v3-kicker">Maschinenraum</h3>
             <p>Live-Daten aus externen APIs: Server-Status über Uptime Kuma, Musik über die Spotify Web API.</p>
           </div>
           <div className="v3-engine-grid">
@@ -509,13 +513,6 @@ function Contact({ status, track }) {
           </div>
         </div>
 
-        <div className="v3-wordmark" data-wordmark aria-hidden="true">
-          <div>
-            {"vvashed".split("").map((c, i) => <span data-wm key={i}>{c}</span>)}
-          </div>
-          <div className="v3-wordmark-fade" />
-        </div>
-        <SiteFooter />
       </div>
     </section>
   );
@@ -525,7 +522,8 @@ export default function HomeV3() {
   const rootRef = useRef(null);
   const { reduced, rootProps, panel } = usePrefs();
   const projNarrow = useMedia("(max-width: 999px), (max-height: 559px)");
-  const scrolly = !projNarrow && !reduced;
+  // Bei vergrößerter Schrift passt das Sticky-Panel nicht mehr in den Viewport
+  const scrolly = !projNarrow && !reduced && rootProps["data-textsize"] === "m";
   const [active, setActive] = useState(0);
   const [ready, setReady] = useState(false);
   const { status, track } = useLiveData();
@@ -561,6 +559,17 @@ export default function HomeV3() {
         <Principles />
         <Contact status={status} track={track} />
       </main>
+      <div className="v3-end">
+        <div className="v3-inner">
+          <div className="v3-wordmark" data-wordmark aria-hidden="true">
+            <div>
+              {"vvashed".split("").map((c, i) => <span data-wm key={i}>{c}</span>)}
+            </div>
+            <div className="v3-wordmark-fade" />
+          </div>
+          <SiteFooter />
+        </div>
+      </div>
       <A11yPanel {...panel} />
     </div>
   );

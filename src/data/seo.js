@@ -15,7 +15,7 @@ export const pageMeta = {
   },
   "/datenschutz": {
     title: "Datenschutz · vvashed",
-    description: "Datenschutzhinweise für vvashed.dev: Hosting, Standort-Anzeige, Live-Widgets, Kontakt und lokale Darstellungseinstellungen.",
+    description: "Datenschutzhinweise für vvashed.dev: Hosting, Besucherzählung mit Umami, Live-Widgets, Kontakt und lokale Darstellungseinstellungen.",
   },
 };
 

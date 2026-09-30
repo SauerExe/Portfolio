@@ -54,6 +54,9 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
       }
 
       if (!reduced) {
+        // Erst alle Maße lesen, dann schreiben — sonst erzwingt jedes
+        // Element ein eigenes Layout pro Frame.
+        const writes = [];
         drifts.forEach((el) => {
           const host = el.closest("section") || el.parentElement;
           const r = host.getBoundingClientRect();
@@ -61,14 +64,15 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
           const c = el.getBoundingClientRect();
           const current = parseFloat(el.style.translate?.split(" ")[1]) || 0;
           const off = (c.top + c.height / 2 - current - vh / 2) * parseFloat(el.dataset.drift);
-          el.style.translate = `0 ${off.toFixed(1)}px`;
+          writes.push(() => { el.style.translate = `0 ${off.toFixed(1)}px`; });
         });
         parallax.forEach((el) => {
           const r = el.parentElement.getBoundingClientRect();
           if (r.bottom < -200 || r.top > vh + 200) return;
           const off = (r.top + r.height / 2 - vh / 2) * parseFloat(el.dataset.parallax);
-          el.style.transform = `translateY(${off.toFixed(1)}px) scale(1.14)`;
+          writes.push(() => { el.style.transform = `translateY(${off.toFixed(1)}px) scale(1.14)`; });
         });
+        writes.forEach((w) => w());
       }
 
       if (projTrack && scrolly) {
@@ -83,7 +87,7 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
         rowbars.forEach((b, i) => { b.style.transform = `scaleX(${clamp01(p * n - i)})`; });
       }
 
-      if (bpTrack && bpLine && bpMax < 1) {
+      if (bpTrack && bpLine && !reduced && bpMax < 1) {
         const r = bpTrack.getBoundingClientRect();
         const prog = clamp01((0.8 * vh - r.top) / (0.15 * vh + r.height));
         if (prog > bpMax) {
@@ -113,7 +117,9 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
       parallax.forEach((el) => { el.style.transform = ""; });
       words.forEach((w) => { w.style.transform = ""; });
       wmLetters.forEach((l) => { l.style.transform = ""; l.style.opacity = ""; l.style.filter = ""; });
+      if (bpLine) bpLine.style.transform = "";
     }
+    if (!scrolly) rowbars.forEach((b) => { b.style.transform = ""; });
 
     let raf = 0;
     const onScroll = () => {
@@ -170,6 +176,8 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
     if (reduced) lines.forEach((l) => { l.style.translate = ""; });
 
     // Marquee beschleunigt mit der Scroll-Geschwindigkeit
+    // Läuft nur, solange gescrollt wird, und schläft ein, sobald die
+    // Geschwindigkeit wieder bei 1 angekommen ist.
     const mq = q("[data-mq]");
     let loopId = 0;
     let rate = 1;
@@ -180,18 +188,22 @@ export function useScrollFx(rootRef, { reduced, scrolly, onProject }) {
       lastY = y;
       rate += (1 + Math.min(v * 0.35, 7) - rate) * 0.08;
       const anim = mq?.getAnimations?.()[0];
-      if (anim && !reduced) anim.playbackRate = rate;
-      loopId = requestAnimationFrame(loop);
+      if (anim) anim.playbackRate = rate;
+      loopId = v === 0 && Math.abs(rate - 1) < 0.01 ? 0 : requestAnimationFrame(loop);
+      if (!loopId && anim) anim.playbackRate = 1;
     };
-    if (!reduced) loopId = requestAnimationFrame(loop);
+    const kickMarquee = () => { if (!loopId && !reduced) loopId = requestAnimationFrame(loop); };
+    window.addEventListener("scroll", kickMarquee, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
       window.removeEventListener("mousemove", onMove);
+      window.removeEventListener("scroll", kickMarquee);
       cancelAnimationFrame(raf);
       cancelAnimationFrame(loopId);
       io?.disconnect();
+      rowbars.forEach((b) => { b.style.transform = ""; });
       bio.disconnect();
     };
   }, [rootRef, reduced, scrolly, onProject]);

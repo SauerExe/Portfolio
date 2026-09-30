@@ -81,7 +81,7 @@ export function TopBar({ status, track }) {
   const clock = useClock();
   const s = STATUS[status?.status] ?? STATUS.unknown;
   return (
-    <div className="v3-top">
+    <header className="v3-top">
       <div className="v3-status">
         <div className="v3-status-left">
           <span>
@@ -106,7 +106,7 @@ export function TopBar({ status, track }) {
           <a className="v3-nav-cta fx" href="/#kontakt">Kontakt</a>
         </div>
       </nav>
-    </div>
+    </header>
   );
 }
 
