@@ -23,6 +23,8 @@ app.use((req, res, next) => {
     "Strict-Transport-Security": "max-age=31536000",
     "X-Content-Type-Options": "nosniff",
     "Referrer-Policy": "strict-origin-when-cross-origin",
+    "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+    "Cross-Origin-Opener-Policy": "same-origin",
     // React/GSAP use style attributes; scripts and style elements stay same-origin.
     "Content-Security-Policy": "default-src 'self'; script-src 'self' https://zahlen.vvashed.dev; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' https://i.scdn.co; font-src 'self' data:; connect-src 'self' https://zahlen.vvashed.dev; object-src 'none'; base-uri 'self'; frame-ancestors 'none'; form-action 'self'",
   });
