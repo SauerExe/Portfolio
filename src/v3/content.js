@@ -28,6 +28,18 @@ export const replayHaven = {
 
 export const projects = [
   {
+    title: "Gewinnspiel-Plattform für die Stadtverwaltung",
+    context: "Entwicklung im Anstellungsverhältnis",
+    status: "Im Regelbetrieb",
+    live: true,
+    screenshot: "/images/projekte/admin-kommune/mockup.svg",
+    caption: "Schematische Darstellung · Inhalte aus Vertraulichkeit unkenntlich",
+    secret: true,
+    desc: "Gewinnspiele liefen über manuell gepflegte Listen: fehleranfällig, ohne Auswertung, ohne Rechteverwaltung. Die neue Plattform hängt am vorhandenen Anmeldesystem der Verwaltung (JWT gegen LDAP) — niemand braucht ein zusätzliches Passwort, Rechte kommen aus den bestehenden Konten.",
+    outcome: "Seit Übergabe im Regelbetrieb: bisher zwei Gewinnspiele mit rund 1.000 Teilnehmern, Tendenz wachsend.",
+    tech: [".NET 10", "EF Core", "JWT / LDAP", "Next.js"],
+  },
+  {
     title: "SimpleAct",
     context: "Mitgründer / CTO · B2B EU-AI-Act-Compliance",
     status: "In Betrieb",
@@ -38,18 +50,6 @@ export const projects = [
     tech: ["Next.js", "TypeScript", "Supabase", "n8n"],
     url: "https://simpleact.de",
     notes: ["go-live-gate"],
-  },
-  {
-    title: "Gewinnspiel-Plattform für die Stadtverwaltung",
-    context: "Entwicklung im Anstellungsverhältnis",
-    status: "Im Regelbetrieb",
-    live: true,
-    screenshot: "/images/projekte/admin-kommune/mockup.svg",
-    caption: "Schematische Darstellung · Inhalte aus Vertraulichkeit unkenntlich",
-    secret: true,
-    desc: "Gewinnspiele liefen über manuell gepflegte Listen: fehleranfällig, ohne Auswertung, ohne Rechteverwaltung. Authentifizierung jetzt per JWT gegen das bestehende LDAP — niemand braucht ein zusätzliches Passwort.",
-    outcome: "Seit Übergabe im Regelbetrieb: bisher zwei Gewinnspiele mit rund 1.000 Teilnehmern, Tendenz wachsend.",
-    tech: [".NET 10", "EF Core", "JWT / LDAP", "Next.js"],
   },
   {
     title: "Sommerfrische",

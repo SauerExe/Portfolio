@@ -487,7 +487,7 @@ function Contact({ status, track }) {
           <div className="v3-card" data-spot data-reveal="up">
             <SpotBar />
             <span className="v3-label">Passt gut</span>
-            <p>Klar geschnittene Web-Projekte — Portal, Buchung, Admin — gern mit Anbindung an ein Bestandssystem. Ein Zeitplan, der Sorgfalt zulässt.</p>
+            <p>Klar geschnittene Web-Projekte — Portal, Buchung, Admin — gern mit Anbindung an ein Bestandssystem, wie bei der <a className="fx" href="#projekte" style={{ color: "var(--ink)", textDecoration: "underline", textDecorationColor: "oklch(50% 0.014 290)", textUnderlineOffset: 4 }}>Plattform für die Stadtverwaltung</a>. Ein Zeitplan, der Sorgfalt zulässt.</p>
           </div>
           <div className="v3-card" data-spot data-reveal="up">
             <SpotBar />
