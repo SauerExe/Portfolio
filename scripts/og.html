@@ -1,0 +1,57 @@
+<!doctype html>
+<!-- Quelle für public/og.png (1200×630). Neu erzeugen mit:
+     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless=new \
+       --hide-scrollbars --window-size=1200,630 --screenshot=public/og.png scripts/og.html -->
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<style>
+@font-face { font-family: SG; src: url(../public/assets/space-grotesk-latin-wght-normal-BhU9QXUp.woff2) format("woff2"); font-weight: 300 700; }
+@font-face { font-family: SG; src: url(../public/assets/space-grotesk-latin-ext-wght-normal-D9tNdqV9.woff2) format("woff2"); font-weight: 300 700; unicode-range: U+0100-024F, U+1E00-1EFF; }
+@font-face { font-family: JBM; src: url(../public/assets/jetbrains-mono-latin-wght-normal-B9CIFXIH.woff2) format("woff2"); font-weight: 100 800; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1200px; height: 630px; overflow: hidden; }
+body {
+  position: relative;
+  background: oklch(13.5% 0.012 290);
+  color: oklch(95% 0.008 290);
+  font-family: SG, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+.glow { position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 40%, oklch(80% 0.11 295 / 0.16), transparent 55%); }
+.grid {
+  position: absolute; inset: 0;
+  background-image: linear-gradient(oklch(70% 0.02 290 / 0.06) 1px, transparent 1px), linear-gradient(90deg, oklch(70% 0.02 290 / 0.06) 1px, transparent 1px);
+  background-size: 80px 80px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+}
+.wrap { position: absolute; inset: 0; padding: 72px 80px; display: grid; grid-template-columns: 1fr 1px 380px; gap: 0 56px; align-items: center; }
+h1 { font-size: 168px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.03em; line-height: 0.88; }
+h1 span { display: block; }
+h1 .out { color: color-mix(in oklab, oklch(95% 0.008 290) 14%, transparent); -webkit-text-stroke: 2.5px oklch(95% 0.008 290); }
+.rule { align-self: stretch; margin: 40px 0; background: linear-gradient(to bottom, oklch(80% 0.11 295), oklch(38% 0.012 290) 35%, transparent); }
+.side { display: grid; gap: 28px; }
+.role { border-left: 2px solid oklch(80% 0.11 295); padding-left: 18px; font-family: JBM, monospace; text-transform: uppercase; display: grid; gap: 6px; }
+.role b { font-weight: 400; font-size: 19px; letter-spacing: 0.1em; color: oklch(80% 0.11 295); }
+.role i { font-style: normal; font-size: 15px; letter-spacing: 0.06em; color: oklch(74% 0.012 290); }
+.claim { font-size: 34px; font-weight: 700; line-height: 1.15; letter-spacing: -0.02em; }
+.claim em { font-style: normal; color: oklch(80% 0.11 295); }
+.foot { position: absolute; left: 80px; right: 80px; bottom: 44px; display: flex; justify-content: space-between; align-items: center; font-family: JBM, monospace; font-size: 17px; color: oklch(70% 0.012 290); }
+.foot span:first-child { display: flex; align-items: center; gap: 10px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: oklch(76% 0.14 150); }
+</style>
+</head>
+<body>
+<div class="glow"></div>
+<div class="grid"></div>
+<div class="wrap">
+  <h1><span>Timo</span><span class="out">Weiß</span></h1>
+  <div class="rule"></div>
+  <div class="side">
+    <div class="role"><b>Full-Stack Developer</b><i>CTO · SimpleAct</i></div>
+    <p class="claim">Software, die im <em>Betrieb</em> läuft. Nicht nur in der Demo.</p>
+  </div>
+</div>
+<div class="foot"><span><span class="dot"></span>Gelsenkirchen</span><span>vvashed.dev</span></div>
+</body>
+</html>
